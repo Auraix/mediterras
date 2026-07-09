@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script id="design-config" type="application/json">
+{
+  "theme":         "mediterranean",
+  "primary":       "#2C3E35",
+  "primary_dark":  "#1A2920",
+  "accent":        "#C8A96E",
+  "bg_main":       "#2C3E35",
+  "bg_alt":        "#243329",
+  "bg_card":       "#1E2D24",
+  "bg_light":      "#F5F0E8",
+  "bg_light_alt":  "#FFFFFF",
+  "text_main":     "#FFFFFF",
+  "text_muted":    "#7A9E8A",
+  "text_dark":     "#3D3D3A",
+  "border_color":  "rgba(200,169,110,0.25)",
+  "font_display":  "Cormorant Garamond",
+  "font_body":     "Outfit",
+  "border_radius": "2px",
+  "hero_overlay":  "rgba(20,30,22,0.62)",
+  "top_bar":       "linear-gradient(90deg,transparent,#C8A96E 30%,#E8C98E 70%,transparent)"
+}
+</script>
+
+<script id="business-config" type="application/json">
+{
+  "name":          "Mediterras",
+  "tagline":       "Home Renovation · Costa del Sol",
+  "city":          "La Cala de Mijas",
+  "address":       "La Cala de Mijas · Mijas Costa, Málaga",
+  "phone":         "658 46 95 29",
+  "email":         "info@mediterras.es",
+  "hours":         "LunVie · 9:0019:00",
+  "google_rating": "5.0",
+  "review_count":  "40+",
+  "cta_urgency":   "Consulta Gratis",
+  "stat1_num":     "12+",
+  "stat1_label":   "Años en la Costa del Sol",
+  "stat2_num":     "150+",
+  "stat2_label":   "Proyectos completados",
+  "stat3_num":     "3",
+  "stat3_label":   "Idiomas · ES · EN · FR",
+  "social_ig":     "#",
+  "social_fb":     "#",
+  "hero_photo":    "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1800&q=90",
+  "story_photo":   "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=900&q=85",
+  "feature_photo": "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1800&q=90",
+  "projects": [
+    {
+      "name":     "Villa Marbella Golden Mile",
+      "type":     "Reforma Integral",
+      "location": "Marbella",
+      "m2":       "480m²",
+      "duration": "9 meses",
+      "photo":    "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=85"
+    },
+    {
+      "name":     "Ático Puerto Banús",
+      "type":     "Cocina + Baños + Interiorismo",
+      "location": "Puerto Banús",
+      "m2":       "220m²",
+      "duration": "4 meses",
+      "photo":    "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=800&q=85"
+    },
+    {
+      "name":     "Villa La Zagaleta",
+      "type":     "Reforma Integral + Exteriores",
+      "location": "Benahavís",
+      "m2":       "720m²",
+      "duration": "14 meses",
+      "photo":    "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=85"
+    },
+    {
+      "name":     "Apartamento Mijas Hills",
+      "type":     "Reforma Cocina y Baños",
+      "location": "Mijas Costa",
+      "m2":       "165m²",
+      "duration": "3 meses",
+      "photo":    "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&q=85"
+    },
+    {
+      "name":     "Chalet Sierra Blanca",
+      "type":     "Reforma Integral",
+      "location": "Sierra Blanca",
+      "m2":       "560m²",
+      "duration": "11 meses",
+      "photo":    "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=800&q=85"
+    },
+    {
+      "name":     "Penthouse Estepona",
+      "type":     "Interiorismo Completo",
+      "location": "Estepona",
+      "m2":       "290m²",
+      "duration": "5 meses",
+      "photo":    "https://images.unsplash.com/photo-1600210492493-0946911123ea?w=800&q=85"
+    }
+  ]
+}
+</script>
+
+<script id="content-config" type="application/json">
+{
+  "hero_eyebrow":  "Home Renovation · Marbella · Mijas · Estepona",
+  "hero_h1":       "Tu hogar.",
+  "hero_h1_em":    "Nuestra pasión.",
+  "hero_sub":      "Reformas de cocinas, baños y viviendas completas en la Costa del Sol. La confianza de propietarios de toda Europa.",
+  "hero_cta1":     "Solicitar consulta gratuita",
+  "hero_cta2":     "Ver proyectos",
+  "hero_badge":    "Consulta gratuita · Sin compromiso",
+
+  "trust_items": [
+    {"text": "Materiales de primera calidad" },
+    {"text": "Responsable de proyecto dedicado" },
+    {"text": "Seguimiento en tiempo real" },
+    {"text": "Atención en ES · EN · FR" }
+  ],
+
+  "projects_tag":   "Nuestros proyectos",
+  "projects_h2":    "Obras que",
+  "projects_h2_em": "hablan por sí solas",
+  "projects_intro": "Cada proyecto es único. Materiales nobles, acabados de calidad y total atención al detalle en cada centímetro de tu vivienda.",
+
+  "services_tag":   "Lo que hacemos",
+  "services_h2":    "Servicios",
+  "services_h2_em": "de alta gama",
+  "services_intro": "Desde el primer boceto hasta la llave en mano. Un único interlocutor gestiona cada fase de tu proyecto con la precisión que mereces.",
+  "services": [
+    {
+      "icon": "",
+      "name": "Reformas de Cocina",
+      "desc": "Desde el diseño hasta los acabados, creamos cocinas que combinan belleza y funcionalidad. Cada detalle refleja tu estilo de vida y el nivel que tu vivienda merece.",
+      "items": ["Diseño a medida", "Electrodomésticos de gama alta", "Mármol y piedra natural", "Iluminación técnica"]
+    },
+    {
+      "icon": "",
+      "name": "Reformas de Baño",
+      "desc": "Transforma tu baño en un espacio de bienestar privado. Materiales de primera calidad, acabados impecables y diseño que aporta calma y bienestar a tu rutina diaria.",
+      "items": ["Baños spa y wellness", "Piedra natural y porcelana", "Grifería de diseño", "Iluminación ambiental"]
+    },
+    {
+      "icon": "",
+      "name": "Reforma Integral",
+      "desc": "Tanto si es una renovación completa como una mejora planificada, gestionamos cada aspecto de tu proyecto con precisión y cuidado desde el primer día.",
+      "items": ["Gestión llave en mano", "Coordinación de gremios", "Control de calidad continuo", "Portal cliente en tiempo real"]
+    },
+    {
+      "icon": "",
+      "name": "Exteriores y Piscinas",
+      "desc": "Terrazas, jardines, piscinas y fachadas diseñados con el mismo nivel de exigencia que el interior. El exterior de tu vivienda también merece lo mejor.",
+      "items": ["Piscinas de diseño", "Terrazas y porches", "Jardines y paisajismo", "Fachadas y cerramientos"]
+    }
+  ],
+
+  "process_tag":   "Cómo trabajamos",
+  "process_h2":    "Tu proyecto,",
+  "process_h2_em": "paso a paso",
+  "process_intro": "Un proceso claro, transparente y sin sorpresas. Sabes exactamente qué pasa en cada fase y lo apruebas tú antes de avanzar.",
+  "process_steps": [
+    { "num": "01", "title": "Consulta gratuita",       "text": "Visitamos tu propiedad, escuchamos tu visión y entendemos exactamente qué quieres conseguir. Sin coste y sin compromiso." },
+    { "num": "02", "title": "Diseño y presupuesto",    "text": "Presentamos una propuesta completa con materiales, plazos y precios transparentes. Sin letra pequeña, sin sorpresas posteriores." },
+    { "num": "03", "title": "Aprobación y materiales", "text": "Tú apruebas cada detalle antes de comenzar. Seleccionamos los materiales juntos para que el resultado sea exactamente lo que imaginaste." },
+    { "num": "04", "title": "Ejecución con updates",   "text": "Nuestro equipo trabaja con precisión mientras recibes actualizaciones regulares con fotos a través de tu portal de cliente personal." },
+    { "num": "05", "title": "Entrega y seguimiento",   "text": "Completamos tu proyecto a la perfección. Revisión conjunta contigo y seguimiento post-obra. Permanecemos disponibles para cualquier ajuste." }
+  ],
+
+  "feature_tag":   "Por qué elegirnos",
+  "feature_h2":    "Calidad sin concesiones",
+  "feature_h2_em": "en cada detalle",
+  "feature_body":  "Trabajamos exclusivamente con materiales de calidad y artesanos con experiencia contrastada. Cada proyecto se ejecuta con los más altos estándares porque tu hogar lo merece. Y si vives en Londres, París o Amsterdam, nuestro portal de cliente te mantiene al día en tiempo real.",
+  "feature_stats": [
+    { "num": "12+",  "label": "Años en Costa del Sol" },
+    { "num": "150+", "label": "Proyectos completados" },
+    { "num": "48h",  "label": "Presupuesto detallado" },
+    { "num": "3",    "label": "Idiomas de atención"   }
+  ],
+
+  "reviews_tag": "Clientes",
+  "reviews_h2":  "Lo que dicen",
+  "reviews_em":  "nuestros clientes",
+  "reviews": [
+    {
+      "text":    "Reformaron nuestra villa en 9 meses tal y como prometieron. El presupuesto se cumplió al céntimo y el resultado superó todas nuestras expectativas. La comunicación fue impecable durante todo el proceso.",
+      "author":  "James & Sarah T.",
+      "project": "Reforma Integral · Villa Marbella · 480m²",
+      "source":  "United Kingdom",
+      "stars":   5
+    },
+    {
+      "text":    "Nous avons pu suivre les travaux depuis Paris grâce au portail client. Un service exceptionnel du début à la fin, avec une qualité de matériaux et de finition vraiment impressionnante.",
+      "author":  "Pierre & Marie L.",
+      "project": "Rénovation complète · Ático Puerto Banús",
+      "source":  "France",
+      "stars":   5
+    },
+    {
+      "text":    "La reforma de nuestra cocina y baños superó todas nuestras expectativas. Profesionalidad, materiales de primera calidad y comunicación continua en todo momento. Totalmente recomendables.",
+      "author":  "Carlos & Ana M.",
+      "project": "Cocina + Baños · Mijas Hills · 165m²",
+      "source":  "España",
+      "stars":   5
+    },
+    {
+      "text":    "We contracted the full renovation of our penthouse and couldn't be happier. Always one dedicated contact, quality materials and not a single surprise on the final bill. Exceptional team.",
+      "author":  "Robert & Claire W.",
+      "project": "Full Renovation · Estepona Penthouse · 290m²",
+      "source":  "Netherlands",
+      "stars":   5
+    },
+    {
+      "text":    "Segunda reforma que hacemos con Mediterras y volveríamos sin dudarlo. Cuidan cada detalle como si fuera su propia casa. Los plazos se cumplieron a la perfección y el trato fue excepcional.",
+      "author":  "Sofía & Pedro M.",
+      "project": "Reforma Integral · Chalet Sierra Blanca · 560m²",
+      "source":  "España",
+      "stars":   5
+    },
+    {
+      "text":    "The client portal was a game changer. Living in London, I could follow every step of the renovation in real time with photos and updates. The quality of the final result is outstanding.",
+      "author":  "Michael D.",
+      "project": "Kitchen & Bathrooms · La Zagaleta",
+      "source":  "United Kingdom",
+      "stars":   5
+    },
+    {
+      "text":    "Mediterras a transformé notre appartement de fond en comble. La qualité des matériaux, le respect des délais et la gentillesse de toute l'équipe ont rendu l'expérience vraiment agréable.",
+      "author":  "Isabelle & François B.",
+      "project": "Rénovation complète · Marbella · 310m²",
+      "source":  "France",
+      "stars":   5
+    }
+  ],
+
+  "budget_tag":   "¿Empezamos?",
+  "budget_h2":    "Solicita tu",
+  "budget_h2_em": "consulta gratuita",
+  "budget_body":  "Cuéntanos tu proyecto y te respondemos en menos de 24 horas para concertar una visita a tu propiedad. Sin compromiso y en el idioma que prefieras.",
+  "budget_items": [
+    { "icon": "", "title": "Llámanos",        "text": "Cuéntanos tu proyecto por teléfono y te orientamos al instante. Atención en español, inglés y francés.",    "cta": "Llamar ahora",      "href": "tel:+34658469529" },
+    { "icon": "", "title": "Escríbenos",      "text": "Envíanos un email con los detalles de tu propiedad y te respondemos con una propuesta en menos de 24h.",       "cta": "Enviar email",      "href": "mailto:joaquin.brazales@gmail.com" },
+    { "icon": "", "title": "Visita gratuita", "text": "Venimos a ver tu propiedad, tomamos medidas y elaboramos el presupuesto detallado in situ. Sin coste.",         "cta": "Solicitar visita",  "href": "#" }
+  ],
+
+  "faq_tag": "Preguntas frecuentes",
+  "faq_h2":  "Lo más",
+  "faq_h2_em": "preguntado",
+  "faqs": [
+    { "q": "¿Trabajáis con propietarios no residentes?",        "a": "Sí, es uno de nuestros perfiles de cliente más habituales. A través del portal de cliente personal puedes seguir cada paso de tu reforma en tiempo real con fotos y actualizaciones, desde Londres, París, Amsterdam o donde estés." },
+    { "q": "¿En qué idiomas atendéis?",                        "a": "Atendemos en español, inglés y francés. Nuestro equipo se comunica en los tres idiomas tanto para las visitas a la propiedad como para toda la documentación del proyecto." },
+    { "q": "¿El presupuesto puede variar una vez firmado?",     "a": "Nuestros presupuestos son cerrados y detallados. Solo varían si el cliente solicita cambios durante la obra. Cualquier modificación se presupuesta y aprueba por escrito antes de ejecutarse." },
+    { "q": "¿Cuánto tiempo tarda una reforma integral?",        "a": "Depende del tamaño y estado de la vivienda. Un apartamento de 150-200m² suele tardar entre 3 y 5 meses. Para obras mayores elaboramos un calendario detallado y vinculante antes de comenzar." },
+    { "q": "¿Trabajáis en toda la Costa del Sol?",             "a": "Sí, trabajamos en toda la Costa del Sol: Marbella, Mijas, Estepona, Benahavís, Fuengirola y alrededores. Nuestra base está en La Cala de Mijas." },
+    { "q": "¿Tenéis seguro de responsabilidad civil?",          "a": "Sí, contamos con todos los seguros necesarios para la ejecución de obra. Te facilitamos toda la documentación antes de firmar cualquier contrato." }
+  ]
+}
+</script>
+
+<link id="gfont" rel="stylesheet" href="">
+<title>Mediterras — Home Renovation · Costa del Sol</title>
+
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --primary:#2C3E35; --primary-dark:#1A2920; --accent:#C8A96E;
+  --bg-main:#F5F0E8; --bg-alt:#FFFFFF; --bg-card:#FFFFFF;
+  --bg-light:#F5F0E8; --bg-light-alt:#FFFFFF;
+  --text-main:#2C3E35; --text-muted:#5A6E5E; --text-dark:#2C3E35;
+  --border:rgba(44,62,53,0.15);
+  --font-display:'Cormorant Garamond',serif; --font-body:'Outfit',sans-serif;
+  --radius:2px;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-body);background:var(--bg-main);color:var(--text-main);overflow-x:hidden}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;width:100%;z-index:100;padding:1rem 5vw;display:flex;align-items:center;justify-content:space-between;background:rgba(26,41,32,.97);backdrop-filter:blur(14px);border-bottom:1px solid rgba(200,169,110,.25);transition:box-shadow .3s}
+nav.scrolled{box-shadow:0 2px 20px rgba(0,0,0,.3)}
+.nav-logo{font-family:var(--font-display);font-size:1.45rem;font-weight:700;color:#FFFFFF;text-decoration:none;letter-spacing:.04em}
+.nav-logo span{font-style:italic;font-weight:300;color:var(--text-main)}
+.nav-right{display:flex;align-items:center;gap:1.5rem}
+nav ul{list-style:none;display:flex;gap:2rem;align-items:center}
+nav a{color:rgba(255,255,255,.75);text-decoration:none;font-size:.75rem;font-weight:400;letter-spacing:.1em;text-transform:uppercase;transition:color .2s}
+nav a:hover{color:#C8A96E}
+.nav-phone{font-size:.82rem!important;color:rgba(255,255,255,.9)!important;font-weight:500!important;letter-spacing:.02em!important;text-transform:none!important}
+.nav-cta{background:var(--primary)!important;color:#ffffff!important;padding:.5rem 1.3rem;border-radius:var(--radius);font-weight:500!important;letter-spacing:.06em!important;font-size:.74rem!important;transition:background .2s!important}
+.nav-cta:hover{background:var(--accent)!important}
+
+/* LANG SWITCHER */
+.lang-switcher{display:flex;align-items:center;gap:.35rem;margin-left:.5rem}
+.lang-btn{display:flex;align-items:center;gap:.3rem;background:none;border:1px solid rgba(200,169,110,.25);color:rgba(255,255,255,.45);font-family:var(--font-body);font-size:.65rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;padding:.3rem .55rem;cursor:pointer;border-radius:var(--radius);transition:all .2s;line-height:1}
+.lang-btn:hover,.lang-btn.active{border-color:var(--primary);color:var(--accent)}
+.lang-btn .flag{font-size:.85rem;line-height:1}
+
+/* STAFF ACCESS ICON */
+.staff-access{display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;border:1px solid rgba(200,169,110,.35);color:rgba(255,255,255,.55);text-decoration:none;margin-left:.5rem;transition:all .2s;flex-shrink:0}
+.staff-access:hover{border-color:var(--accent);color:var(--accent);background:rgba(200,169,110,.1)}
+.staff-access svg{width:16px;height:16px}
+
+/* ── HERO ── */
+#hero{min-height:92vh;position:relative;display:flex;align-items:center;overflow:hidden;background:#F5F0E8}
+.hero-photo{position:absolute;top:0;right:0;width:52%;height:100%;background-size:cover;background-position:center;clip-path:polygon(8% 0,100% 0,100% 100%,0% 100%)}
+.hero-overlay{position:absolute;top:0;right:0;width:52%;height:100%;background:linear-gradient(to right,#F5F0E8 0%,transparent 20%);z-index:1;pointer-events:none}
+#top-bar{position:fixed;top:0;left:0;right:0;height:2px;z-index:200}
+.hero-content{position:relative;z-index:2;padding:7rem 5vw 5rem;display:grid;grid-template-columns:55% 45%;gap:2rem;align-items:center;width:100%}
+.hero-pill{display:inline-flex;align-items:center;gap:.5rem;background:rgba(44,62,53,.08);border:1px solid rgba(44,62,53,.2);padding:.35rem 1rem;border-radius:999px;margin-bottom:1.6rem}
+.hero-pill::before{content:'';width:6px;height:6px;background:#C8A96E;border-radius:50%;animation:blink 2s infinite}
+.hero-pill span{font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:#2C3E35;font-weight:500}
+h1{font-family:var(--font-display);font-size:clamp(3.2rem,6vw,5.8rem);font-weight:300;line-height:1;color:#2C3E35;margin-bottom:1.2rem;letter-spacing:-.01em}
+h1 em{font-style:italic;font-weight:600;color:#C8A96E;display:block}
+.hero-sub{font-size:.95rem;font-weight:400;color:#4A5E52;line-height:1.85;margin-bottom:2rem;max-width:460px}
+.hero-actions{display:flex;gap:1rem;flex-wrap:wrap}
+.btn-primary{display:inline-block;background:var(--primary);color:#ffffff;text-decoration:none;padding:.9rem 2.2rem;border-radius:var(--radius);font-weight:500;font-size:.82rem;letter-spacing:.08em;text-transform:uppercase;transition:background .2s,transform .15s}
+.btn-primary:hover{background:var(--accent);transform:translateY(-1px)}
+.btn-ghost{display:inline-flex;align-items:center;gap:.5rem;color:#2C3E35;text-decoration:none;font-size:.82rem;border-bottom:1px solid rgba(44,62,53,.4);padding-bottom:2px;letter-spacing:.06em;transition:all .2s}
+.btn-ghost:hover{color:#C8A96E;border-color:#C8A96E}
+.hero-right{display:flex;flex-direction:column;gap:1rem}
+.hero-trust{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
+.trust-item{background:rgba(245,240,232,.95);border:1px solid rgba(44,62,53,.15);padding:.8rem 1rem;border-radius:var(--radius);display:flex;align-items:center;gap:.6rem;font-size:.75rem;color:#2C3E35;font-weight:400}
+.hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(44,62,53,.1)}
+.hero-stat{background:rgba(245,240,232,.95);padding:1rem;text-align:center}
+.hs-num{font-family:var(--font-display);font-size:1.8rem;font-weight:600;color:#2C3E35;line-height:1;display:block;margin-bottom:.15rem}
+.hs-label{font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:#7A8A70}
+
+/* ── SHARED ── */
+.section-tag{display:block;font-size:.65rem;letter-spacing:.22em;text-transform:uppercase;color:#C8A96E;font-weight:500;margin-bottom:.7rem}
+h2{font-family:var(--font-display);font-size:clamp(2rem,4vw,3.2rem);font-weight:400;line-height:1.1;margin-bottom:.8rem;letter-spacing:-.01em;color:#2C3E35}
+h2 em{font-style:italic;color:#C8A96E}
+.section-intro{font-size:.9rem;line-height:1.9;max-width:520px;font-weight:300;color:#4A5E52}
+.gold-rule{width:40px;height:1px;background:#C8A96E;margin:1.2rem 0 2rem;opacity:.8}
+#projects .section-intro{color:#4A5E52}
+#services .section-intro{color:#4A5E52}
+.section-light{background:var(--bg-light);color:#3D3D3A}
+.section-light h2{color:#2C3E35}
+.section-light h2 em{color:#C8A96E}
+.section-light .section-tag{color:#C8A96E}
+.section-light .section-intro{color:#5A5A56}
+
+/* ── PROJECTS ── */
+#projects{padding:6rem 5vw;background:#F5F0E8}
+.projects-header{margin-bottom:3.5rem}
+.projects-grid{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:auto auto;gap:3px;background:var(--border)}
+.project-card{position:relative;overflow:hidden;cursor:pointer;background:var(--bg-card)}
+.project-card:first-child{grid-column:1/3;grid-row:1/2}
+.project-card:nth-child(4){grid-column:2/4}
+.project-photo{width:100%;height:100%;min-height:280px;object-fit:cover;display:block;transition:transform .6s;filter:brightness(.85) saturate(1.1)}
+.project-card:hover .project-photo{transform:scale(1.04)}
+.project-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(20,30,22,.88) 0%,transparent 55%);opacity:0;transition:opacity .3s}
+.project-card:hover .project-overlay{opacity:1}
+.project-info{position:absolute;bottom:0;left:0;right:0;padding:1.5rem;transform:translateY(10px);opacity:0;transition:all .3s}
+.project-card:hover .project-info{transform:translateY(0);opacity:1}
+.project-type{font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:#C8A96E;font-weight:500;margin-bottom:.3rem}
+.project-name{font-family:var(--font-display);font-size:1.3rem;font-weight:600;color:#fff;line-height:1.1;margin-bottom:.5rem}
+.project-meta{display:flex;gap:1rem}
+.project-meta span{font-size:.68rem;color:rgba(255,255,255,.9);font-weight:300;letter-spacing:.06em}
+
+/* ── SERVICES ── */
+#services{padding:6rem 5vw;background:#FFFFFF}
+.services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1px;background:var(--border);margin-top:3.5rem}
+.service-card{background:#F5F0E8;padding:2.5rem;transition:background .2s;position:relative;overflow:hidden;border:1px solid rgba(44,62,53,.08)}
+.service-card::before{content:'';position:absolute;top:0;left:0;width:2px;height:0;background:linear-gradient(to bottom,#C8A96E,#E8C98E);transition:height .4s}
+.service-card:hover{background:#EAE4D6}
+.service-card:hover::before{height:100%}
+.service-icon{font-size:1.8rem;margin-bottom:1.2rem;display:block}
+.service-name{font-family:var(--font-display);font-size:1.3rem;font-weight:600;color:#2C3E35;margin-bottom:.7rem;line-height:1.1}
+.service-desc{font-size:.82rem;color:#4A5E52;line-height:1.7;margin-bottom:1.2rem;font-weight:300}
+.service-items{list-style:none;display:flex;flex-direction:column;gap:.35rem}
+.service-items li{font-size:.75rem;color:#5A6E5E;font-weight:300;padding-left:1rem;position:relative}
+.service-items li::before{content:'';position:absolute;left:0;color:var(--primary);font-size:.65rem}
+
+/* ── PROCESS ── */
+#process{padding:6rem 5vw;background:#F5F0E8}
+.process-inner{display:grid;grid-template-columns:1fr 2fr;gap:5rem;align-items:start}
+.process-steps{display:flex;flex-direction:column;gap:0;margin-top:1rem}
+.process-step{display:flex;gap:1.5rem;padding:1.8rem 0;border-bottom:.5px solid rgba(44,62,53,.12)}
+.process-step:last-child{border-bottom:none}
+.step-num{font-family:var(--font-display);font-size:2.5rem;font-weight:700;color:rgba(44,62,53,.2);line-height:1;flex-shrink:0;width:3.5rem;transition:color .3s}
+.process-step:hover .step-num{color:#C8A96E}
+.step-title{font-family:var(--font-display);font-size:1.1rem;font-weight:600;color:#2C3E35;margin-bottom:.4rem}
+.step-text{font-size:.8rem;color:#4A5E52;line-height:1.7;font-weight:300}
+
+/* ── FEATURE ── */
+#feature{position:relative;min-height:520px;display:flex;align-items:center;overflow:hidden}
+.feature-photo{position:absolute;inset:0;background-size:cover;background-position:center}
+.feature-overlay{position:absolute;inset:0;background:linear-gradient(105deg,rgba(20,30,22,.92) 0%,rgba(20,30,22,.6) 50%,rgba(20,30,22,.15) 100%)}
+.feature-content{position:relative;z-index:2;padding:5rem 8vw;max-width:580px}
+.feature-content .section-tag{color:var(--accent)}
+.feature-content h2{color:#fff;font-size:clamp(2rem,4vw,3rem)}
+.feature-content h2 em{color:var(--accent)}
+.feature-content p{color:rgba(255,255,255,.9);font-size:.88rem;line-height:1.9;margin:1.5rem 0 2.5rem;font-weight:300}
+.feature-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:rgba(200,169,110,.15);max-width:360px}
+.fs{padding:1.1rem 1.3rem;background:rgba(255,255,255,.1);text-align:center}
+.fs-num{font-family:var(--font-display);font-size:1.8rem;font-weight:700;color:var(--accent);display:block;line-height:1;margin-bottom:.2rem}
+.fs-label{font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.8)}
+
+/* ── REVIEWS ── */
+#reviews{padding:6rem 5vw;background:#FFFFFF}
+.reviews-top{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:3.5rem;flex-wrap:wrap;gap:1rem}
+.rating-block{text-align:right}
+.rating-num{font-family:var(--font-display);font-size:3.5rem;font-weight:600;color:#2C3E35;line-height:1}
+.rating-stars{color:var(--accent);font-size:.9rem;margin:.2rem 0}
+.rating-note{font-size:.7rem;color:#5A6E5E;font-weight:300}
+.reviews-scroll{overflow:hidden}
+.reviews-track{display:flex;gap:1.5rem;animation:scrollLeft 55s linear infinite;width:max-content}
+.reviews-track:hover{animation-play-state:paused}
+.review-card{background:#F5F0E8;border:1px solid rgba(44,62,53,.1);padding:2rem;width:360px;flex-shrink:0;border-radius:var(--radius)}
+.review-stars-row{color:var(--accent);font-size:.72rem;margin-bottom:.8rem}
+.review-text{font-size:.85rem;line-height:1.8;color:#2C3E35;margin-bottom:1rem;font-weight:300;font-style:italic}
+.review-project{font-size:.65rem;color:#C8A96E;font-weight:500;letter-spacing:.06em;text-transform:uppercase;margin-bottom:.4rem}
+.review-author{font-size:.7rem;color:rgba(255,255,255,.65);font-weight:400}
+
+/* ── FAQ ── */
+#faq{padding:6rem 5vw;background:#F5F0E8}
+.faq-inner{display:grid;grid-template-columns:1fr 1.5fr;gap:5rem;align-items:start}
+.faq-list{display:flex;flex-direction:column}
+.faq-item{border-bottom:.5px solid rgba(44,62,53,.15)}
+.faq-q{padding:1.3rem 0;display:flex;justify-content:space-between;align-items:center;cursor:pointer;font-size:.88rem;font-weight:400;color:#2C3E35;transition:color .2s;gap:1rem;line-height:1.4}
+.faq-q:hover{color:#C8A96E}
+.faq-arrow{font-size:.65rem;color:#C8A96E;transition:transform .25s;flex-shrink:0}
+.faq-a{font-size:.8rem;color:#4A5E52;line-height:1.8;font-weight:300;padding-bottom:1.2rem;display:none}
+.faq-item.open .faq-arrow{transform:rotate(180deg)}
+.faq-item.open .faq-a{display:block}
+.faq-item.open .faq-q{color:#C8A96E}
+
+/* ── BUDGET ── */
+#budget{padding:6rem 5vw;background:var(--bg-light);text-align:center}
+#budget .section-tag{color:#C8A96E}
+#budget h2{color:#2C3E35}
+#budget h2 em{color:#C8A96E}
+#budget .section-intro{color:#5A5A56;margin:0 auto 3.5rem}
+.budget-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.5rem;max-width:900px;margin:0 auto 2rem}
+.budget-card{background:#fff;border:.5px solid rgba(200,169,110,.3);padding:2.2rem 1.8rem;border-radius:4px;box-shadow:0 4px 20px rgba(27,58,107,.08);transition:box-shadow .25s,transform .25s;text-align:center}
+.budget-card:hover{box-shadow:0 10px 40px rgba(200,169,110,.15);transform:translateY(-3px)}
+.budget-icon{font-size:2rem;margin-bottom:.8rem;display:block}
+.budget-card h3{font-family:var(--font-display);font-size:1.1rem;font-weight:600;color:#2C3E35;margin-bottom:.5rem}
+.budget-card p{font-size:.78rem;color:#5A5A56;line-height:1.7;margin-bottom:1.5rem;font-weight:300}
+.budget-btn{display:inline-block;background:var(--primary);color:#fff;text-decoration:none;padding:.55rem 1.3rem;font-size:.72rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;border-radius:var(--radius);transition:background .2s}
+.budget-btn:hover{background:#1A2920}
+.budget-hours{font-size:.75rem;color:#7A8A70;margin-top:.5rem}
+
+/* ── INFO ── */
+#info{padding:3rem 5vw;background:#2C3E35;border-top:1px solid rgba(200,169,110,.25)}
+.info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:2.5rem}
+.info-block h3{font-family:var(--font-display);font-size:.95rem;font-weight:600;color:var(--accent);margin-bottom:.8rem}
+.info-block p,.info-block li{font-size:.78rem;color:rgba(255,255,255,.6);line-height:2;font-weight:300}
+.info-block ul{list-style:none}
+.info-block a{color:rgba(255,255,255,.7);text-decoration:none;transition:color .2s}
+.info-block a:hover{color:var(--primary)}
+
+/* ── FOOTER ── */
+footer{background:#2C3E35;border-top:1px solid rgba(200,169,110,.2);padding:1.8rem 5vw;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+.footer-logo{font-family:var(--font-display);font-size:1.2rem;font-weight:700;color:#FFFFFF;text-decoration:none}
+.footer-logo span{font-style:italic;font-weight:300;color:rgba(255,255,255,.5)}
+footer p{font-size:.68rem;color:rgba(255,255,255,.6);font-weight:300}
+
+/* ── WHATSAPP ── */
+#whatsapp-btn{position:fixed;bottom:1.8rem;right:1.8rem;z-index:999;width:56px;height:56px;display:flex;align-items:center;justify-content:center;border-radius:50%;box-shadow:0 4px 20px rgba(37,211,102,.45);text-decoration:none;transition:transform .2s,box-shadow .2s;animation:waPulse 2.5s ease infinite}
+#whatsapp-btn:hover{transform:scale(1.1);box-shadow:0 6px 28px rgba(37,211,102,.65);animation:none}
+#whatsapp-btn svg{width:56px;height:56px}
+#whatsapp-tooltip{position:absolute;right:68px;background:#1A1A1A;color:#fff;font-size:.72rem;padding:.35rem .85rem;border-radius:4px;white-space:nowrap;pointer-events:none;opacity:0;transform:translateX(6px);transition:opacity .2s,transform .2s}
+#whatsapp-tooltip::after{content:'';position:absolute;left:100%;top:50%;transform:translateY(-50%);border:5px solid transparent;border-left-color:#1A1A1A}
+#whatsapp-btn:hover #whatsapp-tooltip{opacity:1;transform:translateX(0)}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@keyframes scrollLeft{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+@keyframes waPulse{0%,100%{box-shadow:0 4px 20px rgba(37,211,102,.45)}50%{box-shadow:0 4px 30px rgba(37,211,102,.75),0 0 0 8px rgba(37,211,102,.1)}}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  #hero{background:#F5F0E8}
+  .hero-photo{width:100%;height:45vh;top:0;right:0;clip-path:none;position:relative}
+  .hero-overlay{width:100%;clip-path:none;background:linear-gradient(to bottom,transparent 60%,#F5F0E8 100%)}
+  .hero-content{grid-template-columns:1fr;gap:2rem;padding:2rem 5vw 3rem}
+  .hero-trust{grid-template-columns:1fr}
+  .hero-stats{grid-template-columns:repeat(3,1fr)}
+  nav ul{display:none}
+  .projects-grid{grid-template-columns:1fr 1fr}
+  .project-card:first-child,.project-card:nth-child(4){grid-column:auto}
+  .process-inner{grid-template-columns:1fr}
+  .faq-inner{grid-template-columns:1fr}
+  #feature .feature-overlay{background:rgba(20,30,22,.82)}
+  .lang-switcher{gap:.25rem}
+  .lang-btn{padding:.25rem .4rem}
+}
+@media(max-width:560px){
+  .lang-btn span:not(.flag){display:none}
+  .lang-btn .flag{font-size:1rem}
+}
+</style>
+</head>
+<body>
+
+<div id="top-bar"></div>
+
+<nav id="nav">
+  <a href="#" class="nav-logo" id="nav-logo"></a>
+  <div class="nav-right">
+    <ul id="nav-ul"></ul>
+    <div class="lang-switcher" id="lang-switcher">
+      <button class="lang-btn active" data-lang="es" onclick="setLang('es')"><span class="flag"></span><span>ES</span></button>
+      <button class="lang-btn" data-lang="en" onclick="setLang('en')"><span class="flag"></span><span>EN</span></button>
+      <button class="lang-btn" data-lang="fr" onclick="setLang('fr')"><span class="flag"></span><span>FR</span></button>
+    </div>
+    <a href="/app/" class="staff-access" title="Acceso operarios" aria-label="Acceso operarios">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-3.5 3.5-6 8-6s8 2.5 8 6"/></svg>
+    </a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-photo" id="hero-photo"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-left">
+      <div class="hero-pill"><span id="hero-badge"></span></div>
+      <h1 id="hero-h1"></h1>
+      <p class="hero-sub" id="hero-sub"></p>
+      <div class="hero-actions">
+        <a href="#budget" class="btn-primary" id="hero-cta1"></a>
+        <a href="#projects" class="btn-ghost" id="hero-cta2">
+          <span></span>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 7h10M7 2l5 5-5 5"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-trust" id="hero-trust"></div>
+      <div class="hero-stats" id="hero-stats"></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="projects-header">
+    <span class="section-tag" id="projects-tag"></span>
+    <h2 id="projects-h2"></h2>
+    <div class="gold-rule"></div>
+    <p class="section-intro" id="projects-intro"></p>
+  </div>
+  <div class="projects-grid" id="projects-grid"></div>
+  <div style="text-align:center;margin-top:3rem">
+    <a href="#budget" class="btn-primary" id="projects-cta">Solicitar consulta gratuita</a>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <span class="section-tag" id="services-tag"></span>
+  <h2 id="services-h2"></h2>
+  <div class="gold-rule"></div>
+  <p class="section-intro" id="services-intro"></p>
+  <div class="services-grid" id="services-grid"></div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="process-inner">
+    <div>
+      <span class="section-tag" id="process-tag"></span>
+      <h2 id="process-h2"></h2>
+      <div class="gold-rule"></div>
+      <p class="section-intro" id="process-intro"></p>
+      <div style="margin-top:2.5rem">
+        <a href="#budget" class="btn-primary" id="process-cta" style="color:#fff">Iniciar mi proyecto</a>
+      </div>
+    </div>
+    <div class="process-steps" id="process-steps"></div>
+  </div>
+</section>
+
+<!-- FEATURE -->
+<section id="feature">
+  <div class="feature-photo" id="feature-photo"></div>
+  <div class="feature-overlay"></div>
+  <div class="feature-content">
+    <span class="section-tag" id="feature-tag"></span>
+    <h2 id="feature-h2"></h2>
+    <p id="feature-body"></p>
+    <div class="feature-stats" id="feature-stats"></div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section id="reviews">
+  <div class="reviews-top">
+    <div>
+      <span class="section-tag" id="reviews-tag"></span>
+      <h2 id="reviews-h2"></h2>
+    </div>
+    <div class="rating-block">
+      <div class="rating-num" id="rating-num"></div>
+      <div class="rating-stars"></div>
+      <div class="rating-note" id="rating-note"></div>
+    </div>
+  </div>
+  <div class="reviews-scroll"><div class="reviews-track" id="reviews-track"></div></div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="faq-inner">
+    <div>
+      <span class="section-tag" id="faq-tag"></span>
+      <h2 id="faq-h2"></h2>
+      <div class="gold-rule"></div>
+      <p class="section-intro" id="faq-intro" style="margin-bottom:2rem"></p>
+      <a href="#budget" class="btn-primary" id="faq-cta">Pedir consulta gratis</a>
+    </div>
+    <div class="faq-list" id="faq-list"></div>
+  </div>
+</section>
+
+<!-- BUDGET CTA -->
+<section id="budget">
+  <span class="section-tag" id="budget-tag"></span>
+  <h2 id="budget-h2"></h2>
+  <p class="section-intro" id="budget-body"></p>
+  <div class="budget-grid" id="budget-grid"></div>
+  <p class="budget-hours" id="budget-hours"></p>
+</section>
+
+<!-- INFO -->
+<section id="info"><div class="info-grid" id="info-grid"></div></section>
+
+<!-- FOOTER -->
+<footer>
+  <a href="#" class="footer-logo" id="footer-logo"></a>
+  <p id="footer-copy"></p>
+  <p id="footer-sub" style="font-size:.65rem;color:rgba(255,255,255,.15)"></p>
+</footer>
+
+<!-- WHATSAPP -->
+<a id="whatsapp-btn" href="#" target="_blank" rel="noopener" aria-label="WhatsApp">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+    <circle cx="24" cy="24" r="24" fill="#25D366"/>
+    <path fill="#fff" d="M34.5 13.5A14.4 14.4 0 0 0 24 9C16.27 9 10 15.27 10 23a13.9 13.9 0 0 0 1.87 7L10 39l9.27-1.84A14 14 0 0 0 24 38.4c7.73 0 14-6.27 14-14a13.93 13.93 0 0 0-3.5-10.9zm-10.5 21.5a11.6 11.6 0 0 1-5.93-1.62l-.42-.25-4.37.87.9-4.25-.28-.44A11.55 11.55 0 0 1 12.4 23c0-6.4 5.2-11.6 11.6-11.6A11.6 11.6 0 0 1 35.6 23c0 6.4-5.2 11.6-11.6 11.6zm6.36-8.68c-.35-.17-2.06-1.02-2.38-1.13-.32-.12-.55-.17-.78.17-.23.35-.9 1.13-1.1 1.37-.2.23-.4.26-.74.09a9.3 9.3 0 0 1-4.62-4.04c-.35-.6.35-.56.99-1.86.11-.23.06-.43-.03-.6-.09-.17-.78-1.88-1.07-2.57-.28-.67-.57-.58-.78-.59h-.67c-.23 0-.6.09-.91.43-.32.35-1.2 1.17-1.2 2.85s1.23 3.3 1.4 3.53c.17.23 2.42 3.7 5.87 5.19 2.18.94 3.04 1.02 4.13.86.66-.1 2.06-.84 2.35-1.66.29-.81.29-1.51.2-1.66-.08-.14-.3-.23-.65-.4z"/>
+  </svg>
+  <span id="whatsapp-tooltip">Pide presupuesto</span>
+</a>
+
+<script>
+(function(){
+  const D=JSON.parse(document.getElementById('design-config').textContent);
+  const B=JSON.parse(document.getElementById('business-config').textContent);
+  const C=JSON.parse(document.getElementById('content-config').textContent);
+  const r=document.documentElement;
+  const cv={'--primary':D.primary,'--primary-dark':D.primary_dark,'--accent':D.accent,
+    '--bg-main':D.bg_main,'--bg-alt':D.bg_alt,'--bg-card':D.bg_card,
+    '--bg-light':D.bg_light,'--bg-light-alt':D.bg_light_alt,
+    '--text-main':D.text_main,'--text-muted':D.text_muted,'--text-dark':D.text_dark,
+    '--border':D.border_color,
+    '--font-display':`'${D.font_display}',serif`,'--font-body':`'${D.font_body}',sans-serif`,
+    '--radius':D.border_radius};
+  for(const[k,v] of Object.entries(cv)) r.style.setProperty(k,v);
+  document.body.classList.add('theme-'+D.theme);
+  document.getElementById('gfont').href=
+    `https://fonts.googleapis.com/css2?family=${D.font_display.replace(/ /g,'+')}:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Outfit:wght@300;400;500&display=swap`;
+  document.title=`${B.name}  ${B.tagline}`;
+  document.getElementById('top-bar').style.cssText=`position:fixed;top:0;left:0;right:0;height:2px;z-index:200;background:${D.top_bar}`;
+
+  const q=id=>document.getElementById(id);
+  const set=(id,html,mode='html')=>{if(q(id)) mode==='text'?q(id).textContent=html:q(id).innerHTML=html;};
+
+  /* ── i18n CONTENT ── */
+  const T={
+    es:{
+      nav:['Proyectos','Servicios','Proceso','Clientes'],
+      nav_phone: B.phone,
+      nav_cta: 'Consulta Gratis',
+      hero_badge: C.hero_badge,
+      hero_h1: `${C.hero_h1}<br><em>${C.hero_h1_em}</em>`,
+      hero_sub: C.hero_sub,
+      hero_cta1: C.hero_cta1,
+      hero_cta2: C.hero_cta2,
+      trust: C.trust_items.map(t=>t.text),
+      projects_tag: C.projects_tag,
+      projects_h2: `${C.projects_h2} <em>${C.projects_h2_em}</em>`,
+      projects_intro: C.projects_intro,
+      projects_cta: 'Solicitar consulta gratuita',
+      services_tag: C.services_tag,
+      services_h2: `${C.services_h2} <em>${C.services_h2_em}</em>`,
+      services_intro: C.services_intro,
+      process_tag: C.process_tag,
+      process_h2: `${C.process_h2} <em>${C.process_h2_em}</em>`,
+      process_intro: C.process_intro,
+      process_cta: 'Iniciar mi proyecto',
+      feature_tag: C.feature_tag,
+      feature_h2: `${C.feature_h2}<br><em>${C.feature_h2_em}</em>`,
+      feature_body: C.feature_body,
+      reviews_tag: C.reviews_tag,
+      reviews_h2: `${C.reviews_h2} <em>${C.reviews_em}</em>`,
+      rating_note: `+${B.review_count} reseñas verificadas`,
+      faq_tag: C.faq_tag,
+      faq_h2: `${C.faq_h2} <em>${C.faq_h2_em}</em>`,
+      faq_intro: 'Resolvemos las dudas más habituales antes de solicitar tu consulta.',
+      faq_cta: 'Pedir consulta gratis',
+      budget_tag: C.budget_tag,
+      budget_h2: `${C.budget_h2} <em>${C.budget_h2_em}</em>`,
+      budget_body: C.budget_body,
+      budget_hours: B.hours,
+      info_where: 'Dónde estamos', info_hours: 'Horario', info_contact: 'Contacto', info_follow: 'Síguenos',
+      wa_tooltip: 'Pide presupuesto'
+    },
+    en:{
+      nav:['Projects','Services','Process','Clients'],
+      nav_phone: B.phone,
+      nav_cta: 'Free Consultation',
+      hero_badge: 'Free consultation · No commitment',
+      hero_h1: 'Your home.<br><em>Our craft.</em>',
+      hero_sub: 'Kitchen, bathroom & full home renovations across the Costa del Sol. Trusted by homeowners from across Europe.',
+      hero_cta1: 'Request a free consultation',
+      hero_cta2: 'View our work',
+      trust: ['Quality materials','Dedicated project manager','Real-time project updates','Service in ES · EN · FR'],
+      projects_tag: 'Our projects',
+      projects_h2: 'Work that <em>speaks for itself</em>',
+      projects_intro: 'Every project is unique. Noble materials, exceptional finishes and total attention to detail in every centimetre of your home.',
+      projects_cta: 'Request a free consultation',
+      services_tag: 'What we do',
+      services_h2: 'Our <em>services</em>',
+      services_intro: 'From the first brief to the final handover. One single point of contact manages every phase of your project.',
+      process_tag: 'How we work',
+      process_h2: 'Your project, <em>step by step</em>',
+      process_intro: 'A clear, transparent process with no surprises. You know exactly what happens at every stage and you approve it before we move forward.',
+      process_cta: 'Start my project',
+      feature_tag: 'Why choose us',
+      feature_h2: 'Uncompromising quality<br><em>in every detail</em>',
+      feature_body: 'We work exclusively with quality materials and experienced craftsmen. Every project is built to the highest standard. And if you live in London, Paris or Amsterdam, our client portal keeps you informed in real time.',
+      reviews_tag: 'Clients',
+      reviews_h2: 'What our <em>clients say</em>',
+      rating_note: `+${B.review_count} verified reviews`,
+      faq_tag: 'FAQ',
+      faq_h2: 'Most <em>asked questions</em>',
+      faq_intro: 'We answer the most common questions before you request your consultation.',
+      faq_cta: 'Request free consultation',
+      budget_tag: "Ready to start?",
+      budget_h2: 'Request your <em>free consultation</em>',
+      budget_body: 'Tell us about your project and we will get back to you within 24 hours to arrange a visit to your property. No commitment.',
+      budget_hours: 'MonFri · 9:0019:00',
+      info_where: 'Where we are', info_hours: 'Office hours', info_contact: 'Contact', info_follow: 'Follow us',
+      wa_tooltip: 'Get a quote'
+    },
+    fr:{
+      nav:['Projets','Services','Processus','Clients'],
+      nav_phone: B.phone,
+      nav_cta: 'Consultation gratuite',
+      hero_badge: 'Consultation gratuite · Sans engagement',
+      hero_h1: 'Votre maison.<br><em>Notre savoir-faire.</em>',
+      hero_sub: 'Rénovations sur la Costa del Sol. La confiance de propriétaires à travers toute l\'Europe.',
+      hero_cta1: 'Demander une consultation gratuite',
+      hero_cta2: 'Voir nos projets',
+      trust: ['Matériaux de qualité','Chef de projet dédié','Suivi en temps réel','Service en ES · EN · FR'],
+      projects_tag: 'Nos projets',
+      projects_h2: 'Des réalisations qui <em>parlent d\'elles-mêmes</em>',
+      projects_intro: 'Chaque projet est unique. Matériaux nobles, finitions soignées et attention totale aux détails.',
+      projects_cta: 'Demander une consultation gratuite',
+      services_tag: 'Nos services',
+      services_h2: 'Nos <em>services</em>',
+      services_intro: 'Du premier brief à la livraison finale. Un seul interlocuteur gère chaque phase de votre projet.',
+      process_tag: 'Notre processus',
+      process_h2: 'Votre projet, <em>étape par étape</em>',
+      process_intro: 'Un processus clair et transparent, sans surprises. Vous approuvez chaque étape avant que nous avancions.',
+      process_cta: 'Démarrer mon projet',
+      feature_tag: 'Pourquoi nous choisir',
+      feature_h2: 'Qualité sans compromis<br><em>dans chaque détail</em>',
+      feature_body: 'Nous travaillons exclusivement avec des matériaux de qualité et des artisans expérimentés. Et si vous vivez à Paris, Londres ou Amsterdam, notre portail client vous tient informé en temps réel.',
+      reviews_tag: 'Clients',
+      reviews_h2: 'Ce que disent <em>nos clients</em>',
+      rating_note: `+${B.review_count} avis vérifiés`,
+      faq_tag: 'FAQ',
+      faq_h2: 'Questions <em>fréquentes</em>',
+      faq_intro: 'Nous répondons aux questions les plus courantes avant votre demande de consultation.',
+      faq_cta: 'Consultation gratuite',
+      budget_tag: 'Prêt à commencer ?',
+      budget_h2: 'Demander votre <em>consultation gratuite</em>',
+      budget_body: 'Décrivez-nous votre projet et nous vous répondrons sous 24 heures pour organiser une visite de votre propriété. Sans engagement.',
+      budget_hours: 'LunVen · 9h0019h00',
+      info_where: 'Où nous sommes', info_hours: 'Horaires', info_contact: 'Contact', info_follow: 'Suivez-nous',
+      wa_tooltip: 'Obtenir un devis'
+    }
+  };
+
+  const faqsI18n={
+    en:[
+      {q:'Do you work with non-resident owners?',a:'Yes, this is one of our most common client profiles. Through your personal client portal you can follow every step of your renovation in real time with photos and updates, from London, Paris, Amsterdam or wherever you are.'},
+      {q:'What languages do you work in?',a:'We work in Spanish, English and French. Our team communicates fluently in all three languages for site visits, documentation and all project correspondence.'},
+      {q:'Can the budget change once agreed?',a:'Our quotes are fixed and detailed. They only change if the client requests modifications during the project. Any change is quoted and approved in writing before being carried out.'},
+      {q:'How long does a full renovation take?',a:'It depends on the size and condition of the property. An apartment of 150200m² typically takes 3 to 5 months. For larger projects we prepare a detailed and binding timeline before we start.'},
+      {q:'Do you work across the Costa del Sol?',a:'Yes, we work throughout the Costa del Sol: Marbella, Mijas, Estepona, Benahavís, Fuengirola and surrounding areas. Our base is in La Cala de Mijas.'},
+      {q:'Do you have public liability insurance?',a:'Yes, we carry all necessary insurances for construction work. We provide full documentation before any contract is signed.'}
+    ],
+    fr:[
+      {q:'Travaillez-vous avec des propriétaires non-résidents ?',a:'Oui, c\'est l\'un de nos profils de clients les plus courants. Grâce à votre portail client personnel, vous pouvez suivre chaque étape de votre rénovation en temps réel avec photos et mises à jour, depuis Paris, Londres, Amsterdam ou où que vous soyez.'},
+      {q:'Dans quelles langues travaillez-vous ?',a:'Nous travaillons en espagnol, anglais et français. Notre équipe communique couramment dans les trois langues pour les visites, la documentation et toute la correspondance du projet.'},
+      {q:'Le budget peut-il changer une fois signé ?',a:'Nos devis sont fixes et détaillés. Ils ne changent que si le client demande des modifications en cours de chantier. Tout changement est devisé et approuvé par écrit avant d\'être exécuté.'},
+      {q:'Combien de temps dure une rénovation complète ?',a:'Cela dépend de la taille et de l\'état du bien. Un appartement de 150 à 200m² prend généralement 3 à 5 mois. Pour les projets plus importants, nous établissons un calendrier détaillé et contraignant avant de commencer.'},
+      {q:'Travaillez-vous sur toute la Costa del Sol ?',a:'Oui, nous intervenons sur toute la Costa del Sol : Marbella, Mijas, Estepona, Benahavís, Fuengirola et ses environs. Notre base est à La Cala de Mijas.'},
+      {q:'Êtes-vous assurés en responsabilité civile ?',a:'Oui, nous disposons de toutes les assurances nécessaires pour les travaux de construction. Nous fournissons la documentation complète avant la signature de tout contrat.'}
+    ]
+  };
+
+  let lang='es';
+
+  function render(l){
+    lang=l;
+    const t=T[l];
+    document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active',b.dataset.lang===l));
+
+    /* NAV */
+    set('nav-logo',`Mediterras`);
+    const anchors=['#projects','#services','#process','#reviews'];
+    set('nav-ul', t.nav.map((n,i)=>`<li><a href="${anchors[i]}">${n}</a></li>`).join('')
+      +`<li><a href="tel:${B.phone.replace(/\s/g,'')}" class="nav-phone">${t.nav_phone}</a></li>`
+      +`<li><a href="#budget" class="nav-cta">${t.nav_cta}</a></li>`);
+
+    /* HERO */
+    set('hero-badge',t.hero_badge,'text');
+    set('hero-h1',t.hero_h1);
+    set('hero-sub',t.hero_sub,'text');
+    q('hero-cta1').textContent=t.hero_cta1;
+    q('hero-cta2').querySelector('span').textContent=t.hero_cta2;
+    set('hero-trust',t.trust.map(tx=>`<div class="trust-item">${tx}</div>`).join(''));
+    set('hero-stats',[
+      {num:B.stat1_num,label:B.stat1_label},
+      {num:B.stat2_num,label:B.stat2_label},
+      {num:B.stat3_num,label:B.stat3_label}
+    ].map(s=>`<div class="hero-stat"><span class="hs-num">${s.num}</span><span class="hs-label">${s.label}</span></div>`).join(''));
+
+    /* PROJECTS */
+    set('projects-tag',t.projects_tag,'text');
+    set('projects-h2',t.projects_h2);
+    set('projects-intro',t.projects_intro,'text');
+    if(q('projects-cta')) q('projects-cta').textContent=t.projects_cta;
+
+    /* SERVICES */
+    set('services-tag',t.services_tag,'text');
+    set('services-h2',t.services_h2);
+    set('services-intro',t.services_intro,'text');
+
+    /* PROCESS */
+    set('process-tag',t.process_tag,'text');
+    set('process-h2',t.process_h2);
+    set('process-intro',t.process_intro,'text');
+    if(q('process-cta')) q('process-cta').textContent=t.process_cta;
+
+    /* FEATURE */
+    set('feature-tag',t.feature_tag,'text');
+    set('feature-h2',t.feature_h2);
+    set('feature-body',t.feature_body,'text');
+
+    /* REVIEWS */
+    set('reviews-tag',t.reviews_tag,'text');
+    set('reviews-h2',t.reviews_h2);
+    set('rating-note',t.rating_note,'text');
+
+    /* FAQ */
+    set('faq-tag',t.faq_tag,'text');
+    set('faq-h2',t.faq_h2);
+    set('faq-intro',t.faq_intro,'text');
+    if(q('faq-cta')) q('faq-cta').textContent=t.faq_cta;
+    const faqs=l==='es'?C.faqs:(faqsI18n[l]||C.faqs);
+    set('faq-list',faqs.map((f,i)=>`
+      <div class="faq-item" data-i="${i}">
+        <div class="faq-q">${f.q}<span class="faq-arrow">▼</span></div>
+        <div class="faq-a">${f.a}</div>
+      </div>`).join(''));
+    document.querySelectorAll('.faq-item').forEach(item=>{
+      item.querySelector('.faq-q').addEventListener('click',()=>item.classList.toggle('open'));
+    });
+
+    /* BUDGET */
+    set('budget-tag',t.budget_tag,'text');
+    set('budget-h2',t.budget_h2);
+    set('budget-body',t.budget_body,'text');
+    set('budget-hours',t.budget_hours,'text');
+
+    /* INFO */
+    set('info-grid',`
+      <div class="info-block"><h3>${t.info_where}</h3><p>${B.address}</p></div>
+      <div class="info-block"><h3>${t.info_hours}</h3><p>${t.budget_hours}</p></div>
+      <div class="info-block"><h3>${t.info_contact}</h3><ul>
+        <li><a href="tel:${B.phone.replace(/\s/g,'')}">${B.phone}</a></li>
+        <li><a href="mailto:${B.email}">${B.email}</a></li>
+      </ul></div>
+      <div class="info-block"><h3>${t.info_follow}</h3><ul>
+        <li><a href="${B.social_ig}">Instagram</a></li>
+        <li><a href="${B.social_fb}">Facebook</a></li>
+      </ul></div>`);
+
+    /* WA TOOLTIP */
+    set('whatsapp-tooltip',t.wa_tooltip,'text');
+  }
+
+  window.setLang=function(l){ render(l); };
+
+  /* ONE-TIME RENDERS (language-independent) */
+  /* HERO PHOTO */
+  q('hero-photo').style.backgroundImage=`url('${B.hero_photo}')`;
+
+  /* PROJECTS */
+  set('projects-grid',B.projects.map(p=>`
+    <div class="project-card">
+      <img src="${p.photo}" alt="${p.name}" class="project-photo" loading="lazy">
+      <div class="project-overlay"></div>
+      <div class="project-info">
+        <div class="project-type">${p.type}</div>
+        <div class="project-name">${p.name}</div>
+        <div class="project-meta">
+          <span> ${p.location}</span>
+          <span> ${p.m2}</span>
+          <span> ${p.duration}</span>
+        </div>
+      </div>
+    </div>`).join(''));
+
+  /* SERVICES */
+  set('services-grid',C.services.map(s=>`
+    <div class="service-card">
+      <span class="service-icon">${s.icon}</span>
+      <div class="service-name">${s.name}</div>
+      <p class="service-desc">${s.desc}</p>
+      <ul class="service-items">
+        ${s.items.map(i=>`<li>${i}</li>`).join('')}
+      </ul>
+    </div>`).join(''));
+
+  /* PROCESS */
+  set('process-steps',C.process_steps.map(s=>`
+    <div class="process-step">
+      <div class="step-num">${s.num}</div>
+      <div class="step-content">
+        <div class="step-title">${s.title}</div>
+        <div class="step-text">${s.text}</div>
+      </div>
+    </div>`).join(''));
+
+  /* FEATURE PHOTO */
+  q('feature-photo').style.backgroundImage=`url('${B.feature_photo}')`;
+
+  /* FEATURE STATS */
+  set('feature-stats',C.feature_stats.map(s=>`
+    <div class="fs"><span class="fs-num">${s.num}</span><span class="fs-label">${s.label}</span></div>`).join(''));
+
+  /* REVIEWS */
+  set('rating-num',B.google_rating,'text');
+  const rv=C.reviews.map(rv=>`
+    <div class="review-card">
+      <div class="review-stars-row">${''.repeat(rv.stars||5)}</div>
+      <p class="review-text">"${rv.text}"</p>
+      <div class="review-project">${rv.project}</div>
+      <div class="review-author">${rv.author} · ${rv.source}</div>
+    </div>`).join('');
+  set('reviews-track',rv+rv);
+
+  /* BUDGET */
+  set('budget-grid',C.budget_items.map(c=>`
+    <div class="budget-card">
+      <span class="budget-icon">${c.icon}</span>
+      <h3>${c.title}</h3><p>${c.text}</p>
+      <a href="${c.href}" class="budget-btn">${c.cta}</a>
+    </div>`).join(''));
+
+  /* FOOTER */
+  set('footer-logo','Mediterras');
+  set('footer-copy',`© ${new Date().getFullYear()} Mediterras · La Cala de Mijas · Costa del Sol · Todos los derechos reservados`,'text');
+  set('footer-sub',B.tagline,'text');
+
+  /* WHATSAPP */
+  const waNum=B.phone.replace(/[\s\-\+\(\)]/g,'');
+  const waMsg=encodeURIComponent('Hola, me gustaría solicitar una consulta gratuita para un proyecto de reforma con Mediterras.');
+  const waBtn=document.getElementById('whatsapp-btn');
+  if(waBtn) waBtn.href=`https://wa.me/34${waNum}?text=${waMsg}`;
+
+  /* NAV SCROLL */
+  const nav=q('nav');
+  window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>60));
+
+  /* INITIAL RENDER */
+  render('es');
+
+  /* FADE IN */
+  const io=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='translateY(0)';io.unobserve(e.target);}
+    });
+  },{threshold:.06});
+  setTimeout(()=>{
+    document.querySelectorAll('.project-card,.service-card,.process-step,.budget-card,.review-card,.faq-item,.trust-item').forEach(el=>{
+      el.style.cssText+='opacity:0;transform:translateY(18px);transition:opacity .55s ease,transform .55s ease';
+      io.observe(el);
+    });
+  },100);
+})();
+</script>
+</body>
+</html>
