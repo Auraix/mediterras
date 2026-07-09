@@ -212,23 +212,21 @@ input[type=file]{display:none}
       <div class="field-group">
         <div class="field-lbl">Trabajador</div>
         <select id="sel-trabajador" class="field-input" style="cursor:pointer">
-          <option value="Juan García|Albañil">Juan García · Albañil</option>
-          <option value="Pedro Martínez|Oficial 1ª">Pedro Martínez · Oficial 1ª</option>
-          <option value="Antonio López|Peón">Antonio López · Peón</option>
-          <option value="Carlos Ruiz|Electricista">Carlos Ruiz · Electricista</option>
-          <option value="Manuel Sánchez|Fontanero">Manuel Sánchez · Fontanero</option>
-          <option value="Roberto Jiménez|Jefe de obra">Roberto Jiménez · Jefe de obra</option>
+          <option value="">Cargando...</option>
         </select>
+      </div>
+      <div class="field-group">
+        <div class="field-lbl">PIN</div>
+        <input type="password" inputmode="numeric" maxlength="4" pattern="[0-9]*" class="field-input" id="login-pin" placeholder="····">
       </div>
       <div class="field-group">
         <div class="field-lbl">Obra activa</div>
         <select id="sel-obra" class="field-input" style="cursor:pointer">
-          <option value="OBR-2026-001|Edificio Residencial Las Acacias|Fase estructura">OBR-001 · Residencial Las Acacias</option>
-          <option value="OBR-2026-002|Reforma Oficinas Edificio Torre Sur|Fase acabados">OBR-002 · Reforma Torre Sur</option>
-          <option value="OBR-2026-003|Nave Industrial Polígono Norte|Cimentación">OBR-003 · Nave Industrial Norte</option>
+          <option value="">Cargando...</option>
         </select>
       </div>
-      <button class="btn-main btn-gold" onclick="doLogin()">
+      <div id="login-error" style="display:none;color:#E74C3C;font-size:12px;margin-bottom:10px"></div>
+      <button class="btn-main btn-gold" id="btn-login" onclick="doLogin()">
         <i class="ti ti-login"></i> Entrar
       </button>
     </div>
@@ -603,24 +601,24 @@ input[type=file]{display:none}
   <div class="body">
     <!-- Resumen obra -->
     <div class="card" style="padding:14px;margin-bottom:12px">
-      <div style="font-size:13px;font-weight:600;color:#0F234B;margin-bottom:2px" id="j-obra-nombre">Edificio Residencial Las Acacias</div>
-      <div style="font-size:11px;color:#888;margin-bottom:10px" id="j-obra-fase">Fase: Estructura</div>
+      <div style="font-size:13px;font-weight:600;color:#0F234B;margin-bottom:2px" id="j-obra-nombre">—</div>
+      <div style="font-size:11px;color:#888;margin-bottom:10px" id="j-obra-fase">—</div>
       <div style="display:flex;justify-content:space-between;font-size:11px;color:#888;margin-bottom:4px">
         <span>Presupuesto ejecutado</span>
-        <span id="j-progreso-pct">62%</span>
+        <span id="j-progreso-pct">—</span>
       </div>
-      <div class="progreso-bar"><div class="progreso-fill" id="j-progreso-fill" style="width:62%"></div></div>
+      <div class="progreso-bar"><div class="progreso-fill" id="j-progreso-fill" style="width:0%"></div></div>
       <div style="display:flex;justify-content:space-between;font-size:11px;margin-top:6px">
-        <span style="color:#888">Ejecutado: <strong style="color:#0F234B">186.000€</strong></span>
-        <span style="color:#888">Presupuesto: <strong style="color:#0F234B">300.000€</strong></span>
+        <span style="color:#888">Gastado: <strong style="color:#0F234B" id="j-ejecutado-val">—</strong></span>
+        <span style="color:#888">Presupuesto: <strong style="color:#0F234B" id="j-presupuesto-val">—</strong></span>
       </div>
     </div>
 
     <div class="kpi-row g4">
-      <div class="kpi"><div class="kpi-val" style="color:#27A86A" id="j-kpi-trabajadores">4</div><div class="kpi-lbl">En obra hoy</div></div>
-      <div class="kpi"><div class="kpi-val" style="color:#E74C3C" id="j-kpi-incidencias">1</div><div class="kpi-lbl">Incidencias</div></div>
-      <div class="kpi"><div class="kpi-val" style="color:#C8A05A" id="j-kpi-gastos">0€</div><div class="kpi-lbl">Gastos hoy</div></div>
-      <div class="kpi"><div class="kpi-val" style="color:#E67E22" id="j-kpi-docs-alerta">2</div><div class="kpi-lbl">Docs alerta</div></div>
+      <div class="kpi"><div class="kpi-val" style="color:#27A86A" id="j-kpi-trabajadores">—</div><div class="kpi-lbl">En obra hoy</div></div>
+      <div class="kpi"><div class="kpi-val" style="color:#E74C3C" id="j-kpi-incidencias">—</div><div class="kpi-lbl">Incidencias</div></div>
+      <div class="kpi"><div class="kpi-val" style="color:#C8A05A" id="j-kpi-gastos">—</div><div class="kpi-lbl">Gasto obra</div></div>
+      <div class="kpi"><div class="kpi-val" style="color:#E67E22" id="j-kpi-docs-alerta">—</div><div class="kpi-lbl">Docs alerta</div></div>
     </div>
 
     <div class="section-lbl">Acciones rápidas</div>
@@ -984,14 +982,38 @@ const WH_JORNADA    = 'https://aientik.app.n8n.cloud/webhook/construccion-jornad
 const WH_DOCS       = 'https://aientik.app.n8n.cloud/webhook/construccion-docs';
 const WH_INCIDENCIA = 'https://aientik.app.n8n.cloud/webhook/construccion-incidencias';
 const WH_GASTOS     = 'https://aientik.app.n8n.cloud/webhook/construccion-gastos';
+const WH_OBRAS      = 'https://aientik.app.n8n.cloud/webhook/construccion-obras';
+const WH_PERSONAL   = 'https://aientik.app.n8n.cloud/webhook/construccion-personal';
+const WH_LOGIN      = 'https://aientik.app.n8n.cloud/webhook/construccion-login';
+const WH_KPIS       = 'https://aientik.app.n8n.cloud/webhook/construccion-kpis';
 
-// ─── CATEGORÍAS Y OBRAS (deben coincidir con la Base de Datos Excel) ─────────
+// ─── CATEGORÍAS (fijas) + OBRAS/PERSONAL (se cargan en vivo desde el Excel) ──
 const CATEGORIAS_APP = ['Material de construcción','Alquiler maquinaria','Subcontrata','Herramientas','Transporte y logística','Combustible maquinaria','Seguridad y EPIs','Otros'];
-const OBRAS_APP = [
-  {id:'OBR-2026-001', nombre:'Residencial Las Acacias'},
-  {id:'OBR-2026-002', nombre:'Reforma Torre Sur'},
-  {id:'OBR-2026-003', nombre:'Nave Industrial Norte'},
-];
+let OBRAS_APP = [];
+let PERSONAL_APP = [];
+
+async function cargarConfiguracion() {
+  const selTrab = document.getElementById('sel-trabajador');
+  const selObra = document.getElementById('sel-obra');
+  try {
+    const [rObras, rPersonal] = await Promise.all([
+      fetch(WH_OBRAS, {method:'POST', headers:{'Content-Type':'application/json'}, body: '{}'}).then(r=>r.json()),
+      fetch(WH_PERSONAL, {method:'POST', headers:{'Content-Type':'application/json'}, body: '{}'}).then(r=>r.json()),
+    ]);
+    OBRAS_APP = (rObras.obras || []).map(o => ({id: o.id, nombre: o.nombre, cliente: o.cliente, estado: o.estado}));
+    PERSONAL_APP = rPersonal.personal || [];
+    selObra.innerHTML = OBRAS_APP.length
+      ? OBRAS_APP.map(o => `<option value="${o.id}|${o.cliente||''}|${o.estado||''}">${o.nombre}</option>`).join('')
+      : '<option value="">Sin obras activas en el Excel</option>';
+    selTrab.innerHTML = PERSONAL_APP.length
+      ? PERSONAL_APP.map(p => `<option value="${p.nombre}|${p.oficio||''}">${p.nombre} · ${p.oficio||''}</option>`).join('')
+      : '<option value="">Sin personal activo en el Excel</option>';
+  } catch (e) {
+    selObra.innerHTML = '<option value="">Error al cargar — revisa n8n</option>';
+    selTrab.innerHTML = '<option value="">Error al cargar — revisa n8n</option>';
+  }
+}
+cargarConfiguracion();
 
 // ─── ESTADO ──────────────────────────────────────────────────────────────────
 const st = {
@@ -1022,7 +1044,7 @@ function actualizarTotal(prefix) {
   if (el) el.textContent = fmtEUR(totalLineas(prefix));
 }
 function obraOptions(selected, disabled) {
-  return OBRAS_APP.map(o => `<option value="${o.id}" ${o.id===selected?'selected':''}>${o.id} · ${o.nombre}</option>`).join('');
+  return OBRAS_APP.map(o => `<option value="${o.id}" ${o.id===selected?'selected':''}>${o.nombre}</option>`).join('');
 }
 function categoriaOptions(selected) {
   return CATEGORIAS_APP.map(c => `<option value="${c}" ${c===selected?'selected':''}>${c}</option>`).join('');
@@ -1100,29 +1122,79 @@ function selRole(r) {
   document.getElementById('rc-trabajador').classList.toggle('selected', r === 'trabajador');
   document.getElementById('rc-jefe').classList.toggle('selected', r === 'jefe');
 }
-function doLogin() {
-  const trab  = document.getElementById('sel-trabajador').value.split('|');
-  const obra  = document.getElementById('sel-obra').value.split('|');
-  st.nombre   = trab[0]; st.perfil = trab[1];
-  st.obraId   = obra[0]; st.obraNombre = obra[1]; st.obraFase = obra[2];
-  const ini   = trab[0].split(' ').slice(0,2).map(w=>w[0]).join('').toUpperCase();
+async function doLogin() {
+  const trabRaw = document.getElementById('sel-trabajador').value;
+  const obraRaw = document.getElementById('sel-obra').value;
+  const errEl = document.getElementById('login-error');
+  const btn = document.getElementById('btn-login');
+  errEl.style.display = 'none';
+  if (!trabRaw || !obraRaw) { errEl.textContent = 'Elige trabajador y obra.'; errEl.style.display = 'block'; return; }
+
+  const pin = document.getElementById('login-pin').value;
+  if (!pin) { errEl.textContent = 'Introduce tu PIN.'; errEl.style.display = 'block'; return; }
+
+  const trab = trabRaw.split('|');
+  const obra = obraRaw.split('|');
+
+  btn.disabled = true;
+  btn.innerHTML = '<i class="ti ti-loader-2" style="animation:spin .8s linear infinite"></i> Comprobando...';
+  let resultado;
+  try {
+    resultado = await fetch(WH_LOGIN, {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ nombre: trab[0], pin })
+    }).then(r => r.json());
+  } catch (e) {
+    resultado = { ok: false, mensaje: 'No se pudo conectar con el servidor.' };
+  }
+  btn.disabled = false;
+  btn.innerHTML = '<i class="ti ti-login"></i> Entrar';
+
+  if (!resultado.ok) {
+    errEl.textContent = resultado.mensaje || 'PIN incorrecto.';
+    errEl.style.display = 'block';
+    return;
+  }
+
+  st.nombre = resultado.nombre || trab[0];
+  st.perfil = resultado.oficio || trab[1] || '';
+  st.obraId = obra[0]; st.obraCliente = obra[1]; st.obraEstado = obra[2];
+  const ini = st.nombre.split(' ').slice(0,2).map(w=>w[0]).join('').toUpperCase();
 
   if (st.rol === 'trabajador') {
-    document.getElementById('t-hdr-sub').textContent  = `${trab[0]} · ${trab[1]}`;
-    document.getElementById('t-obra-tag').innerHTML   = `<i class="ti ti-building"></i>${obra[0]}`;
+    document.getElementById('t-hdr-sub').textContent  = `${st.nombre} · ${st.perfil}`;
+    document.getElementById('t-obra-tag').innerHTML   = `<i class="ti ti-building"></i>${st.obraId}`;
     document.getElementById('t-perfil-ini').textContent = ini;
-    document.getElementById('t-perfil-nombre').textContent = trab[0];
-    document.getElementById('t-perfil-rol').textContent    = trab[1];
-    document.getElementById('t-perfil-obra').textContent   = obra[0];
+    document.getElementById('t-perfil-nombre').textContent = st.nombre;
+    document.getElementById('t-perfil-rol').textContent    = st.perfil;
+    document.getElementById('t-perfil-obra').textContent   = st.obraId;
     goTab('s-t-home','t-nav-home');
   } else {
-    document.getElementById('j-hdr-sub').textContent  = trab[0];
-    document.getElementById('j-obra-tag').innerHTML   = `<i class="ti ti-building"></i>${obra[0]}`;
-    document.getElementById('j-obra-nombre').textContent = obra[1];
-    document.getElementById('j-obra-fase').textContent   = `Fase: ${obra[2]}`;
-    document.getElementById('j-cf-nombre').textContent = trab[0];
+    document.getElementById('j-hdr-sub').textContent  = st.nombre;
+    document.getElementById('j-obra-tag').innerHTML   = `<i class="ti ti-building"></i>${st.obraId}`;
+    document.getElementById('j-obra-nombre').textContent = st.obraId;
+    document.getElementById('j-obra-fase').textContent   = `${st.obraCliente || 'Sin cliente'} · ${st.obraEstado || ''}`;
+    document.getElementById('j-cf-nombre').textContent = st.nombre;
     goTab('s-j-home','j-nav-home');
+    cargarKPIs(st.obraId);
   }
+}
+
+// ─── KPIs REALES DE LA OBRA (jefe) ────────────────────────────────────────────
+async function cargarKPIs(obraId) {
+  try {
+    const k = await fetch(WH_KPIS, {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ obra: obraId })
+    }).then(r => r.json());
+    if (!k.ok) return;
+    const pct = k.pct_presupuesto_consumido != null ? Math.round(k.pct_presupuesto_consumido * 100) : null;
+    document.getElementById('j-progreso-pct').textContent = pct != null ? pct + '%' : '—';
+    document.getElementById('j-progreso-fill').style.width = pct != null ? Math.min(pct,100) + '%' : '0%';
+    document.getElementById('j-ejecutado-val').textContent = k.gasto_obra != null ? fmtEUR(k.gasto_obra) : '—';
+    document.getElementById('j-presupuesto-val').textContent = k.presupuesto != null ? fmtEUR(k.presupuesto) : '—';
+    document.getElementById('j-kpi-gastos').textContent = k.gasto_obra != null ? fmtEUR(k.gasto_obra) : '—';
+  } catch (e) { /* silencioso: se queda en — */ }
 }
 
 // ─── RELOJ ────────────────────────────────────────────────────────────────────
