@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Mediterras · App Operarios</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.x/dist/tabler-icons.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;min-height:100vh;background:#fff;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif}
+.app{width:100%;max-width:430px;margin:0 auto;background:#fff;min-height:100vh;display:flex;flex-direction:column;position:relative}
+.screen{display:none;flex-direction:column;min-height:100vh}
+.screen.active{display:flex}
+.topbar{background:#2C3E35;padding:14px 16px 12px;display:flex;align-items:center;justify-content:space-between;min-height:56px;flex-shrink:0}
+.topbar-title{font-size:15px;font-weight:500;color:#fff}
+.topbar-sub{font-size:11px;color:rgba(255,255,255,.45);margin-top:1px}
+.logo-txt{font-size:18px;font-weight:600;color:#fff;letter-spacing:.02em}
+.logo-txt span{color:#C8A96E}
+.back-btn{display:flex;align-items:center;gap:6px;cursor:pointer;padding:4px 0}
+.back-btn i{font-size:20px;color:#C8A96E}
+.back-btn span{font-size:13px;color:rgba(255,255,255,.8)}
+.obra-tag{display:inline-flex;align-items:center;gap:5px;background:rgba(200,169,110,.2);color:#C8A96E;font-size:11px;font-weight:500;padding:4px 10px;border-radius:20px;border:.5px solid rgba(200,169,110,.4)}
+.body{flex:1;padding:14px;background:#f5f6f8;overflow-y:auto}
+.card{background:#fff;border-radius:14px;border:.5px solid #e8e8e8;padding:14px;margin-bottom:12px}
+.section-lbl{font-size:10px;font-weight:500;color:#888;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px}
+.kpi-row{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:12px}
+.kpi{background:#fff;border-radius:12px;border:.5px solid #e8e8e8;padding:12px;text-align:center}
+.kpi-val{font-size:22px;font-weight:600;color:#2C3E35;line-height:1}
+.kpi-lbl{font-size:10px;color:#888;margin-top:3px}
+.btn-main{width:100%;background:#2C3E35;color:#fff;border:none;border-radius:14px;padding:14px;font-size:14px;font-weight:500;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:10px;font-family:inherit}
+.btn-main:active{opacity:.85}
+.btn-main i{font-size:20px}
+.btn-gold{background:#C8A96E}
+.btn-outline{background:#fff;color:#2C3E35;border:1.5px solid #2C3E35}
+.btn-green{background:#27A86A}
+.btn-red{background:#E74C3C}
+.btn-main:disabled{opacity:.35;pointer-events:none}
+.badge{display:inline-flex;align-items:center;font-size:10px;font-weight:500;padding:2px 8px;border-radius:20px}
+.bg{background:#eaf3de;color:#3B6D11}
+.bo{background:#faeeda;color:#633806}
+.br{background:#fcebeb;color:#A32D2D}
+.bb{background:#e6f1fb;color:#0C447C}
+.item{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:.5px solid #f0f0f0}
+.item:last-child{border-bottom:none}
+.item-label{color:#666;font-size:12px}
+.item-val{font-weight:500;color:#1a1a1a;font-size:13px}
+.bottomnav{background:#2C3E35;display:flex;padding:10px 0 16px;flex-shrink:0;border-top:1px solid #1a2e28}
+.navbtn{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;border:none;background:none;padding:6px 4px}
+.navbtn i{font-size:22px;color:rgba(255,255,255,.3)}
+.navbtn span{font-size:9px;color:rgba(255,255,255,.3)}
+.navbtn.active i,.navbtn.active span{color:#C8A96E}
+.field-group{margin-bottom:12px}
+.field-lbl{font-size:11px;color:#888;margin-bottom:4px;font-weight:500}
+.field-val{font-size:14px;color:#1a1a1a;font-weight:500;background:#f5f6f8;padding:10px 12px;border-radius:10px;border:.5px solid #e0e0e0}
+.field-input{width:100%;font-size:14px;padding:10px 12px;border-radius:10px;border:.5px solid #e0e0e0;background:#fff;color:#1a1a1a;font-family:inherit}
+.field-highlight{border:1.5px solid #2C3E35!important;font-size:18px;font-weight:600;color:#2C3E35}
+.photo-preview{width:100%;height:150px;background:#f0f4fa;border-radius:12px;border:1.5px dashed #7A9E8A;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;cursor:pointer;margin-bottom:12px;overflow:hidden}
+.photo-preview i{font-size:36px;color:#7A9E8A}
+.photo-preview span{font-size:12px;color:#888}
+.photo-taken{width:100%;height:150px;background:#2C3E35;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:12px;overflow:hidden}
+.photo-taken img{width:100%;height:100%;object-fit:cover}
+.photo-taken-ph{text-align:center}
+.photo-taken-ph i{font-size:40px;color:#C8A96E}
+.photo-taken-ph span{display:block;font-size:11px;color:rgba(255,255,255,.6);margin-top:6px}
+.divider{height:.5px;background:#f0f0f0;margin:10px 0}
+.success-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;padding:2rem;text-align:center;gap:14px}
+.success-icon{width:80px;height:80px;border-radius:50%;background:#eaf3de;display:flex;align-items:center;justify-content:center}
+.success-icon i{font-size:40px;color:#27A86A}
+.type-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:14px}
+.type-btn{background:#fff;border:1.5px solid #e0e0e0;border-radius:12px;padding:16px 10px;display:flex;flex-direction:column;align-items:center;gap:7px;cursor:pointer;font-size:12px;font-weight:500;color:#555;transition:all .15s}
+.type-btn i{font-size:26px;color:#2C3E35}
+.type-btn.selected{border-color:#C8A96E;background:#fdf8ef;color:#2C3E35}
+.type-btn.selected i{color:#C8A96E}
+.spinner{display:inline-block;border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.ai-badge{display:flex;align-items:center;gap:8px;background:#e8f0ec;border-radius:10px;padding:10px 12px;margin-bottom:14px;font-size:11px;color:#2C3E35;font-weight:500}
+.ai-badge i{font-size:16px;color:#C8A96E;flex-shrink:0}
+.proc-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;gap:18px;text-align:center;padding:2rem}
+.proc-circle{width:80px;height:80px;border-radius:50%;background:#2C3E35;display:flex;align-items:center;justify-content:center}
+.step-list{display:flex;flex-direction:column;gap:8px;width:100%;max-width:260px;margin-top:8px}
+.step-item{font-size:12px;color:#aaa;display:flex;align-items:center;gap:8px}
+.step-item.done{color:#27A86A}
+input[type=file]{display:none}
+.login-header{background:#2C3E35;padding:48px 24px 36px;text-align:center}
+.login-divider{width:48px;height:3px;background:#C8A96E;margin:12px auto 0;border-radius:2px}
+.jornada-btn{width:100%;padding:18px;border-radius:16px;border:none;cursor:pointer;display:flex;align-items:center;gap:14px;font-family:inherit;margin-bottom:10px;transition:opacity .15s;text-align:left}
+.jornada-btn:active{opacity:.85}
+.jornada-btn i{font-size:30px;flex-shrink:0}
+.jornada-btn-txt span{font-size:15px;font-weight:600;display:block}
+.jornada-btn-txt small{font-size:11px;opacity:.7}
+.jbtn-entrada{background:#2C3E35;color:#fff}
+.jbtn-descanso{background:#faeeda;color:#633806}
+.jbtn-vuelta{background:#eaf3de;color:#2D5A1E}
+.jbtn-salida{background:#fcebeb;color:#A32D2D}
+.tl-item{display:flex;gap:12px;padding:8px 0}
+.tl-dot{display:flex;flex-direction:column;align-items:center;padding-top:4px}
+.tl-circle{width:10px;height:10px;border-radius:50%;background:#C8A96E;flex-shrink:0}
+.tl-circle.ok{background:#27A86A}
+.tl-line{width:2px;flex:1;background:#e8e8e8;min-height:16px}
+.tl-info{flex:1;padding-bottom:8px}
+.tl-title{font-size:12px;font-weight:500;color:#1a1a1a}
+.tl-sub{font-size:11px;color:#888;margin-top:1px}
+.tl-time{font-size:10px;color:#bbb;margin-top:1px}
+
+/* CLASIFICACIÓN BLOQUES */
+.bloque-obra{background:#eaf3de;border-radius:12px;padding:12px 14px;margin-bottom:10px;border:.5px solid #c3e0b8}
+.bloque-herr{background:#e6f1fb;border-radius:12px;padding:12px 14px;margin-bottom:10px;border:.5px solid #b5d4f4}
+.bloque-emp{background:#faeeda;border-radius:12px;padding:12px 14px;margin-bottom:10px;border:.5px solid #f0d4a8}
+.bloque-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.bloque-obra .bloque-title{color:#276221}
+.bloque-herr .bloque-title{color:#0C447C}
+.bloque-emp .bloque-title{color:#7A4F00}
+.bloque-linea{font-size:12px;color:#444;padding:4px 0;border-bottom:.5px solid rgba(0,0,0,.06)}
+.bloque-linea:last-child{border-bottom:none}
+.bloque-importe{font-size:13px;font-weight:600;margin-top:6px}
+.lineas-list{max-height:160px;overflow-y:auto}
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- ═══ LOGIN ═══ -->
+<div id="s-login" class="screen active">
+  <div class="login-header">
+    <div class="logo-txt" style="font-size:28px">Mediterras<span>.</span></div>
+    <div style="font-size:11px;color:rgba(255,255,255,.4);margin-top:6px;letter-spacing:.06em">GESTIÓN DE OBRA</div>
+    <div class="login-divider"></div>
+  </div>
+  <div class="body" style="display:flex;flex-direction:column;justify-content:center">
+    <div class="card">
+      <div style="font-size:15px;font-weight:600;color:#2C3E35;margin-bottom:2px">Acceso al sistema</div>
+      <div style="font-size:12px;color:#888;margin-bottom:16px">Identifícate para registrar gastos</div>
+      <div class="field-group">
+        <div class="field-lbl">Usuario</div>
+        <input type="text" id="inp-usuario" class="field-input" placeholder="Tu usuario" autocapitalize="none">
+      </div>
+      <div class="field-group">
+        <div class="field-lbl">PIN</div>
+        <input type="password" id="inp-pin" class="field-input" placeholder="••••" inputmode="numeric" maxlength="4">
+      </div>
+      <div id="login-error" style="color:#E74C3C;font-size:12px;margin-bottom:10px;display:none">Usuario o PIN incorrecto</div>
+      <button class="btn-main btn-gold" id="btn-login" onclick="doLogin()">
+        <i class="ti ti-login"></i> Entrar
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ HOME ═══ -->
+<div id="s-home" class="screen">
+  <div class="topbar">
+    <div>
+      <div class="logo-txt" style="font-size:15px">Mediterras<span>.</span></div>
+      <div id="hdr-sub" style="font-size:10px;color:rgba(255,255,255,.45);margin-top:1px">—</div>
+    </div>
+    <div id="obra-tag" class="obra-tag"><i class="ti ti-building"></i>—</div>
+  </div>
+  <div class="body">
+    <div class="kpi-row">
+      <div class="kpi"><div class="kpi-val" id="kpi-gastos" style="color:#C8A96E">0€</div><div class="kpi-lbl">Gastos hoy</div></div>
+      <div class="kpi"><div class="kpi-val" id="kpi-docs" style="color:#27A86A">0</div><div class="kpi-lbl">Docs registrados</div></div>
+    </div>
+    <div class="section-lbl">Acciones rápidas</div>
+    <div class="type-grid">
+      <div class="type-btn" onclick="goTab('s-jornada','nav-jornada')"><i class="ti ti-clock-play"></i>Fichar jornada</div>
+      <div class="type-btn" onclick="goTab('s-foto','nav-foto')"><i class="ti ti-camera"></i>Fotografiar doc.</div>
+    </div>
+    <div class="section-lbl" style="margin-top:4px">Mi jornada hoy</div>
+    <div class="card" style="padding:10px 14px">
+      <div id="timeline-wrap">
+        <div style="font-size:12px;color:#bbb;text-align:center;padding:8px">Sin registros hoy</div>
+      </div>
+    </div>
+    <div class="section-lbl">Gastos registrados hoy</div>
+    <div class="card" style="padding:10px 14px" id="gastos-lista-home">
+      <div style="font-size:12px;color:#bbb;text-align:center;padding:8px">Sin gastos registrados</div>
+    </div>
+  </div>
+  <div class="bottomnav">
+    <button class="navbtn active" id="nav-home" onclick="goTab('s-home','nav-home')"><i class="ti ti-home"></i><span>Inicio</span></button>
+    <button class="navbtn" id="nav-jornada" onclick="goTab('s-jornada','nav-jornada')"><i class="ti ti-clock"></i><span>Jornada</span></button>
+    <button class="navbtn" id="nav-foto" onclick="goTab('s-foto','nav-foto')"><i class="ti ti-camera"></i><span>Foto</span></button>
+    <button class="navbtn" id="nav-perfil" onclick="goTab('s-perfil','nav-perfil')"><i class="ti ti-user"></i><span>Perfil</span></button>
+  </div>
+</div>
+
+<!-- ═══ JORNADA ═══ -->
+<div id="s-jornada" class="screen">
+  <div class="topbar">
+    <div class="back-btn" onclick="goTab('s-home','nav-home')"><i class="ti ti-arrow-left"></i><span>Inicio</span></div>
+    <div class="topbar-title">Mi jornada</div>
+    <div style="width:60px"></div>
+  </div>
+  <div class="body">
+    <div class="card" style="text-align:center;padding:16px;margin-bottom:12px">
+      <div style="font-size:11px;color:#888;margin-bottom:4px">HORA ACTUAL</div>
+      <div style="font-size:34px;font-weight:600;color:#2C3E35;font-variant-numeric:tabular-nums" id="reloj">--:--</div>
+      <div style="font-size:11px;color:#888;margin-top:2px" id="fecha-hoy">—</div>
+      <div style="margin-top:10px" id="jornada-badge"><span class="badge bb">Sin fichar</span></div>
+    </div>
+    <button class="jornada-btn jbtn-entrada" onclick="fichar('entrada','Entrada en obra')">
+      <i class="ti ti-clock-play"></i>
+      <div class="jornada-btn-txt"><span>Fichar entrada</span><small>Inicio de jornada</small></div>
+    </button>
+    <button class="jornada-btn jbtn-descanso" onclick="fichar('descanso','Inicio descanso')">
+      <i class="ti ti-coffee"></i>
+      <div class="jornada-btn-txt"><span>Iniciar descanso</span><small>Pausa reglamentaria</small></div>
+    </button>
+    <button class="jornada-btn jbtn-vuelta" onclick="fichar('vuelta','Vuelta del descanso')">
+      <i class="ti ti-player-play"></i>
+      <div class="jornada-btn-txt"><span>Vuelta al trabajo</span><small>Fin de pausa</small></div>
+    </button>
+    <button class="jornada-btn jbtn-salida" onclick="fichar('salida','Salida de obra')">
+      <i class="ti ti-clock-stop"></i>
+      <div class="jornada-btn-txt"><span>Fichar salida</span><small>Fin de jornada</small></div>
+    </button>
+    <div class="section-lbl">Reportar ausencia</div>
+    <div class="type-grid">
+      <div class="type-btn" onclick="fichar('baja','Baja médica')"><i class="ti ti-medical-cross" style="color:#E74C3C"></i>Baja médica</div>
+      <div class="type-btn" onclick="fichar('retraso','Retraso comunicado')"><i class="ti ti-clock-exclamation" style="color:#E67E22"></i>Llego tarde</div>
+      <div class="type-btn" onclick="fichar('permiso','Permiso personal')"><i class="ti ti-calendar-event" style="color:#C8A96E"></i>Permiso</div>
+      <div class="type-btn" onclick="fichar('vacaciones','Vacaciones')"><i class="ti ti-beach" style="color:#27A86A"></i>Vacaciones</div>
+    </div>
+  </div>
+  <div class="bottomnav">
+    <button class="navbtn" onclick="goTab('s-home','nav-home')"><i class="ti ti-home"></i><span>Inicio</span></button>
+    <button class="navbtn active"><i class="ti ti-clock"></i><span>Jornada</span></button>
+    <button class="navbtn" onclick="goTab('s-foto','nav-foto')"><i class="ti ti-camera"></i><span>Foto</span></button>
+    <button class="navbtn" onclick="goTab('s-perfil','nav-perfil')"><i class="ti ti-user"></i><span>Perfil</span></button>
+  </div>
+</div>
+
+<!-- ═══ FOTO ═══ -->
+<div id="s-foto" class="screen">
+  <div class="topbar">
+    <div class="back-btn" onclick="goTab('s-home','nav-home')"><i class="ti ti-arrow-left"></i><span>Inicio</span></div>
+    <div class="topbar-title">Fotografiar documento</div>
+    <div style="width:70px"></div>
+  </div>
+  <div class="body">
+    <div class="section-lbl">Tipo de documento</div>
+    <div class="type-grid">
+      <div class="type-btn selected" id="tf-factura" onclick="selTipo('factura')"><i class="ti ti-file-invoice"></i>Factura</div>
+      <div class="type-btn" id="tf-ticket" onclick="selTipo('ticket')"><i class="ti ti-receipt"></i>Ticket</div>
+      <div class="type-btn" id="tf-factura_simplificada" onclick="selTipo('factura_simplificada')"><i class="ti ti-file-description"></i>Fra. Simplificada</div>
+      <div class="type-btn" id="tf-otro" onclick="selTipo('otro')"><i class="ti ti-paperclip"></i>Otro</div>
+    </div>
+    <div class="section-lbl">Fotografías <span id="foto-count-lbl" style="color:#C8A96E;font-weight:600">0 seleccionadas</span></div>
+    <div class="ai-badge"><i class="ti ti-cpu"></i>Puedes subir varias páginas de una misma factura</div>
+    <div class="photo-preview" id="photo-area" onclick="document.getElementById('file-input').click()">
+      <i class="ti ti-camera-upload"></i>
+      <span>Toca para fotografiar</span>
+      <span style="font-size:11px;color:#bbb">Puedes seleccionar varias imágenes</span>
+    </div>
+    <input type="file" id="file-input" accept="image/*,application/pdf" multiple onchange="onPhotos(this)">
+    <div id="miniaturas" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px"></div>
+    <button class="btn-main" id="btn-procesar" disabled onclick="go('s-procesando')">
+      <i class="ti ti-cpu"></i> Procesar con IA
+    </button>
+  </div>
+  <div class="bottomnav">
+    <button class="navbtn" onclick="goTab('s-home','nav-home')"><i class="ti ti-home"></i><span>Inicio</span></button>
+    <button class="navbtn" onclick="goTab('s-jornada','nav-jornada')"><i class="ti ti-clock"></i><span>Jornada</span></button>
+    <button class="navbtn active"><i class="ti ti-camera"></i><span>Foto</span></button>
+    <button class="navbtn" onclick="goTab('s-perfil','nav-perfil')"><i class="ti ti-user"></i><span>Perfil</span></button>
+  </div>
+</div>
+
+<!-- ═══ PROCESANDO ═══ -->
+<div id="s-procesando" class="screen">
+  <div class="topbar"><div class="back-btn" onclick="go('s-foto')"><i class="ti ti-arrow-left"></i><span>Cancelar</span></div><div class="topbar-title">Procesando</div><div style="width:70px"></div></div>
+  <div class="proc-wrap">
+    <div class="proc-circle"><div class="spinner" style="width:38px;height:38px;border:3px solid rgba(200,169,110,.3);border-top-color:#C8A96E"></div></div>
+    <div style="font-size:16px;font-weight:600;color:#2C3E35">Analizando documento</div>
+    <div style="font-size:13px;color:#888;max-width:240px">IA extrae y clasifica los gastos automáticamente</div>
+    <div class="step-list">
+      <div class="step-item done"><i class="ti ti-check"></i>Imagen recibida</div>
+      <div class="step-item" id="p2"><i class="ti ti-circle"></i>Detectando tipo de gasto</div>
+      <div class="step-item" id="p3"><i class="ti ti-circle"></i>Extrayendo datos</div>
+      <div class="step-item" id="p4"><i class="ti ti-circle"></i>Clasificando líneas</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ CONFIRMAR ═══ -->
+<div id="s-confirmar" class="screen">
+  <div class="topbar"><div class="back-btn" onclick="go('s-foto')"><i class="ti ti-arrow-left"></i><span>Repetir</span></div><div class="topbar-title">Confirmar datos</div><div style="width:70px"></div></div>
+  <div class="body">
+    <div class="ai-badge"><i class="ti ti-cpu"></i>IA clasificó automáticamente · Revisa y confirma</div>
+
+    <!-- Datos del documento -->
+    <div class="card" style="padding:10px 14px;margin-bottom:10px">
+      <div class="section-lbl">Documento</div>
+      <div class="item"><div class="item-label">Proveedor</div><div class="item-val" id="cf-proveedor">—</div></div>
+      <div class="item"><div class="item-label">Fecha</div><div class="item-val" id="cf-fecha">—</div></div>
+      <div class="item"><div class="item-label">Nº documento</div><div class="item-val" id="cf-num">—</div></div>
+      <div class="item"><div class="item-label">Base imponible</div><div class="item-val" id="cf-base">—</div></div>
+      <div class="item"><div class="item-label">IVA</div><div class="item-val" id="cf-iva">—</div></div>
+      <div class="item" style="border-bottom:none"><div class="item-label" style="font-weight:600;color:#2C3E35">TOTAL</div>
+        <input class="field-input field-highlight" type="number" step="0.01" id="cf-total" style="width:120px;text-align:right">
+      </div>
+    </div>
+
+    <!-- Bloque material de obra -->
+    <div id="bloque-obra-wrap" style="display:none">
+      <div class="bloque-obra">
+        <div class="bloque-title"><i class="ti ti-bricks"></i>Material de obra</div>
+        <div class="lineas-list" id="bl-obra-lineas"></div>
+        <div class="bloque-importe" style="color:#276221">Total: <span id="bl-obra-importe">0,00 €</span></div>
+      </div>
+      <div class="field-group">
+        <div class="field-lbl" style="color:#276221;font-weight:600">¿A qué obra se imputa este material?</div>
+        <select id="sel-obra-mat" class="field-input" style="cursor:pointer">
+          <option value="">Cargando obras activas...</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Bloque herramienta -->
+    <div id="bloque-herr-wrap" style="display:none">
+      <div class="bloque-herr">
+        <div class="bloque-title"><i class="ti ti-tool"></i>Herramienta / Activo empresa</div>
+        <div class="lineas-list" id="bl-herr-lineas"></div>
+        <div class="bloque-importe" style="color:#0C447C">Total: <span id="bl-herr-importe">0,00 €</span></div>
+      </div>
+      <div class="ai-badge" style="background:#e6f1fb"><i class="ti ti-info-circle"></i>Se registrará automáticamente en Activos de la empresa</div>
+    </div>
+
+    <!-- Bloque gasto empresa -->
+    <div id="bloque-emp-wrap" style="display:none">
+      <div class="bloque-emp">
+        <div class="bloque-title"><i class="ti ti-receipt-2"></i>Gasto de empresa</div>
+        <div class="lineas-list" id="bl-emp-lineas"></div>
+        <div class="bloque-importe" style="color:#7A4F00">Total: <span id="bl-emp-importe">0,00 €</span></div>
+      </div>
+    </div>
+
+    <div class="card" style="padding:10px 14px;margin-bottom:10px">
+      <div class="item"><div class="item-label">Operario</div><div class="item-val" id="cf-operario">—</div></div>
+      <div class="item" style="border-bottom:none"><div class="item-label">Tipo documento</div><div class="item-val" id="cf-tipo">—</div></div>
+    </div>
+
+    <button class="btn-main btn-green" id="btn-confirmar" onclick="go('s-guardando')"><i class="ti ti-check"></i>Confirmar y guardar</button>
+    <button class="btn-main btn-outline" onclick="go('s-foto')" style="margin-top:0"><i class="ti ti-camera"></i>Repetir foto</button>
+  </div>
+</div>
+
+<!-- ═══ GUARDANDO ═══ -->
+<div id="s-guardando" class="screen">
+  <div class="topbar"><div><div class="topbar-title">Guardando</div><div class="topbar-sub">Registrando en Excel</div></div></div>
+  <div class="proc-wrap">
+    <div class="proc-circle"><div class="spinner" style="width:38px;height:38px;border:3px solid rgba(200,169,110,.3);border-top-color:#C8A96E"></div></div>
+    <div style="font-size:16px;font-weight:600;color:#2C3E35">Registrando datos</div>
+    <div class="step-list">
+      <div class="step-item done"><i class="ti ti-check"></i>Datos confirmados</div>
+      <div class="step-item" id="g2"><i class="ti ti-circle"></i>Guardando en FACTURAS</div>
+      <div class="step-item" id="g3"><i class="ti ti-circle"></i>Imputando a tabla correcta</div>
+      <div class="step-item" id="g4"><i class="ti ti-circle"></i>Actualizando base de datos</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ OK ═══ -->
+<div id="s-ok" class="screen">
+  <div class="topbar"><div class="logo-txt">Mediterras<span>.</span></div></div>
+  <div class="body">
+    <div class="success-wrap">
+      <div class="success-icon"><i class="ti ti-check"></i></div>
+      <div style="font-size:20px;font-weight:600;color:#2C3E35">Documento registrado</div>
+      <div style="font-size:13px;color:#888;max-width:240px">Guardado en Excel y clasificado correctamente</div>
+      <div class="card" style="width:100%;text-align:left;margin-top:4px" id="ok-detalle"></div>
+      <button class="btn-main" style="width:100%" onclick="goTab('s-home','nav-home')"><i class="ti ti-home"></i>Volver al inicio</button>
+      <button class="btn-main btn-outline" style="width:100%;margin-top:0" onclick="goTab('s-foto','nav-foto')"><i class="ti ti-camera"></i>Fotografiar otro</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ PERFIL ═══ -->
+<div id="s-perfil" class="screen">
+  <div class="topbar"><div class="back-btn" onclick="goTab('s-home','nav-home')"><i class="ti ti-arrow-left"></i><span>Inicio</span></div><div class="topbar-title">Mi perfil</div><div style="width:60px"></div></div>
+  <div class="body">
+    <div class="card" style="text-align:center;padding:24px">
+      <div style="width:68px;height:68px;border-radius:50%;background:#2C3E35;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:22px;font-weight:600;color:#C8A96E" id="perfil-ini">—</div>
+      <div style="font-size:17px;font-weight:600;color:#2C3E35" id="perfil-nombre">—</div>
+      <div style="font-size:12px;color:#888;margin-top:2px" id="perfil-puesto">—</div>
+    </div>
+    <div class="card" style="padding:10px 14px">
+      <div class="item"><div class="item-label">Obra activa</div><div class="item-val" id="perfil-obra">—</div></div>
+      <div class="item"><div class="item-label">Gastos registrados hoy</div><div class="item-val" id="perfil-gastos">0</div></div>
+      <div class="item" style="border-bottom:none"><div class="item-label">Estado jornada</div><div class="item-val" id="perfil-estado">Sin fichar</div></div>
+    </div>
+    <button class="btn-main btn-outline" onclick="go('s-login')" style="margin-top:4px"><i class="ti ti-logout"></i>Cerrar sesión</button>
+  </div>
+  <div class="bottomnav">
+    <button class="navbtn" onclick="goTab('s-home','nav-home')"><i class="ti ti-home"></i><span>Inicio</span></button>
+    <button class="navbtn" onclick="goTab('s-jornada','nav-jornada')"><i class="ti ti-clock"></i><span>Jornada</span></button>
+    <button class="navbtn" onclick="goTab('s-foto','nav-foto')"><i class="ti ti-camera"></i><span>Foto</span></button>
+    <button class="navbtn active"><i class="ti ti-user"></i><span>Perfil</span></button>
+  </div>
+</div>
+
+</div><!-- /app -->
+
+<script>
+// ─── WEBHOOKS ────────────────────────────────────────────────────────────────
+const WH_LOGIN      = 'https://aientik.app.n8n.cloud/webhook/mediterras-login';
+const WH_FASE1      = 'https://aientik.app.n8n.cloud/webhook/mediterras-gastos-fase1';
+const WH_FASE2      = 'https://aientik.app.n8n.cloud/webhook/mediterras-gastos-fase2';
+const WH_JORNADA    = 'https://aientik.app.n8n.cloud/webhook/mediterras-jornada';
+const WH_OBRAS      = 'https://aientik.app.n8n.cloud/webhook/mediterras-obras-activas';
+
+// ─── ESTADO ──────────────────────────────────────────────────────────────────
+const st = {
+  nombre: '', puesto: '', obraId: '', obraNombre: '',
+  tipoFoto: 'factura',
+  imagenesB64: [],
+  datosExtraidos: {},
+  gastos: [], totalGastos: 0, docsHoy: 0,
+  jornadaEstado: 'Sin fichar',
+  obrasActivas: []
+};
+
+// ─── NAVEGACIÓN ───────────────────────────────────────────────────────────────
+function go(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+  if (id === 's-procesando') runProcesando();
+  if (id === 's-guardando')  runGuardando();
+}
+function goTab(screenId, navId) {
+  go(screenId);
+  document.querySelectorAll('[id^="nav-"]').forEach(b => b.classList.remove('active'));
+  if (navId) document.getElementById(navId)?.classList.add('active');
+}
+function stepOk(id) {
+  const el = document.getElementById(id); if (!el) return;
+  el.className = 'step-item done';
+  el.innerHTML = '<i class="ti ti-check"></i>' + el.textContent.trim();
+}
+
+// ─── RELOJ ────────────────────────────────────────────────────────────────────
+function tick() {
+  const n = new Date();
+  const el = document.getElementById('reloj');
+  if (el) el.textContent = n.toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'});
+  const fh = document.getElementById('fecha-hoy');
+  if (fh) fh.textContent = n.toLocaleDateString('es-ES',{weekday:'long',day:'numeric',month:'long'});
+}
+setInterval(tick, 1000); tick();
+
+// ─── LOGIN ────────────────────────────────────────────────────────────────────
+async function doLogin() {
+  const usuario = document.getElementById('inp-usuario').value.trim();
+  const pin     = document.getElementById('inp-pin').value.trim();
+  if (!usuario || !pin) { alert('Introduce usuario y PIN'); return; }
+
+  const btn = document.getElementById('btn-login');
+  btn.disabled = true;
+  btn.innerHTML = '<i class="ti ti-loader-2" style="animation:spin .8s linear infinite"></i> Verificando...';
+  document.getElementById('login-error').style.display = 'none';
+
+  try {
+    const res = await fetch(WH_LOGIN, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ nombre: usuario, pin })
+    });
+    const data = await res.json();
+    const d = Array.isArray(data) ? data[0] : data;
+
+    if (d.ok) {
+      st.nombre  = d.nombre || usuario;
+      st.puesto  = d.oficio || 'Operario';
+      // Cargar obras activas
+      await cargarObras();
+      // Seleccionar primera obra activa por defecto
+      if (st.obrasActivas.length > 0) {
+        st.obraId     = st.obrasActivas[0].id;
+        st.obraNombre = st.obrasActivas[0].nombre;
+      }
+      actualizarUI();
+      goTab('s-home','nav-home');
+    } else {
+      document.getElementById('login-error').style.display = 'block';
+    }
+  } catch(e) {
+    document.getElementById('login-error').textContent = 'Error de conexión. Inténtalo de nuevo.';
+    document.getElementById('login-error').style.display = 'block';
+  }
+  btn.disabled = false;
+  btn.innerHTML = '<i class="ti ti-login"></i> Entrar';
+}
+
+async function cargarObras() {
+  try {
+    const res = await fetch(WH_OBRAS);
+    const data = await res.json();
+    const d = Array.isArray(data) ? data[0] : data;
+    st.obrasActivas = d.obras_activas || [];
+  } catch(e) {
+    st.obrasActivas = [];
+  }
+  // Actualizar desplegable de obras en confirmación
+  const sel = document.getElementById('sel-obra-mat');
+  if (sel) {
+    if (st.obrasActivas.length === 0) {
+      sel.innerHTML = '<option value="">Sin obras activas</option>';
+    } else {
+      sel.innerHTML = st.obrasActivas.map(o =>
+        `<option value="${o.id}">${o.id} · ${o.nombre}</option>`
+      ).join('');
+    }
+  }
+}
+
+function actualizarUI() {
+  const ini = st.nombre.split(' ').slice(0,2).map(w=>w[0]).join('').toUpperCase();
+  document.getElementById('hdr-sub').textContent = `${st.nombre} · ${st.puesto}`;
+  document.getElementById('obra-tag').innerHTML  = `<i class="ti ti-building"></i>${st.obraId || 'Sin obra'}`;
+  document.getElementById('perfil-ini').textContent   = ini;
+  document.getElementById('perfil-nombre').textContent = st.nombre;
+  document.getElementById('perfil-puesto').textContent = st.puesto;
+  document.getElementById('perfil-obra').textContent   = st.obraId;
+}
+
+// ─── JORNADA ─────────────────────────────────────────────────────────────────
+function fichar(tipo, label) {
+  const hora = new Date().toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'});
+  st.jornadaEstado = label;
+  const badges = {
+    entrada: '<span class="badge bg" style="padding:6px 16px;font-size:12px">En obra</span>',
+    descanso:'<span class="badge bo" style="padding:6px 16px;font-size:12px">Descansando</span>',
+    vuelta:  '<span class="badge bg" style="padding:6px 16px;font-size:12px">De vuelta</span>',
+    salida:  '<span class="badge br" style="padding:6px 16px;font-size:12px">Jornada terminada</span>',
+    baja:    '<span class="badge br" style="padding:6px 16px;font-size:12px">Baja médica</span>',
+    retraso: '<span class="badge bo" style="padding:6px 16px;font-size:12px">Retraso comunicado</span>',
+    permiso: '<span class="badge bb" style="padding:6px 16px;font-size:12px">Permiso</span>',
+    vacaciones:'<span class="badge bg" style="padding:6px 16px;font-size:12px">Vacaciones</span>',
+  };
+  document.getElementById('jornada-badge').innerHTML = badges[tipo] || '';
+  document.getElementById('perfil-estado').textContent = label;
+
+  // Timeline en home
+  const tl = document.getElementById('timeline-wrap');
+  const dot = tipo === 'entrada' || tipo === 'vuelta' ? 'ok' : '';
+  if (tl.innerHTML.includes('Sin registros')) tl.innerHTML = '';
+  tl.innerHTML += `<div class="tl-item"><div class="tl-dot"><div class="tl-circle ${dot}"></div><div class="tl-line"></div></div><div class="tl-info"><div class="tl-title">${label}</div><div class="tl-sub">${st.nombre}</div><div class="tl-time">${hora}</div></div></div>`;
+
+  fetch(WH_JORNADA, { method:'POST', headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({tipo, label, operario: st.nombre, obra: st.obraId, hora, timestamp: new Date().toISOString()})
+  }).catch(()=>{});
+
+  goTab('s-jornada','nav-jornada');
+}
+
+// ─── FOTO ─────────────────────────────────────────────────────────────────────
+function selTipo(t) {
+  st.tipoFoto = t;
+  ['factura','ticket','factura_simplificada','otro'].forEach(x =>
+    document.getElementById('tf-'+x)?.classList.toggle('selected', x === t));
+}
+
+function onPhotos(input) {
+  const files = Array.from(input.files);
+  if (!files.length) return;
+  st.imagenesB64 = [];
+  const minis = document.getElementById('miniaturas');
+  minis.innerHTML = '';
+  const lbl = document.getElementById('foto-count-lbl');
+  lbl.textContent = `${files.length} seleccionada${files.length>1?'s':''}`;
+
+  let loaded = 0;
+  files.forEach((file, idx) => {
+    const r = new FileReader();
+    r.onload = e => {
+      st.imagenesB64[idx] = e.target.result.split(',')[1];
+      loaded++;
+      // Miniatura
+      const mini = document.createElement('div');
+      mini.style.cssText = 'width:60px;height:60px;border-radius:8px;overflow:hidden;border:1.5px solid #C8A96E';
+      mini.innerHTML = `<img src="${e.target.result}" style="width:100%;height:100%;object-fit:cover">`;
+      minis.appendChild(mini);
+      if (loaded === files.length) {
+        document.getElementById('photo-area').innerHTML = `<i class="ti ti-check" style="font-size:32px;color:#27A86A"></i><span style="color:#27A86A;font-size:12px">${files.length} imagen${files.length>1?'es':''} lista${files.length>1?'s':''}</span>`;
+        document.getElementById('btn-procesar').disabled = false;
+      }
+    };
+    r.readAsDataURL(file);
+  });
+}
+
+// ─── PROCESANDO ───────────────────────────────────────────────────────────────
+function runProcesando() {
+  ['p2','p3','p4'].forEach((id,i) => setTimeout(()=>stepOk(id),(i+1)*700));
+
+  fetch(WH_FASE1, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      imagenes: st.imagenesB64,
+      tipo_documento: st.tipoFoto,
+      operario: st.nombre
+    })
+  })
+  .then(r => r.json())
+  .then(data => {
+    const d = Array.isArray(data) ? data[0] : data;
+    st.datosExtraidos = d.datos_extraidos || d;
+    setTimeout(() => { fillConfirmar(st.datosExtraidos); go('s-confirmar'); }, 2400);
+  })
+  .catch(() => {
+    st.datosExtraidos = {};
+    setTimeout(() => { fillConfirmar({}); go('s-confirmar'); }, 2400);
+  });
+}
+
+function fillConfirmar(d) {
+  document.getElementById('cf-proveedor').textContent = d.proveedor || '—';
+  document.getElementById('cf-fecha').textContent     = d.fecha || new Date().toLocaleDateString('es-ES');
+  document.getElementById('cf-num').textContent       = d.numero_documento || '—';
+  document.getElementById('cf-base').textContent      = d.base_imponible ? d.base_imponible.toFixed(2)+' €' : '—';
+  document.getElementById('cf-iva').textContent       = d.iva_importe ? d.iva_importe.toFixed(2)+' €' : '—';
+  document.getElementById('cf-total').value           = (d.total || 0).toFixed(2);
+  document.getElementById('cf-operario').textContent  = st.nombre;
+  document.getElementById('cf-tipo').textContent      = st.tipoFoto;
+
+  const lineas = d.lineas || [];
+  const obraLineas  = lineas.filter(l => l.clasificacion === 'material_obra');
+  const herrLineas  = lineas.filter(l => l.clasificacion === 'herramienta');
+  const empLineas   = lineas.filter(l => l.clasificacion === 'gasto_empresa');
+
+  const cls = d.clasificacion_general || 'gasto_empresa';
+
+  // Si no hay líneas desglosadas usar clasificación general
+  const showObra = obraLineas.length > 0 || cls === 'material_obra';
+  const showHerr = herrLineas.length > 0 || cls === 'herramienta';
+  const showEmp  = empLineas.length > 0  || (cls === 'gasto_empresa' && obraLineas.length === 0 && herrLineas.length === 0);
+
+  function renderLineas(arr, total) {
+    if (!arr.length) return `<div class="bloque-linea">Importe total: ${(total||0).toFixed(2)} €</div>`;
+    return arr.map(l => `<div class="bloque-linea">${l.descripcion || '—'} · ${(l.importe||0).toFixed(2)} €</div>`).join('');
+  }
+
+  document.getElementById('bloque-obra-wrap').style.display = showObra ? 'block' : 'none';
+  document.getElementById('bloque-herr-wrap').style.display = showHerr ? 'block' : 'none';
+  document.getElementById('bloque-emp-wrap').style.display  = showEmp  ? 'block' : 'none';
+
+  if (showObra) {
+    const imp = d.importe_material_obra || obraLineas.reduce((s,l)=>s+(l.importe||0),0) || (d.total||0);
+    document.getElementById('bl-obra-lineas').innerHTML = renderLineas(obraLineas, imp);
+    document.getElementById('bl-obra-importe').textContent = imp.toFixed(2)+' €';
+    // Cargar obras en desplegable si no están cargadas
+    if (document.getElementById('sel-obra-mat').options.length <= 1) cargarObras();
+  }
+  if (showHerr) {
+    const imp = d.importe_herramienta || herrLineas.reduce((s,l)=>s+(l.importe||0),0);
+    document.getElementById('bl-herr-lineas').innerHTML = renderLineas(herrLineas, imp);
+    document.getElementById('bl-herr-importe').textContent = imp.toFixed(2)+' €';
+  }
+  if (showEmp) {
+    const imp = d.importe_gasto_empresa || empLineas.reduce((s,l)=>s+(l.importe||0),0) || (d.total||0);
+    document.getElementById('bl-emp-lineas').innerHTML = renderLineas(empLineas, imp);
+    document.getElementById('bl-emp-importe').textContent = imp.toFixed(2)+' €';
+  }
+}
+
+// ─── GUARDANDO ────────────────────────────────────────────────────────────────
+function runGuardando() {
+  ['g2','g3','g4'].forEach((id,i) => setTimeout(()=>stepOk(id),(i+1)*800));
+
+  const total      = parseFloat(document.getElementById('cf-total')?.value || 0);
+  const id_obra    = document.getElementById('sel-obra-mat')?.value || '';
+  const d          = st.datosExtraidos;
+
+  fetch(WH_FASE2, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      datos_extraidos: d,
+      tipo_documento: st.tipoFoto,
+      operario: st.nombre,
+      id_obra: id_obra || st.obraId,
+      clasificacion_general: d.clasificacion_general || 'gasto_empresa',
+      imagenes: st.imagenesB64,
+      total_confirmado: total,
+      timestamp: new Date().toISOString()
+    })
+  })
+  .then(r => r.json())
+  .then(data => {
+    const res = Array.isArray(data) ? data[0] : data;
+    st.docsHoy++;
+    st.totalGastos += total;
+    st.gastos.push({
+      proveedor: d.proveedor || '—',
+      importe: total,
+      tipo: st.tipoFoto,
+      obra: id_obra || st.obraId,
+      hora: new Date().toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'})
+    });
+    document.getElementById('kpi-gastos').textContent = st.totalGastos.toFixed(0)+'€';
+    document.getElementById('kpi-docs').textContent   = st.docsHoy;
+    document.getElementById('perfil-gastos').textContent = st.docsHoy;
+    actualizarListaGastos();
+    setTimeout(() => {
+      document.getElementById('ok-detalle').innerHTML = `
+        <div class="item"><div class="item-label">Proveedor</div><div class="item-val">${d.proveedor||'—'}</div></div>
+        <div class="item"><div class="item-label">Importe</div><div class="item-val" style="color:#27A86A">${total.toFixed(2).replace('.',',')} €</div></div>
+        <div class="item"><div class="item-label">Clasificación</div><div class="item-val">${d.clasificacion_general||'—'}</div></div>
+        <div class="item" style="border-bottom:none"><div class="item-label">Excel BD</div><div class="item-val" style="color:#27A86A"><i class="ti ti-check"></i> Registrado</div></div>`;
+      go('s-ok');
+    }, 3000);
+  })
+  .catch(() => {
+    setTimeout(() => go('s-ok'), 3000);
+  });
+}
+
+function actualizarListaGastos() {
+  const el = document.getElementById('gastos-lista-home');
+  if (!st.gastos.length) return;
+  el.innerHTML = st.gastos.map(g =>
+    `<div class="item"><div><div style="font-size:12px;font-weight:500">${g.proveedor}</div><div style="font-size:11px;color:#888">${g.tipo} · ${g.hora}</div></div><div style="font-size:13px;font-weight:500;color:#2C3E35">${g.importe.toFixed(2).replace('.',',')}€</div></div>`
+  ).join('');
+}
+</script>
+</body>
+</html>
