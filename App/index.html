@@ -206,9 +206,9 @@ input[type=file]{display:none}
 
 <!-- ═══ LOGIN ═══ -->
 <div id="s-login" class="screen active">
-  <div class="login-header">
-    <div class="logo-txt" style="font-size:28px">Mediterras<span>.</span></div>
-    <div style="font-size:11px;color:rgba(255,255,255,.4);margin-top:6px;letter-spacing:.06em">GESTIÓN DE OBRA</div>
+  <div class="login-header" style="padding:40px 24px 32px">
+    <div class="logo-txt" style="font-size:32px">Mediterras<span>.</span></div>
+    <div style="font-size:10px;color:rgba(200,169,110,.65);margin-top:4px;letter-spacing:.1em;font-weight:500">GESTIÓN DE OBRA · ADMINISTRACIÓN</div>
     <div class="login-divider"></div>
   </div>
   <div class="body" style="display:flex;flex-direction:column;justify-content:center">
@@ -227,6 +227,32 @@ input[type=file]{display:none}
       <button class="btn-main btn-gold" id="btn-login" onclick="doLogin()">
         <i class="ti ti-login"></i> Entrar
       </button>
+    </div>
+    <!-- FUNCIONALIDADES -->
+    <div style="background:#eaf3de;border-radius:16px;padding:16px 18px;margin-top:16px;border:.5px solid #c3e0b8">
+      <div style="font-size:9px;font-weight:700;color:#27A86A;text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px;text-align:center">FUNCIONALIDADES DE LA APP</div>
+      <div style="display:flex;flex-direction:column;gap:9px">
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="width:20px;height:20px;border-radius:50%;background:#27A86A;display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="ti ti-check" style="font-size:11px;color:#fff"></i></div>
+          <span style="font-size:12px;font-weight:600;color:#1a3d10;text-transform:uppercase;letter-spacing:.02em">Lectura y contabilización de facturas</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="width:20px;height:20px;border-radius:50%;background:#27A86A;display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="ti ti-check" style="font-size:11px;color:#fff"></i></div>
+          <span style="font-size:12px;font-weight:600;color:#1a3d10;text-transform:uppercase;letter-spacing:.02em">Registro de jornada e imputación a obra</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="width:20px;height:20px;border-radius:50%;background:#27A86A;display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="ti ti-check" style="font-size:11px;color:#fff"></i></div>
+          <span style="font-size:12px;font-weight:600;color:#1a3d10;text-transform:uppercase;letter-spacing:.02em">Estado y evolución de obra</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="width:20px;height:20px;border-radius:50%;background:#27A86A;display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="ti ti-check" style="font-size:11px;color:#fff"></i></div>
+          <span style="font-size:12px;font-weight:600;color:#1a3d10;text-transform:uppercase;letter-spacing:.02em">Registro directo en CRM</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="width:20px;height:20px;border-radius:50%;background:#27A86A;display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="ti ti-check" style="font-size:11px;color:#fff"></i></div>
+          <span style="font-size:12px;font-weight:600;color:#1a3d10;text-transform:uppercase;letter-spacing:.02em">Experto Administrativo</span>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -266,7 +292,7 @@ input[type=file]{display:none}
     <button class="navbtn" id="nav-jornada" onclick="goTab('s-jornada','nav-jornada')"><i class="ti ti-clock"></i><span>Jornada</span></button>
     <button class="navbtn" id="nav-foto" onclick="goTab('s-foto','nav-foto')"><i class="ti ti-camera"></i><span>Factura</span></button>
     <button class="navbtn" id="nav-mas" onclick="goTab('s-mas','nav-mas')"><i class="ti ti-grid-dots"></i><span>Más</span></button>
-    <button class="navbtn" id="nav-perfil" onclick="goTab('s-perfil','nav-perfil')"><i class="ti ti-settings"></i><span>Admin</span></button>
+    <button class="navbtn" id="nav-perfil" onclick="goTab('s-perfil','nav-perfil')"><i class="ti ti-message-chatbot"></i><span>D.Admin</span></button>
   </div>
 </div>
 
@@ -313,7 +339,7 @@ input[type=file]{display:none}
     <button class="navbtn active" id="nav-jornada2"><i class="ti ti-clock"></i><span>Jornada</span></button>
     <button class="navbtn" onclick="goTab('s-foto','nav-foto')"><i class="ti ti-camera"></i><span>Factura</span></button>
     <button class="navbtn" onclick="goTab('s-mas','nav-mas')"><i class="ti ti-grid-dots"></i><span>Más</span></button>
-    <button class="navbtn" onclick="goTab('s-perfil','nav-perfil')"><i class="ti ti-settings"></i><span>Admin</span></button>
+    <button class="navbtn" onclick="goTab('s-perfil','nav-perfil')"><i class="ti ti-message-chatbot"></i><span>D.Admin</span></button>
   </div>
 </div>
 
@@ -384,7 +410,7 @@ input[type=file]{display:none}
     <button class="navbtn" onclick="goTab('s-jornada','nav-jornada')"><i class="ti ti-clock"></i><span>Jornada</span></button>
     <button class="navbtn active"><i class="ti ti-camera"></i><span>Factura</span></button>
     <button class="navbtn" onclick="goTab('s-mas','nav-mas')"><i class="ti ti-grid-dots"></i><span>Más</span></button>
-    <button class="navbtn" onclick="goTab('s-perfil','nav-perfil')"><i class="ti ti-settings"></i><span>Admin</span></button>
+    <button class="navbtn" onclick="goTab('s-perfil','nav-perfil')"><i class="ti ti-message-chatbot"></i><span>D.Admin</span></button>
   </div>
 </div>
 
@@ -528,40 +554,73 @@ input[type=file]{display:none}
     <div><div class="logo-txt" style="font-size:15px">Mediterras<span>.</span></div><div style="font-size:10px;color:rgba(255,255,255,.4);margin-top:1px">Gestión de obra</div></div>
   </div>
   <div class="body">
+    <!-- Banner de valor -->
+    <div style="background:linear-gradient(135deg,#2C3E35 0%,#1a2e28 100%);border-radius:14px;padding:14px 16px;margin-bottom:14px;display:flex;align-items:center;gap:12px">
+      <i class="ti ti-sparkles" style="font-size:28px;color:#C8A96E;flex-shrink:0"></i>
+      <div>
+        <div style="font-size:12px;font-weight:700;color:#fff;margin-bottom:2px">Sistema administrativo completo</div>
+        <div style="font-size:11px;color:rgba(255,255,255,.6);line-height:1.4">Todo lo que necesitas para gestionar una obra sin papeleo: incidencias, material, registros fotográficos y contabilidad automática.</div>
+      </div>
+    </div>
     <div class="section-lbl">Herramientas de obra</div>
     <div class="mas-grid">
       <div class="mas-btn" onclick="goBack('s-incidencia')">
-        <i class="ti ti-alert-triangle"></i>
-        <div class="mas-lbl">Incidencia</div>
-        <div class="mas-sub">Reporta problemas, retrasos o imprevistos con foto</div>
+        <i class="ti ti-alert-triangle" style="color:#E67E22"></i>
+        <div class="mas-lbl">Incidencias</div>
+        <div class="mas-sub">Reporta cualquier problema con foto, urgencia y estimación de impacto en plazo. Queda registrado en el historial de obra.</div>
       </div>
       <div class="mas-btn" onclick="goBack('s-solicitud')">
-        <i class="ti ti-package"></i>
+        <i class="ti ti-package" style="color:#27A86A"></i>
         <div class="mas-lbl">Solicitar material</div>
-        <div class="mas-sub">Pide material a compras con notificación inmediata por WhatsApp</div>
+        <div class="mas-sub">Pide material urgente desde obra. El responsable recibe notificación inmediata por WhatsApp con todos los detalles.</div>
       </div>
       <div class="mas-btn" onclick="goBack('s-progreso')">
-        <i class="ti ti-photo-check"></i>
+        <i class="ti ti-photo-check" style="color:#2C3E35"></i>
         <div class="mas-lbl">Evolución de obra</div>
-        <div class="mas-sub">Documenta el progreso con fotos vinculadas a cada fase</div>
+        <div class="mas-sub">Documenta el avance con fotos por fases. Archivo automático en OneDrive vinculado a cada obra y partida.</div>
       </div>
       <div class="mas-btn mas-btn-pronto">
         <i class="ti ti-chart-bar"></i>
         <div class="mas-lbl">Informes</div>
+        <div class="mas-sub">Costes por obra, horas y rendimiento del equipo.</div>
         <div class="mas-badge-pronto">Próximamente</div>
       </div>
     </div>
-    <div class="section-lbl" style="margin-top:4px">Administración</div>
+    <div class="section-lbl" style="margin-top:4px">Administración y contabilidad</div>
     <div class="mas-grid">
       <div class="mas-btn mas-btn-pronto">
         <i class="ti ti-calculator"></i>
         <div class="mas-lbl">Presupuestos</div>
+        <div class="mas-sub">Genera presupuestos desde la base de partidas de obra con precios actualizados.</div>
         <div class="mas-badge-pronto">Próximamente</div>
       </div>
       <div class="mas-btn mas-btn-pronto">
         <i class="ti ti-robot"></i>
         <div class="mas-lbl">Asesor fiscal</div>
+        <div class="mas-sub">Consulta al agente IA sobre IVA, IRPF y deducciones aplicables a tu actividad.</div>
         <div class="mas-badge-pronto">Próximamente</div>
+      </div>
+    </div>
+    <!-- Bloque ventajas -->
+    <div style="background:#f5f6f8;border-radius:14px;padding:14px 16px;margin-top:4px">
+      <div style="font-size:10px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">Qué hace esta app por ti</div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <div style="display:flex;align-items:flex-start;gap:10px">
+          <i class="ti ti-check" style="font-size:14px;color:#27A86A;margin-top:1px;flex-shrink:0"></i>
+          <div style="font-size:12px;color:#444;line-height:1.4"><strong style="color:#2C3E35">Sin papeleo.</strong> Las facturas se fotografían, la IA extrae los datos y los contabiliza sola.</div>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:10px">
+          <i class="ti ti-check" style="font-size:14px;color:#27A86A;margin-top:1px;flex-shrink:0"></i>
+          <div style="font-size:12px;color:#444;line-height:1.4"><strong style="color:#2C3E35">Todo en orden para Hacienda.</strong> Cada gasto queda clasificado por cuenta PGC y archivado en OneDrive.</div>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:10px">
+          <i class="ti ti-check" style="font-size:14px;color:#27A86A;margin-top:1px;flex-shrink:0"></i>
+          <div style="font-size:12px;color:#444;line-height:1.4"><strong style="color:#2C3E35">Control total de obra.</strong> Jornadas, incidencias, materiales y fotos registradas en tiempo real.</div>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:10px">
+          <i class="ti ti-check" style="font-size:14px;color:#27A86A;margin-top:1px;flex-shrink:0"></i>
+          <div style="font-size:12px;color:#444;line-height:1.4"><strong style="color:#2C3E35">Ahorra tiempo en gestión.</strong> Lo que antes llevaba horas, ahora se hace desde el móvil en segundos.</div>
+        </div>
       </div>
     </div>
   </div>
@@ -570,7 +629,7 @@ input[type=file]{display:none}
     <button class="navbtn" onclick="goTab('s-jornada','nav-jornada')"><i class="ti ti-clock"></i><span>Jornada</span></button>
     <button class="navbtn" onclick="goTab('s-foto','nav-foto')"><i class="ti ti-camera"></i><span>Factura</span></button>
     <button class="navbtn active" id="nav-mas2"><i class="ti ti-grid-dots"></i><span>Más</span></button>
-    <button class="navbtn" onclick="goTab('s-perfil','nav-perfil')"><i class="ti ti-settings"></i><span>Admin</span></button>
+    <button class="navbtn" onclick="goTab('s-perfil','nav-perfil')"><i class="ti ti-message-chatbot"></i><span>D.Admin</span></button>
   </div>
 </div>
 
@@ -747,12 +806,17 @@ input[type=file]{display:none}
 </div>
 
 <!-- ═══ ADMINISTRACIÓN (antes Perfil) ═══ -->
-<div id="s-perfil" class="screen" style="display:none;flex-direction:column">
+<div id="s-perfil" class="screen">
   <div class="topbar">
-    <div><div class="logo-txt" style="font-size:15px">Mediterras<span>.</span></div><div style="font-size:10px;color:rgba(255,255,255,.4);margin-top:1px">Administración</div></div>
-    <button class="btn-main btn-outline" onclick="go('s-login')" style="width:auto;padding:6px 12px;font-size:11px;margin:0;border-color:rgba(255,255,255,.3);color:#fff;background:transparent"><i class="ti ti-logout" style="font-size:14px"></i> Salir</button>
+    <div>
+      <div class="logo-txt" style="font-size:15px">Mediterras<span>.</span></div>
+      <div style="font-size:10px;color:rgba(255,255,255,.4);margin-top:1px">Administración</div>
+    </div>
+    <button onclick="go('s-login')" style="background:transparent;border:none;cursor:pointer;display:flex;align-items:center;gap:5px;color:rgba(255,255,255,.6);font-size:12px;font-family:inherit;padding:4px 0">
+      <i class="ti ti-logout" style="font-size:16px;color:rgba(255,255,255,.5)"></i> Salir
+    </button>
   </div>
-  <!-- Perfil compacto oculto para mantener compatibilidad JS -->
+  <!-- Campos ocultos para compatibilidad JS -->
   <div style="display:none">
     <div id="perfil-ini">—</div>
     <div id="perfil-nombre">—</div>
@@ -761,38 +825,49 @@ input[type=file]{display:none}
     <div id="perfil-gastos">0</div>
     <div id="perfil-estado">Sin fichar</div>
   </div>
-  <!-- CHAT CON AGENTE -->
-  <div style="flex:1;display:flex;flex-direction:column;overflow:hidden">
-    <div id="admin-chat-msgs" style="flex:1;overflow-y:auto;padding:12px 14px;background:#f5f6f8;display:flex;flex-direction:column;gap:10px">
-      <!-- Mensaje bienvenida del agente -->
-      <div style="display:flex;gap:8px;align-items:flex-start">
-        <div style="width:32px;height:32px;border-radius:50%;background:#2C3E35;display:flex;align-items:center;justify-content:center;flex-shrink:0">
-          <i class="ti ti-robot" style="font-size:16px;color:#C8A96E"></i>
-        </div>
-        <div style="background:#fff;border-radius:14px 14px 14px 4px;padding:10px 14px;max-width:82%;border:.5px solid #e8e8e8">
-          <div style="font-size:12px;font-weight:600;color:#2C3E35;margin-bottom:3px">Agente Mediterras</div>
-          <div style="font-size:13px;color:#444;line-height:1.5">Hola, soy tu asistente de administración. Puedo ayudarte con consultas sobre obras, gastos, jornadas y cualquier gestión administrativa. ¿En qué te ayudo?</div>
-          <div style="font-size:10px;color:#bbb;margin-top:4px;text-align:right">Ahora</div>
-        </div>
+  <!-- CABECERA AGENTE -->
+  <div style="background:#fff;border-bottom:.5px solid #e8e8e8;padding:10px 14px;display:flex;align-items:center;gap:10px;flex-shrink:0">
+    <div style="width:40px;height:40px;border-radius:50%;background:#2C3E35;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+      <i class="ti ti-message-chatbot" style="font-size:20px;color:#C8A96E"></i>
+    </div>
+    <div>
+      <div style="font-size:14px;font-weight:700;color:#2C3E35">Blanca</div>
+      <div style="font-size:11px;color:#27A86A;display:flex;align-items:center;gap:4px">
+        <span style="width:6px;height:6px;border-radius:50%;background:#27A86A;display:inline-block"></span>
+        Departamento Administración y Contabilidad
       </div>
     </div>
-    <!-- Input chat -->
-    <div style="background:#fff;border-top:.5px solid #e8e8e8;padding:10px 12px;display:flex;gap:8px;align-items:flex-end">
-      <textarea id="admin-chat-input" placeholder="Escribe tu consulta..." rows="1"
-        style="flex:1;border:.5px solid #e0e0e0;border-radius:20px;padding:9px 14px;font-size:13px;font-family:inherit;resize:none;outline:none;max-height:100px;overflow-y:auto;line-height:1.4;color:#1a1a1a"
-        oninput="autoGrowChat(this)"
-        onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();enviarMensajeAdmin()}"></textarea>
-      <button onclick="enviarMensajeAdmin()" style="width:40px;height:40px;border-radius:50%;background:#2C3E35;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0">
-        <i class="ti ti-send" style="font-size:18px;color:#C8A96E"></i>
-      </button>
+  </div>
+  <!-- MENSAJES -->
+  <div id="admin-chat-msgs" style="flex:1;overflow-y:auto;padding:12px 14px;background:#f5f6f8;display:flex;flex-direction:column;gap:10px">
+    <div style="display:flex;gap:8px;align-items:flex-start">
+      <div style="width:32px;height:32px;border-radius:50%;background:#2C3E35;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+        <i class="ti ti-message-chatbot" style="font-size:16px;color:#C8A96E"></i>
+      </div>
+      <div style="background:#fff;border-radius:14px 14px 14px 4px;padding:10px 14px;max-width:82%;border:.5px solid #e8e8e8">
+        <div style="font-size:11px;font-weight:700;color:#2C3E35;margin-bottom:1px">Blanca</div>
+        <div style="font-size:10px;color:#888;margin-bottom:6px">Departamento Administración y Contabilidad</div>
+        <div style="font-size:13px;color:#444;line-height:1.5">Hola, soy Blanca. Estoy aquí para ayudarte con cualquier consulta sobre obras, gastos, jornadas o gestión administrativa. ¿En qué puedo ayudarte?</div>
+        <div style="font-size:10px;color:#bbb;margin-top:4px;text-align:right">Ahora</div>
+      </div>
     </div>
+  </div>
+  <!-- INPUT -->
+  <div style="background:#fff;border-top:.5px solid #e8e8e8;padding:10px 12px;display:flex;gap:8px;align-items:flex-end;flex-shrink:0">
+    <textarea id="admin-chat-input" placeholder="Escribe tu consulta a Blanca..." rows="1"
+      style="flex:1;border:.5px solid #e0e0e0;border-radius:20px;padding:9px 14px;font-size:13px;font-family:inherit;resize:none;outline:none;max-height:100px;overflow-y:auto;line-height:1.4;color:#1a1a1a"
+      oninput="autoGrowChat(this)"
+      onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();enviarMensajeAdmin()}"></textarea>
+    <button onclick="enviarMensajeAdmin()" style="width:40px;height:40px;border-radius:50%;background:#2C3E35;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+      <i class="ti ti-send" style="font-size:18px;color:#C8A96E"></i>
+    </button>
   </div>
   <div class="bottomnav">
     <button class="navbtn" onclick="goTab('s-home','nav-home')"><i class="ti ti-home"></i><span>Inicio</span></button>
     <button class="navbtn" onclick="goTab('s-jornada','nav-jornada')"><i class="ti ti-clock"></i><span>Jornada</span></button>
     <button class="navbtn" onclick="goTab('s-foto','nav-foto')"><i class="ti ti-camera"></i><span>Factura</span></button>
     <button class="navbtn" onclick="goTab('s-mas','nav-mas')"><i class="ti ti-grid-dots"></i><span>Más</span></button>
-    <button class="navbtn active"><i class="ti ti-settings"></i><span>Admin</span></button>
+    <button class="navbtn active"><i class="ti ti-message-chatbot"></i><span>D.Admin</span></button>
   </div>
 </div>
 
@@ -1398,7 +1473,7 @@ async function enviarMensajeAdmin() {
   msgs.innerHTML += `
     <div id="${typingId}" style="display:flex;gap:8px;align-items:flex-start">
       <div style="width:32px;height:32px;border-radius:50%;background:#2C3E35;display:flex;align-items:center;justify-content:center;flex-shrink:0">
-        <i class="ti ti-robot" style="font-size:16px;color:#C8A96E"></i>
+        <i class="ti ti-message-chatbot" style="font-size:16px;color:#C8A96E"></i>
       </div>
       <div style="background:#fff;border-radius:14px 14px 14px 4px;padding:10px 14px;border:.5px solid #e8e8e8">
         <div style="display:flex;gap:4px;align-items:center;height:18px">
@@ -1429,10 +1504,11 @@ async function enviarMensajeAdmin() {
   msgs.innerHTML += `
     <div style="display:flex;gap:8px;align-items:flex-start">
       <div style="width:32px;height:32px;border-radius:50%;background:#2C3E35;display:flex;align-items:center;justify-content:center;flex-shrink:0">
-        <i class="ti ti-robot" style="font-size:16px;color:#C8A96E"></i>
+        <i class="ti ti-message-chatbot" style="font-size:16px;color:#C8A96E"></i>
       </div>
       <div style="background:#fff;border-radius:14px 14px 14px 4px;padding:10px 14px;max-width:82%;border:.5px solid #e8e8e8">
-        <div style="font-size:12px;font-weight:600;color:#2C3E35;margin-bottom:3px">Agente Mediterras</div>
+        <div style="font-size:11px;font-weight:700;color:#2C3E35;margin-bottom:1px">Blanca</div>
+        <div style="font-size:10px;color:#888;margin-bottom:6px">Departamento Administración y Contabilidad</div>
         <div style="font-size:13px;color:#444;line-height:1.5">${respuesta}</div>
         <div style="font-size:10px;color:#bbb;margin-top:4px;text-align:right">${new Date().toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'})}</div>
       </div>
