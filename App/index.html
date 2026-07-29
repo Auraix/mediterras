@@ -81,6 +81,9 @@ html,body{width:100%;min-height:100vh;background:#fff;font-family:-apple-system,
 .type-btn.selected i{color:#C8A96E}
 .spinner{display:inline-block;border-radius:50%;animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
+
+@keyframes bounce{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-6px)}}
+
 .ai-badge{display:flex;align-items:center;gap:8px;background:#e8f0ec;border-radius:10px;padding:10px 12px;margin-bottom:14px;font-size:11px;color:#2C3E35;font-weight:500}
 .ai-badge i{font-size:16px;color:#C8A96E;flex-shrink:0}
 .proc-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;gap:18px;text-align:center;padding:2rem}
@@ -166,6 +169,36 @@ input[type=file]{display:none}
 /* PROCESAR — textos rediseñados */
 .proc-headline{font-size:16px;font-weight:700;color:#2C3E35;line-height:1.3}
 .proc-sub{font-size:12px;color:#888;max-width:220px;line-height:1.5}
+
+/* MODAL OVERLAY */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:1000;display:flex;align-items:flex-end;justify-content:center}
+.modal-overlay.hidden{display:none}
+.modal-sheet{background:#fff;border-radius:20px 20px 0 0;width:100%;max-width:430px;padding:20px 16px 32px;max-height:90vh;overflow-y:auto}
+.modal-handle{width:40px;height:4px;background:#e0e0e0;border-radius:2px;margin:0 auto 16px}
+.modal-title{font-size:16px;font-weight:700;color:#2C3E35;margin-bottom:4px}
+.modal-sub{font-size:12px;color:#888;margin-bottom:16px}
+
+/* TOAST */
+.toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:#2C3E35;color:#fff;border-radius:12px;padding:10px 18px;font-size:13px;font-weight:500;display:flex;align-items:center;gap:8px;z-index:2000;box-shadow:0 4px 20px rgba(0,0,0,.2);opacity:0;transition:opacity .25s;pointer-events:none;white-space:nowrap}
+.toast.show{opacity:1}
+.toast i{font-size:16px;color:#C8A96E}
+
+/* REGISTRO CONFIRMADO banner */
+.reg-banner{background:#eaf3de;border:.5px solid #c3e0b8;border-radius:12px;padding:12px 14px;display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.reg-banner i{font-size:22px;color:#27A86A;flex-shrink:0}
+.reg-banner-txt strong{font-size:13px;color:#276221;display:block}
+.reg-banner-txt span{font-size:11px;color:#555}
+
+/* MAS BTN más grande */
+.mas-btn{padding:20px 12px;min-height:100px}
+.mas-btn i{font-size:32px}
+.mas-btn .mas-lbl{font-size:13px}
+.mas-btn .mas-sub{font-size:10px;color:#888;margin-top:3px;line-height:1.4;text-align:center}
+
+/* CHAT ADMIN */
+#admin-chat-msgs::-webkit-scrollbar{width:3px}
+#admin-chat-msgs::-webkit-scrollbar-track{background:transparent}
+#admin-chat-msgs::-webkit-scrollbar-thumb{background:#e0e0e0;border-radius:2px}
 </style>
 </head>
 <body>
@@ -233,7 +266,7 @@ input[type=file]{display:none}
     <button class="navbtn" id="nav-jornada" onclick="goTab('s-jornada','nav-jornada')"><i class="ti ti-clock"></i><span>Jornada</span></button>
     <button class="navbtn" id="nav-foto" onclick="goTab('s-foto','nav-foto')"><i class="ti ti-camera"></i><span>Factura</span></button>
     <button class="navbtn" id="nav-mas" onclick="goTab('s-mas','nav-mas')"><i class="ti ti-grid-dots"></i><span>Más</span></button>
-    <button class="navbtn" id="nav-perfil" onclick="goTab('s-perfil','nav-perfil')"><i class="ti ti-user"></i><span>Perfil</span></button>
+    <button class="navbtn" id="nav-perfil" onclick="goTab('s-perfil','nav-perfil')"><i class="ti ti-settings"></i><span>Admin</span></button>
   </div>
 </div>
 
@@ -251,15 +284,15 @@ input[type=file]{display:none}
       <div style="font-size:11px;color:#888;margin-top:2px" id="fecha-hoy">—</div>
       <div style="margin-top:10px" id="jornada-badge"><span class="badge bb">Sin fichar</span></div>
     </div>
-    <button class="jornada-btn jbtn-entrada" onclick="fichar('entrada','Entrada en obra')">
+    <button class="jornada-btn jbtn-entrada" onclick="abrirModalEntrada()">
       <i class="ti ti-clock-play"></i>
       <div class="jornada-btn-txt"><span>Fichar entrada</span><small>Inicio de jornada</small></div>
     </button>
-    <button class="jornada-btn jbtn-descanso" onclick="fichar('descanso','Inicio descanso')">
+    <button class="jornada-btn jbtn-descanso" onclick="registrarPausa('descanso')">
       <i class="ti ti-coffee"></i>
       <div class="jornada-btn-txt"><span>Iniciar descanso</span><small>Pausa reglamentaria</small></div>
     </button>
-    <button class="jornada-btn jbtn-vuelta" onclick="fichar('vuelta','Vuelta del descanso')">
+    <button class="jornada-btn jbtn-vuelta" onclick="registrarPausa('vuelta')">
       <i class="ti ti-player-play"></i>
       <div class="jornada-btn-txt"><span>Vuelta al trabajo</span><small>Fin de pausa</small></div>
     </button>
@@ -269,7 +302,7 @@ input[type=file]{display:none}
     </button>
     <div class="section-lbl">Reportar ausencia</div>
     <div class="type-grid">
-      <div class="type-btn" onclick="fichar('baja','Baja médica')"><i class="ti ti-medical-cross" style="color:#E74C3C"></i>Baja médica</div>
+      <div class="type-btn" onclick="abrirModalBaja()"><i class="ti ti-medical-cross" style="color:#E74C3C"></i>Baja médica</div>
       <div class="type-btn" onclick="fichar('retraso','Retraso comunicado')"><i class="ti ti-clock-exclamation" style="color:#E67E22"></i>Llego tarde</div>
       <div class="type-btn" onclick="fichar('permiso','Permiso personal')"><i class="ti ti-calendar-event" style="color:#C8A96E"></i>Permiso</div>
       <div class="type-btn" onclick="fichar('vacaciones','Vacaciones')"><i class="ti ti-beach" style="color:#27A86A"></i>Vacaciones</div>
@@ -280,7 +313,7 @@ input[type=file]{display:none}
     <button class="navbtn active" id="nav-jornada2"><i class="ti ti-clock"></i><span>Jornada</span></button>
     <button class="navbtn" onclick="goTab('s-foto','nav-foto')"><i class="ti ti-camera"></i><span>Factura</span></button>
     <button class="navbtn" onclick="goTab('s-mas','nav-mas')"><i class="ti ti-grid-dots"></i><span>Más</span></button>
-    <button class="navbtn" onclick="goTab('s-perfil','nav-perfil')"><i class="ti ti-user"></i><span>Perfil</span></button>
+    <button class="navbtn" onclick="goTab('s-perfil','nav-perfil')"><i class="ti ti-settings"></i><span>Admin</span></button>
   </div>
 </div>
 
@@ -351,7 +384,7 @@ input[type=file]{display:none}
     <button class="navbtn" onclick="goTab('s-jornada','nav-jornada')"><i class="ti ti-clock"></i><span>Jornada</span></button>
     <button class="navbtn active"><i class="ti ti-camera"></i><span>Factura</span></button>
     <button class="navbtn" onclick="goTab('s-mas','nav-mas')"><i class="ti ti-grid-dots"></i><span>Más</span></button>
-    <button class="navbtn" onclick="goTab('s-perfil','nav-perfil')"><i class="ti ti-user"></i><span>Perfil</span></button>
+    <button class="navbtn" onclick="goTab('s-perfil','nav-perfil')"><i class="ti ti-settings"></i><span>Admin</span></button>
   </div>
 </div>
 
@@ -500,17 +533,17 @@ input[type=file]{display:none}
       <div class="mas-btn" onclick="goBack('s-incidencia')">
         <i class="ti ti-alert-triangle"></i>
         <div class="mas-lbl">Incidencia</div>
-        <div class="mas-sub">Reportar problema en obra</div>
+        <div class="mas-sub">Reporta problemas, retrasos o imprevistos con foto</div>
       </div>
       <div class="mas-btn" onclick="goBack('s-solicitud')">
         <i class="ti ti-package"></i>
         <div class="mas-lbl">Solicitar material</div>
-        <div class="mas-sub">Pedir material urgente</div>
+        <div class="mas-sub">Pide material a compras con notificación inmediata por WhatsApp</div>
       </div>
       <div class="mas-btn" onclick="goBack('s-progreso')">
-        <i class="ti ti-camera"></i>
-        <div class="mas-lbl">Foto de obra</div>
-        <div class="mas-sub">Registro visual del avance</div>
+        <i class="ti ti-photo-check"></i>
+        <div class="mas-lbl">Evolución de obra</div>
+        <div class="mas-sub">Documenta el progreso con fotos vinculadas a cada fase</div>
       </div>
       <div class="mas-btn mas-btn-pronto">
         <i class="ti ti-chart-bar"></i>
@@ -537,7 +570,7 @@ input[type=file]{display:none}
     <button class="navbtn" onclick="goTab('s-jornada','nav-jornada')"><i class="ti ti-clock"></i><span>Jornada</span></button>
     <button class="navbtn" onclick="goTab('s-foto','nav-foto')"><i class="ti ti-camera"></i><span>Factura</span></button>
     <button class="navbtn active" id="nav-mas2"><i class="ti ti-grid-dots"></i><span>Más</span></button>
-    <button class="navbtn" onclick="goTab('s-perfil','nav-perfil')"><i class="ti ti-user"></i><span>Perfil</span></button>
+    <button class="navbtn" onclick="goTab('s-perfil','nav-perfil')"><i class="ti ti-settings"></i><span>Admin</span></button>
   </div>
 </div>
 
@@ -583,6 +616,35 @@ input[type=file]{display:none}
         <div class="urgencia-opt" id="urg-media" onclick="selUrgencia('media')">Media</div>
         <div class="urgencia-opt selected sel-baja" id="urg-baja" onclick="selUrgencia('baja')">Baja</div>
       </div>
+    </div>
+    <div class="field-group">
+      <div class="field-lbl">Notas adicionales (opcional)</div>
+      <textarea class="field-input" id="inc-notas" placeholder="Información relevante para el jefe de obra..." rows="2" style="resize:none"></textarea>
+    </div>
+    <div class="field-group">
+      <div class="field-lbl">Estimación del retraso que generará</div>
+      <select class="field-input" id="inc-retraso">
+        <option value="ninguno">Sin impacto en plazo</option>
+        <option value="horas">Pocas horas</option>
+        <option value="1dia">Aprox. 1 día</option>
+        <option value="2-3dias">2-3 días</option>
+        <option value="semana">1 semana o más</option>
+        <option value="indefinido">Indefinido — requiere evaluación</option>
+      </select>
+    </div>
+    <div class="field-group">
+      <div class="field-lbl">¿Se requiere profesional externo?</div>
+      <select class="field-input" id="inc-profesional">
+        <option value="no">No requerido</option>
+        <option value="electricista">Electricista</option>
+        <option value="fontanero">Fontanero</option>
+        <option value="estructural">Técnico estructural</option>
+        <option value="cristalero">Cristalero</option>
+        <option value="pintor">Pintor</option>
+        <option value="carpintero">Carpintero</option>
+        <option value="impermeabilizador">Impermeabilizador</option>
+        <option value="otro">Otro profesional</option>
+      </select>
     </div>
     <button class="btn-main btn-gold" onclick="enviarIncidencia()"><i class="ti ti-send"></i>Reportar incidencia</button>
   </div>
@@ -637,7 +699,7 @@ input[type=file]{display:none}
 <div id="s-progreso" class="screen">
   <div class="topbar">
     <div class="back-btn" onclick="goBack('s-mas')"><i class="ti ti-arrow-left"></i><span>Más</span></div>
-    <div class="topbar-title">Foto de progreso</div>
+    <div class="topbar-title">Evolución de obra</div>
     <div style="width:70px"></div>
   </div>
   <div class="body">
@@ -684,31 +746,101 @@ input[type=file]{display:none}
   </div>
 </div>
 
-<!-- ═══ PERFIL ═══ -->
-<div id="s-perfil" class="screen">
-  <div class="topbar"><div class="back-btn" onclick="goTab('s-home','nav-home')"><i class="ti ti-arrow-left"></i><span>Inicio</span></div><div class="topbar-title">Mi perfil</div><div style="width:60px"></div></div>
-  <div class="body">
-    <div class="card" style="text-align:center;padding:24px">
-      <div style="width:68px;height:68px;border-radius:50%;background:#2C3E35;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:22px;font-weight:600;color:#C8A96E" id="perfil-ini">—</div>
-      <div style="font-size:17px;font-weight:600;color:#2C3E35" id="perfil-nombre">—</div>
-      <div style="font-size:12px;color:#888;margin-top:2px" id="perfil-puesto">—</div>
+<!-- ═══ ADMINISTRACIÓN (antes Perfil) ═══ -->
+<div id="s-perfil" class="screen" style="display:none;flex-direction:column">
+  <div class="topbar">
+    <div><div class="logo-txt" style="font-size:15px">Mediterras<span>.</span></div><div style="font-size:10px;color:rgba(255,255,255,.4);margin-top:1px">Administración</div></div>
+    <button class="btn-main btn-outline" onclick="go('s-login')" style="width:auto;padding:6px 12px;font-size:11px;margin:0;border-color:rgba(255,255,255,.3);color:#fff;background:transparent"><i class="ti ti-logout" style="font-size:14px"></i> Salir</button>
+  </div>
+  <!-- Perfil compacto oculto para mantener compatibilidad JS -->
+  <div style="display:none">
+    <div id="perfil-ini">—</div>
+    <div id="perfil-nombre">—</div>
+    <div id="perfil-puesto">—</div>
+    <div id="perfil-obra">—</div>
+    <div id="perfil-gastos">0</div>
+    <div id="perfil-estado">Sin fichar</div>
+  </div>
+  <!-- CHAT CON AGENTE -->
+  <div style="flex:1;display:flex;flex-direction:column;overflow:hidden">
+    <div id="admin-chat-msgs" style="flex:1;overflow-y:auto;padding:12px 14px;background:#f5f6f8;display:flex;flex-direction:column;gap:10px">
+      <!-- Mensaje bienvenida del agente -->
+      <div style="display:flex;gap:8px;align-items:flex-start">
+        <div style="width:32px;height:32px;border-radius:50%;background:#2C3E35;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+          <i class="ti ti-robot" style="font-size:16px;color:#C8A96E"></i>
+        </div>
+        <div style="background:#fff;border-radius:14px 14px 14px 4px;padding:10px 14px;max-width:82%;border:.5px solid #e8e8e8">
+          <div style="font-size:12px;font-weight:600;color:#2C3E35;margin-bottom:3px">Agente Mediterras</div>
+          <div style="font-size:13px;color:#444;line-height:1.5">Hola, soy tu asistente de administración. Puedo ayudarte con consultas sobre obras, gastos, jornadas y cualquier gestión administrativa. ¿En qué te ayudo?</div>
+          <div style="font-size:10px;color:#bbb;margin-top:4px;text-align:right">Ahora</div>
+        </div>
+      </div>
     </div>
-    <div class="card" style="padding:10px 14px">
-      <div class="item"><div class="item-label">Obra activa</div><div class="item-val" id="perfil-obra">—</div></div>
-      <div class="item"><div class="item-label">Gastos registrados hoy</div><div class="item-val" id="perfil-gastos">0</div></div>
-      <div class="item" style="border-bottom:none"><div class="item-label">Estado jornada</div><div class="item-val" id="perfil-estado">Sin fichar</div></div>
+    <!-- Input chat -->
+    <div style="background:#fff;border-top:.5px solid #e8e8e8;padding:10px 12px;display:flex;gap:8px;align-items:flex-end">
+      <textarea id="admin-chat-input" placeholder="Escribe tu consulta..." rows="1"
+        style="flex:1;border:.5px solid #e0e0e0;border-radius:20px;padding:9px 14px;font-size:13px;font-family:inherit;resize:none;outline:none;max-height:100px;overflow-y:auto;line-height:1.4;color:#1a1a1a"
+        oninput="autoGrowChat(this)"
+        onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();enviarMensajeAdmin()}"></textarea>
+      <button onclick="enviarMensajeAdmin()" style="width:40px;height:40px;border-radius:50%;background:#2C3E35;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+        <i class="ti ti-send" style="font-size:18px;color:#C8A96E"></i>
+      </button>
     </div>
-    <button class="btn-main btn-outline" onclick="go('s-login')" style="margin-top:4px"><i class="ti ti-logout"></i>Cerrar sesión</button>
   </div>
   <div class="bottomnav">
     <button class="navbtn" onclick="goTab('s-home','nav-home')"><i class="ti ti-home"></i><span>Inicio</span></button>
     <button class="navbtn" onclick="goTab('s-jornada','nav-jornada')"><i class="ti ti-clock"></i><span>Jornada</span></button>
     <button class="navbtn" onclick="goTab('s-foto','nav-foto')"><i class="ti ti-camera"></i><span>Factura</span></button>
     <button class="navbtn" onclick="goTab('s-mas','nav-mas')"><i class="ti ti-grid-dots"></i><span>Más</span></button>
-    <button class="navbtn active"><i class="ti ti-user"></i><span>Perfil</span></button>
+    <button class="navbtn active"><i class="ti ti-settings"></i><span>Admin</span></button>
   </div>
 </div>
 
+
+<!-- ═══ MODAL ENTRADA ═══ -->
+<div id="modal-entrada" class="modal-overlay hidden" onclick="cerrarModal('modal-entrada',event)">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title"><i class="ti ti-clock-play" style="color:#C8A96E;margin-right:6px"></i>Fichar entrada</div>
+    <div class="modal-sub">Selecciona la obra en la que vas a trabajar hoy</div>
+    <div class="field-group">
+      <div class="field-lbl">Obra</div>
+      <select id="modal-entrada-obra" class="field-input" style="font-size:14px"></select>
+    </div>
+    <div id="modal-entrada-hora" style="text-align:center;font-size:28px;font-weight:700;color:#2C3E35;margin:12px 0;font-variant-numeric:tabular-nums">--:--</div>
+    <button class="btn-main btn-green" onclick="confirmarEntrada()"><i class="ti ti-check"></i>Confirmar entrada</button>
+    <button class="btn-main btn-outline" style="margin-top:0" onclick="cerrarModal('modal-entrada')"><i class="ti ti-x"></i>Cancelar</button>
+  </div>
+</div>
+
+<!-- ═══ MODAL BAJA MÉDICA ═══ -->
+<div id="modal-baja" class="modal-overlay hidden" onclick="cerrarModal('modal-baja',event)">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title" style="color:#E74C3C"><i class="ti ti-medical-cross" style="margin-right:6px"></i>Baja médica</div>
+    <div class="modal-sub">Adjunta el justificante médico para que quede registrado en el sistema</div>
+    <div style="background:#fcebeb;border-radius:12px;padding:12px 14px;margin-bottom:14px;border:.5px solid #f5c6c6">
+      <div style="font-size:13px;color:#A32D2D;font-weight:600;margin-bottom:4px"><i class="ti ti-info-circle"></i> Adjunta justificante médico</div>
+      <div style="font-size:12px;color:#c0392b;line-height:1.5">Para que la baja quede validada, adjunta la foto del parte médico o el documento oficial.</div>
+    </div>
+    <div class="field-lbl">Foto del justificante</div>
+    <div class="photo-preview" id="baja-photo-area" onclick="document.getElementById('baja-file').click()" style="height:110px;margin-bottom:12px">
+      <i class="ti ti-camera-upload" style="font-size:28px;color:#E74C3C"></i>
+      <span style="font-size:12px;color:#888">Toca para adjuntar foto</span>
+      <span style="font-size:10px;color:#bbb">Parte médico u hoja de baja oficial</span>
+    </div>
+    <input type="file" id="baja-file" accept="image/*" onchange="onBajaPhoto(this)">
+    <div class="field-group">
+      <div class="field-lbl">Notas (opcional)</div>
+      <textarea class="field-input" id="baja-notas" placeholder="Centro médico, duración estimada..." rows="2" style="resize:none"></textarea>
+    </div>
+    <button class="btn-main btn-red" onclick="confirmarBaja()"><i class="ti ti-medical-cross"></i>Registrar baja médica</button>
+    <button class="btn-main btn-outline" style="margin-top:0" onclick="cerrarModal('modal-baja')"><i class="ti ti-x"></i>Cancelar</button>
+  </div>
+</div>
+
+<!-- ═══ TOAST ═══ -->
+<div id="toast-global" class="toast"><i class="ti ti-check"></i><span id="toast-msg">Registrado</span></div>
 </div><!-- /app -->
 
 <script>
@@ -1088,6 +1220,224 @@ function runGuardando() {
     }, 3200);
   })
   .catch(() => { setTimeout(() => go('s-ok'), 3200); });
+}
+
+
+// ─── MODAL ENTRADA ────────────────────────────────────────────────────────────
+function abrirModalEntrada() {
+  const modal = document.getElementById('modal-entrada');
+  const sel = document.getElementById('modal-entrada-obra');
+  if (st.obrasActivas.length) {
+    sel.innerHTML = st.obrasActivas.map(o => `<option value="${o.id}">${o.id} · ${o.nombre}</option>`).join('');
+  } else {
+    sel.innerHTML = '<option value="">Sin obras activas</option>';
+  }
+  // Actualizar hora en el modal
+  const actualizarHoraModal = () => {
+    const el = document.getElementById('modal-entrada-hora');
+    if (el) el.textContent = new Date().toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'});
+  };
+  actualizarHoraModal();
+  window._modalReloj = setInterval(actualizarHoraModal, 1000);
+  modal.classList.remove('hidden');
+}
+
+function confirmarEntrada() {
+  const obraId = document.getElementById('modal-entrada-obra')?.value || '';
+  const obra = st.obrasActivas.find(o => o.id === obraId);
+  if (obraId) {
+    st.obraId = obraId;
+    st.obraNombre = obra?.nombre || obraId;
+    document.getElementById('obra-tag').innerHTML = `<i class="ti ti-building"></i>${st.obraId}`;
+  }
+  cerrarModal('modal-entrada');
+  clearInterval(window._modalReloj);
+  const hora = new Date().toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'});
+  fichar('entrada','Entrada en obra');
+  mostrarToast(`✓ Entrada registrada · ${st.obraNombre || st.obraId} · ${hora}`);
+  mostrarBannerJornada('Entrada registrada', `${st.obraNombre || st.obraId} · ${hora}`, '#27A86A');
+}
+
+// ─── PAUSA CON FEEDBACK ────────────────────────────────────────────────────────
+function registrarPausa(tipo) {
+  const hora = new Date().toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'});
+  const configs = {
+    descanso: { label:'Inicio descanso', msg:`Descanso iniciado · ${hora}`, color:'#E67E22' },
+    vuelta:   { label:'Vuelta del descanso', msg:`Vuelta al trabajo · ${hora}`, color:'#27A86A' }
+  };
+  const cfg = configs[tipo];
+  fichar(tipo, cfg.label);
+  mostrarToast(cfg.msg);
+  mostrarBannerJornada(cfg.label, hora, cfg.color);
+}
+
+// ─── MODAL BAJA MÉDICA ────────────────────────────────────────────────────────
+let bajaPhotoB64 = null;
+
+function abrirModalBaja() {
+  document.getElementById('modal-baja').classList.remove('hidden');
+}
+
+function onBajaPhoto(input) {
+  const file = input.files[0]; if (!file) return;
+  const r = new FileReader();
+  r.onload = e => {
+    bajaPhotoB64 = e.target.result.split(',')[1];
+    document.getElementById('baja-photo-area').innerHTML = `<img src="${e.target.result}" style="width:100%;height:100%;object-fit:cover;border-radius:10px">`;
+  };
+  r.readAsDataURL(file);
+}
+
+function confirmarBaja() {
+  const notas = document.getElementById('baja-notas')?.value || '';
+  const hora = new Date().toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'});
+  fetch(WH_JORNADA, { method:'POST', headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({ tipo:'baja', label:'Baja médica', operario: st.nombre,
+      obra: st.obraId, hora, notas, foto: bajaPhotoB64, timestamp: new Date().toISOString() })
+  }).catch(()=>{});
+  cerrarModal('modal-baja');
+  fichar('baja','Baja médica');
+  mostrarMiniOk('Baja médica registrada','El justificante ha sido enviado al sistema y notificado al responsable','ti-medical-cross');
+}
+
+// ─── UTILS MODAL / TOAST / BANNER ────────────────────────────────────────────
+function cerrarModal(id, event) {
+  if (event && event.target !== document.getElementById(id)) return;
+  document.getElementById(id)?.classList.add('hidden');
+  clearInterval(window._modalReloj);
+}
+
+function mostrarToast(msg) {
+  const t = document.getElementById('toast-global');
+  document.getElementById('toast-msg').textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+function mostrarBannerJornada(titulo, subtitulo, color) {
+  const container = document.querySelector('#s-jornada .body');
+  if (!container) return;
+  const old = document.getElementById('reg-banner-jornada');
+  if (old) old.remove();
+  const banner = document.createElement('div');
+  banner.id = 'reg-banner-jornada';
+  banner.className = 'reg-banner';
+  banner.style.borderColor = color + '44';
+  banner.style.background = color + '15';
+  banner.innerHTML = `<i class="ti ti-circle-check" style="font-size:22px;color:${color};flex-shrink:0"></i>
+    <div class="reg-banner-txt">
+      <strong style="color:${color}">${titulo}</strong>
+      <span>${subtitulo} · Registrado en el sistema</span>
+    </div>`;
+  container.insertBefore(banner, container.firstChild);
+  setTimeout(() => { if (banner.parentNode) banner.remove(); }, 8000);
+}
+
+// ─── INCIDENCIA — actualizar función para incluir nuevos campos ───────────────
+const _enviarIncidenciaOriginal = window.enviarIncidencia;
+function enviarIncidencia() {
+  const obra  = document.getElementById('inc-obra')?.value || st.obraId;
+  const tipo  = document.getElementById('inc-tipo')?.value || '';
+  const desc  = document.getElementById('inc-desc')?.value || '';
+  const notas = document.getElementById('inc-notas')?.value || '';
+  const retraso = document.getElementById('inc-retraso')?.value || 'ninguno';
+  const profesional = document.getElementById('inc-profesional')?.value || 'no';
+  if (!desc) { alert('Añade una descripción'); return; }
+  fetch(WH_INCIDENCIA, { method:'POST', headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({ operario: st.nombre, obra, tipo, descripcion: desc,
+      notas, retraso_estimado: retraso, profesional_requerido: profesional,
+      urgencia: st.urgenciaInc, foto: st.incPhotoB64, timestamp: new Date().toISOString() })
+  }).catch(()=>{});
+  mostrarMiniOk('Incidencia reportada','El equipo ha sido notificado y quedará registrada en el historial de obra','ti-alert-triangle');
+}
+
+// ─── CONFIRMAR SALIDA — mostrar feedback ─────────────────────────────────────
+const _confirmarSalidaOriginal = window.confirmarSalida;
+function confirmarSalida() {
+  const hora    = new Date().toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'});
+  const obra    = document.getElementById('sal-obra')?.value || st.obraId;
+  const notas   = document.getElementById('sal-notas')?.value || '';
+  const tareas  = Array.from(document.querySelectorAll('#tareas-check input:checked')).map(c => c.value);
+  fetch(WH_JORNADA, { method:'POST', headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({tipo:'salida', label:'Salida de obra', operario: st.nombre, obra, hora,
+      timestamp: new Date().toISOString(), tareas, notas, inicio: st.jornadaInicio})
+  }).catch(()=>{});
+  fichar('salida','Salida de obra');
+  const tareasStr = tareas.length ? tareas.join(', ') : 'Sin tareas seleccionadas';
+  mostrarMiniOk('Jornada finalizada','Salida registrada · ' + tareasStr, 'ti-clock-stop');
+}
+
+// ─── CHAT ADMINISTRACIÓN ──────────────────────────────────────────────────────
+const WH_ADMIN_CHAT = 'https://aientik.app.n8n.cloud/webhook/mediterras-admin-chat';
+
+function autoGrowChat(el) {
+  el.style.height = 'auto';
+  el.style.height = Math.min(el.scrollHeight, 100) + 'px';
+}
+
+async function enviarMensajeAdmin() {
+  const input = document.getElementById('admin-chat-input');
+  const msg = input.value.trim();
+  if (!msg) return;
+  input.value = '';
+  input.style.height = 'auto';
+
+  const msgs = document.getElementById('admin-chat-msgs');
+
+  // Añadir burbuja usuario
+  msgs.innerHTML += `
+    <div style="display:flex;justify-content:flex-end">
+      <div style="background:#2C3E35;color:#fff;border-radius:14px 14px 4px 14px;padding:10px 14px;max-width:82%;font-size:13px;line-height:1.5">
+        ${msg}
+        <div style="font-size:10px;color:rgba(255,255,255,.45);margin-top:4px;text-align:right">${new Date().toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'})}</div>
+      </div>
+    </div>`;
+
+  // Indicador escribiendo
+  const typingId = 'typing-' + Date.now();
+  msgs.innerHTML += `
+    <div id="${typingId}" style="display:flex;gap:8px;align-items:flex-start">
+      <div style="width:32px;height:32px;border-radius:50%;background:#2C3E35;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+        <i class="ti ti-robot" style="font-size:16px;color:#C8A96E"></i>
+      </div>
+      <div style="background:#fff;border-radius:14px 14px 14px 4px;padding:10px 14px;border:.5px solid #e8e8e8">
+        <div style="display:flex;gap:4px;align-items:center;height:18px">
+          <div style="width:6px;height:6px;border-radius:50%;background:#C8A96E;animation:bounce .8s infinite .0s"></div>
+          <div style="width:6px;height:6px;border-radius:50%;background:#C8A96E;animation:bounce .8s infinite .15s"></div>
+          <div style="width:6px;height:6px;border-radius:50%;background:#C8A96E;animation:bounce .8s infinite .3s"></div>
+        </div>
+      </div>
+    </div>`;
+  msgs.scrollTop = msgs.scrollHeight;
+
+  // Llamar al webhook
+  let respuesta = 'En este momento no puedo conectarme. Inténtalo de nuevo.';
+  try {
+    const res = await fetch(WH_ADMIN_CHAT, {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ operario: st.nombre, obra: st.obraId, mensaje: msg,
+        timestamp: new Date().toISOString() })
+    });
+    const data = await res.json();
+    const d = Array.isArray(data) ? data[0] : data;
+    respuesta = d.respuesta || d.message || d.text || 'Recibido. En breve te respondo.';
+  } catch(e) {}
+
+  // Quitar typing y mostrar respuesta
+  const typingEl = document.getElementById(typingId);
+  if (typingEl) typingEl.remove();
+  msgs.innerHTML += `
+    <div style="display:flex;gap:8px;align-items:flex-start">
+      <div style="width:32px;height:32px;border-radius:50%;background:#2C3E35;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+        <i class="ti ti-robot" style="font-size:16px;color:#C8A96E"></i>
+      </div>
+      <div style="background:#fff;border-radius:14px 14px 14px 4px;padding:10px 14px;max-width:82%;border:.5px solid #e8e8e8">
+        <div style="font-size:12px;font-weight:600;color:#2C3E35;margin-bottom:3px">Agente Mediterras</div>
+        <div style="font-size:13px;color:#444;line-height:1.5">${respuesta}</div>
+        <div style="font-size:10px;color:#bbb;margin-top:4px;text-align:right">${new Date().toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'})}</div>
+      </div>
+    </div>`;
+  msgs.scrollTop = msgs.scrollHeight;
 }
 
 function actualizarListaGastos() {
