@@ -1140,21 +1140,13 @@ function runProcesando() {
   fetch(WH_FASE1, { method:'POST', headers:{'Content-Type':'application/json'},
     body: JSON.stringify({ imagenes: st.imagenesB64, tipo_documento: st.tipoFoto, operario: st.nombre })
   })
-  .then(r => r.text())
-  .then(text => {
-    let d = {};
-    try {
-      const data = JSON.parse(text);
-      const raw  = Array.isArray(data) ? data[0] : data;
-      d = raw.datos_extraidos || raw;
-    } catch(e) {
-      console.warn('Respuesta no JSON:', text);
-    }
-    st.datosExtraidos = d;
+  .then(r => r.json())
+  .then(data => {
+    const d = Array.isArray(data) ? data[0] : data;
+    st.datosExtraidos = d.datos_extraidos || d;
     setTimeout(() => { fillConfirmar(st.datosExtraidos); go('s-confirmar'); }, 2400);
   })
-  .catch(err => {
-    console.warn('Error fetch:', err);
+  .catch(() => {
     st.datosExtraidos = {};
     setTimeout(() => { fillConfirmar({}); go('s-confirmar'); }, 2400);
   });
