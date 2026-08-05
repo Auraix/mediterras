@@ -481,6 +481,14 @@ input[type=file]{display:none}
         </select>
       </div>
 
+      <!-- Imputar gasto al cliente -->
+      <label class="check-opt" id="opt-repercutido" onclick="toggleRepercutido(this)">
+        <input type="checkbox" id="chk-repercutido" onclick="event.stopPropagation()">
+        <div class="check-opt-txt">
+          <strong>Imputar gasto al cliente</strong>
+          <small>El cliente reembolsa este gasto · G-OBR-REP</small>
+        </div>
+      </label>
       <!-- Opción repartir entre obras -->
       <label class="check-opt" id="opt-multiples" onclick="toggleMultiples(this)">
         <input type="checkbox" id="chk-multiples" onclick="event.stopPropagation()">
