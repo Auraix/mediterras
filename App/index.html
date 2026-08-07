@@ -131,7 +131,7 @@ input[type=file]{display:none}
 /* OPCIONES EXTRAS en CONFIRMAR */
 .check-opt{display:flex;align-items:center;gap:10px;padding:12px;background:#fff;border-radius:12px;border:1.5px solid #e0e0e0;margin-bottom:8px;cursor:pointer;transition:border-color .15s}
 .check-opt.active{border-color:#C8A96E;background:#fdf8ef}
-.check-opt input[type=checkbox]{display:none}
+.check-opt input[type=checkbox]{width:18px;height:18px;accent-color:#C8A96E;cursor:pointer;flex-shrink:0}
 .check-opt-txt{flex:1}
 .check-opt-txt strong{font-size:13px;color:#2C3E35;display:block}
 .check-opt-txt small{font-size:11px;color:#888}
@@ -481,28 +481,26 @@ input[type=file]{display:none}
         </select>
       </div>
 
-      <!-- Imputar gasto al cliente -->
-      <label class="check-opt" id="opt-repercutido" onclick="toggleRepercutido(this)">
-        <input type="checkbox" id="chk-repercutido" onclick="event.stopPropagation()">
-        <i class="ti ti-user-dollar" style="font-size:20px;color:#888;flex-shrink:0" id="ico-repercutido"></i>
-        <div class="check-opt-txt">
-          <strong>Imputar gasto al cliente</strong>
-          <small>El cliente reembolsa este gasto · G-OBR-REP</small>
-        </div>
-      </label>
-      <!-- Opción repartir entre obras -->
-      <label class="check-opt" id="opt-multiples" onclick="toggleMultiples(this)">
-        <input type="checkbox" id="chk-multiples" onclick="event.stopPropagation()">
-        <i class="ti ti-building-community" style="font-size:20px;color:#888;flex-shrink:0" id="ico-multiples"></i>
-        <div class="check-opt-txt">
-          <strong>Partidas para obras diferentes</strong>
-          <small>Asigna cada línea a su obra individualmente</small>
-        </div>
-      </label>
+      <!-- Toggles generales -->
+      <div style="display:flex;gap:8px;margin-bottom:8px">
+        <button id="btn-repercutido" onclick="toggleRepercutido()"
+          style="flex:1;padding:10px 8px;border-radius:10px;border:1.5px solid #e0e0e0;background:#fff;cursor:pointer;font-family:inherit;font-size:12px;font-weight:600;color:#888;display:flex;align-items:center;justify-content:center;gap:6px;transition:all .15s">
+          <i class="ti ti-user-dollar" style="font-size:16px"></i>
+          <span>¿Gasto repercutido?</span>
+        </button>
+        <button id="btn-multiples" onclick="toggleMultiples()"
+          style="flex:1;padding:10px 8px;border-radius:10px;border:1.5px solid #e0e0e0;background:#fff;cursor:pointer;font-family:inherit;font-size:12px;font-weight:600;color:#888;display:flex;align-items:center;justify-content:center;gap:6px;transition:all .15s">
+          <i class="ti ti-building-community" style="font-size:16px"></i>
+          <span>¿Obras diferentes?</span>
+        </button>
+      </div>
+      <!-- Checkboxes ocultos para compatibilidad -->
+      <input type="checkbox" id="chk-repercutido" style="display:none">
+      <input type="checkbox" id="chk-multiples" style="display:none">
 
-      <!-- Detalle por línea con obra + repercutido individual (oculto por defecto) -->
-      <div id="lineas-detalle" style="display:none;margin-top:8px">
-        <div class="section-lbl">Asignación por partida</div>
+      <!-- Detalle por partida (oculto por defecto) -->
+      <div id="lineas-detalle" style="display:none;margin-top:4px">
+        <div class="section-lbl">Detalle por partida</div>
         <div id="lineas-detalle-list"></div>
       </div>
     </div>
@@ -1217,41 +1215,77 @@ function fillConfirmar(d) {
   }
 }
 
-function toggleRepercutido(label) {
+function toggleRepercutido() {
   const chk = document.getElementById('chk-repercutido');
+  const btn = document.getElementById('btn-repercutido');
   chk.checked = !chk.checked;
-  label.classList.toggle('active', chk.checked);
-  const ico = document.getElementById('ico-repercutido');
-  if (ico) ico.style.color = chk.checked ? '#C8A96E' : '#888';
+  if (chk.checked) {
+    btn.style.borderColor = '#C8A96E';
+    btn.style.background  = '#fdf8ef';
+    btn.style.color       = '#C8A96E';
+  } else {
+    btn.style.borderColor = '#e0e0e0';
+    btn.style.background  = '#fff';
+    btn.style.color       = '#888';
+  }
+  renderLineasDetalle();
 }
 
-function toggleMultiples(label) {
+function toggleMultiples() {
   const chk = document.getElementById('chk-multiples');
+  const btn = document.getElementById('btn-multiples');
   chk.checked = !chk.checked;
-  label.classList.toggle('active', chk.checked);
-  const ico = document.getElementById('ico-multiples');
-  if (ico) ico.style.color = chk.checked ? '#C8A96E' : '#888';
-  const det = document.getElementById('lineas-detalle');
-  det.style.display = chk.checked ? 'block' : 'none';
-  if (chk.checked) renderLineasDetalle();
+  if (chk.checked) {
+    btn.style.borderColor = '#C8A96E';
+    btn.style.background  = '#fdf8ef';
+    btn.style.color       = '#C8A96E';
+    // Ocultar selector de obra general — cada partida tiene el suyo
+    const obraGenWrap = document.getElementById('obra-selector-general');
+    if (obraGenWrap) obraGenWrap.style.display = 'none';
+  } else {
+    btn.style.borderColor = '#e0e0e0';
+    btn.style.background  = '#fff';
+    btn.style.color       = '#888';
+    const obraGenWrap = document.getElementById('obra-selector-general');
+    if (obraGenWrap) obraGenWrap.style.display = 'block';
+  }
+  renderLineasDetalle();
 }
 
 function renderLineasDetalle() {
-  const lineas = (st._lineas || []).filter(l => l.clasificacion === 'material_obra');
-  const obraOpts = st.obrasActivas.map(o => `<option value="${o.id}">${o.id} · ${o.nombre}</option>`).join('');
+  const esRep = document.getElementById('chk-repercutido')?.checked || false;
+  const esMul = document.getElementById('chk-multiples')?.checked   || false;
+
+  // Solo mostrar panel si alguno está activo
+  const det = document.getElementById('lineas-detalle');
+  if (!esRep && !esMul) { det.style.display = 'none'; return; }
+  det.style.display = 'block';
+
+  const lineas   = (st._lineas || []).filter(l => l.clasificacion === 'material_obra');
+  const obraOpts = st.obrasActivas.map(o =>
+    `<option value="${o.id}">${o.id} · ${o.nombre}</option>`).join('');
+  const obraGeneral = document.getElementById('sel-obra-mat')?.value || st.obraId || '';
+
   const html = lineas.map((l, i) => `
     <div style="background:#fff;border-radius:10px;border:.5px solid #e0e0e0;padding:10px 12px;margin-bottom:8px">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-        <div style="font-size:12px;font-weight:600;color:#2C3E35">${l.descripcion || '—'}</div>
-        <div style="font-size:12px;font-weight:700;color:#C8A96E">${(l.importe||0).toFixed(2)} €</div>
+        <div style="font-size:12px;font-weight:600;color:#2C3E35;flex:1;margin-right:8px">${l.descripcion || '—'}</div>
+        <div style="font-size:12px;font-weight:700;color:#C8A96E;flex-shrink:0">${(l.importe||0).toFixed(2)} €</div>
       </div>
-      <select class="field-input" id="lo-obra-${i}" style="margin-bottom:6px;font-size:12px">${obraOpts}</select>
-      <label style="display:flex;align-items:center;gap:6px;font-size:11px;color:#555;cursor:pointer">
-        <input type="checkbox" id="lo-rep-${i}" style="accent-color:#C8A96E;width:14px;height:14px">
+      ${esMul ? `
+      <select class="field-input" id="lo-obra-${i}" style="margin-bottom:6px;font-size:12px">
+        <option value="${obraGeneral}">${obraGeneral || 'Obra general'}</option>
+        ${obraOpts}
+      </select>` : ''}
+      ${esRep ? `
+      <label style="display:flex;align-items:center;gap:6px;font-size:11px;color:#555;cursor:pointer;padding:6px 0">
+        <input type="checkbox" id="lo-rep-${i}" style="accent-color:#C8A96E;width:15px;height:15px">
         <span>Repercutir este gasto al cliente</span>
-      </label>
+      </label>` : ''}
     </div>`).join('');
-  document.getElementById('lineas-detalle-list').innerHTML = html || '<div style="font-size:12px;color:#888;padding:8px">Sin partidas de obra</div>';
+
+  document.getElementById('lineas-detalle-list').innerHTML =
+    html || '<div style="font-size:12px;color:#888;padding:8px">Sin partidas de material de obra detectadas</div>';
 }
 
 // ─── GUARDANDO ────────────────────────────────────────────────────────────────
@@ -1265,35 +1299,32 @@ function runGuardando() {
 
   // Enriquecer cada línea con su obra y repercutido individual
   const obraGeneral = document.getElementById('sel-obra-mat')?.value || st.obraId;
-  let obraIndexMat = 0;
+  let matIdx = 0;
   const lineasEnriquecidas = (d.lineas || []).map(l => {
-    if (l.clasificacion !== 'material_obra') return l;
-    const i = obraIndexMat++;
-    const obraLinea = esMultiples
-      ? (document.getElementById(`lo-obra-${i}`)?.value || obraGeneral)
-      : obraGeneral;
-    const repLinea = esMultiples
-      ? (document.getElementById(`lo-rep-${i}`)?.checked || false)
-      : esRepercutido;
+    if (l.clasificacion !== 'material_obra') return { ...l, id_obra: obraGeneral, repercutido: false };
+    const i        = matIdx++;
+    const idObra   = esMultiples   ? (document.getElementById(`lo-obra-${i}`)?.value || obraGeneral) : obraGeneral;
+    const repercutido = esRepercutido ? (document.getElementById(`lo-rep-${i}`)?.checked || false)   : false;
     return {
       ...l,
-      id_obra:      obraLinea,
-      repercutido:  repLinea,
-      cod_sugerido: repLinea ? 'G-OBR-REP' : l.cod_sugerido
+      id_obra:      idObra,
+      repercutido:  repercutido,
+      cod_sugerido: repercutido ? 'G-OBR-REP' : l.cod_sugerido
     };
   });
 
   fetch(WH_FASE2, { method:'POST', headers:{'Content-Type':'application/json'},
     body: JSON.stringify({
-      datos_extraidos:      { ...d, lineas: lineasEnriquecidas },
-      tipo_documento:       st.tipoFoto,
-      operario:             st.nombre,
-      id_obra:              obraGeneral,
+      datos_extraidos:       { ...d, lineas: lineasEnriquecidas },
+      tipo_documento:        st.tipoFoto,
+      operario:              st.nombre,
+      id_obra:               obraGeneral,
       clasificacion_general: d.clasificacion_general || 'gasto_empresa',
-      total_confirmado:     total,
-      es_repercutido:       esRepercutido,
-      es_multiples:         esMultiples,
-      timestamp:            new Date().toISOString()
+      imagenes:              st.imagenesB64,
+      total_confirmado:      total,
+      es_repercutido:        esRepercutido,
+      es_multiples:          esMultiples,
+      timestamp:             new Date().toISOString()
     })
   })
   .then(r => r.json())
