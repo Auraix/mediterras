@@ -1152,10 +1152,12 @@ function runProcesando() {
   .then(data => {
     const d = Array.isArray(data) ? data[0] : data;
     st.datosExtraidos = d.datos_extraidos || d;
+    st.imagenesB64 = []; // limpiar fotos — ya no se necesitan
     setTimeout(() => { fillConfirmar(st.datosExtraidos); go('s-confirmar'); }, 2400);
   })
   .catch(() => {
     st.datosExtraidos = {};
+    st.imagenesB64 = [];
     setTimeout(() => { fillConfirmar({}); go('s-confirmar'); }, 2400);
   });
 }
