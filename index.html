@@ -509,9 +509,9 @@ footer p{font-size:.68rem;color:rgba(255,255,255,.6);font-weight:300}
       <button class="lang-btn" data-lang="en" onclick="setLang('en')"><span class="flag"></span><span>EN</span></button>
       <button class="lang-btn" data-lang="fr" onclick="setLang('fr')"><span class="flag"></span><span>FR</span></button>
     </div>
-    <a href="/acceso.html" target="_blank" rel="noopener" class="staff-access" title="Acceso operarios" aria-label="Acceso operarios">
+    <button onclick="abrirAcceso()" class="staff-access" title="Acceso staff" aria-label="Acceso staff" style="background:none;border:1px solid rgba(200,169,110,.35);cursor:pointer">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-3.5 3.5-6 8-6s8 2.5 8 6"/></svg>
-    </a>
+    </button>
   </div>
 </nav>
 
@@ -1000,6 +1000,129 @@ footer p{font-size:.68rem;color:rgba(255,255,255,.6);font-weight:300}
     });
   },100);
 })();
+</script>
+
+<!-- ═══ MODAL ACCESO STAFF ═══ -->
+<div id="modal-acceso" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:9999;align-items:center;justify-content:center">
+  <div style="background:#fff;border-radius:20px;width:90%;max-width:360px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.3)">
+
+    <!-- HEADER -->
+    <div style="background:#2C3E35;padding:28px 24px 22px;text-align:center">
+      <div style="font-family:'Cormorant Garamond',Georgia,serif;font-size:24px;font-weight:700;color:#fff;letter-spacing:-.3px">Mediterras<span style="color:#C8A96E">.</span></div>
+      <div style="font-size:10px;color:rgba(200,169,110,.6);margin-top:4px;letter-spacing:.1em;text-transform:uppercase">Acceso restringido</div>
+    </div>
+
+    <!-- LOGIN FORM -->
+    <div id="acceso-login" style="padding:24px">
+      <div style="margin-bottom:12px">
+        <div style="font-size:11px;font-weight:600;color:#888;text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px">Usuario</div>
+        <input id="acc-usuario" type="text" placeholder="Tu usuario" autocapitalize="none" autocomplete="off"
+          style="width:100%;padding:11px 14px;border:1.5px solid #e0e0e0;border-radius:10px;font-size:14px;font-family:inherit;outline:none;color:#1a1a1a;transition:border-color .15s"
+          onfocus="this.style.borderColor='#C8A96E'" onblur="this.style.borderColor='#e0e0e0'"
+          onkeydown="if(event.key==='Enter')document.getElementById('acc-pin').focus()">
+      </div>
+      <div style="margin-bottom:16px">
+        <div style="font-size:11px;font-weight:600;color:#888;text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px">PIN</div>
+        <input id="acc-pin" type="password" placeholder="••••" inputmode="numeric" maxlength="4"
+          style="width:100%;padding:11px 14px;border:1.5px solid #e0e0e0;border-radius:10px;font-size:14px;font-family:inherit;outline:none;color:#1a1a1a;transition:border-color .15s"
+          onfocus="this.style.borderColor='#C8A96E'" onblur="this.style.borderColor='#e0e0e0'"
+          onkeydown="if(event.key==='Enter')doAcceso()">
+      </div>
+      <div id="acceso-error" style="display:none;color:#E74C3C;font-size:12px;margin-bottom:10px;text-align:center">Usuario o PIN incorrecto</div>
+      <button onclick="doAcceso()"
+        style="width:100%;padding:13px;background:#2C3E35;color:#C8A96E;border:none;border-radius:10px;font-size:14px;font-weight:600;font-family:inherit;cursor:pointer;transition:background .2s">
+        Entrar
+      </button>
+      <button onclick="cerrarAcceso()"
+        style="width:100%;padding:10px;background:none;border:none;color:#aaa;font-size:12px;font-family:inherit;cursor:pointer;margin-top:8px">
+        Cancelar
+      </button>
+    </div>
+
+    <!-- SELECTOR APP/DASHBOARD (oculto hasta login correcto) -->
+    <div id="acceso-selector" style="display:none;padding:20px 24px">
+      <div style="text-align:center;margin-bottom:20px">
+        <div style="font-size:14px;font-weight:600;color:#2C3E35">Bienvenido, <span id="acc-nombre">—</span></div>
+        <div style="font-size:11px;color:#888;margin-top:2px">¿Dónde quieres trabajar?</div>
+      </div>
+      <!-- App -->
+      <a id="acc-btn-app" href="/app/index.html" target="_blank"
+        style="display:flex;align-items:center;gap:14px;background:#2C3E35;border-radius:14px;padding:16px 18px;text-decoration:none;margin-bottom:12px;transition:opacity .15s"
+        onmouseover="this.style.opacity='.88'" onmouseout="this.style.opacity='1'">
+        <div style="width:44px;height:44px;border-radius:12px;background:rgba(200,169,110,.15);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#C8A96E" stroke-width="1.8" width="22" height="22"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18" stroke-width="2.5"/></svg>
+        </div>
+        <div style="flex:1">
+          <div style="font-size:14px;font-weight:700;color:#fff;margin-bottom:2px">App de obra</div>
+          <div style="font-size:11px;color:rgba(255,255,255,.5)">Jornada · Facturas · Incidencias</div>
+        </div>
+        <svg viewBox="0 0 24 24" fill="none" stroke="#C8A96E" stroke-width="2" width="16" height="16"><path d="M9 18l6-6-6-6"/></svg>
+      </a>
+      <!-- Dashboard (solo admin) -->
+      <a id="acc-btn-dash" href="/app/dashboard.html" target="_blank"
+        style="display:none;align-items:center;gap:14px;background:#C8A96E;border-radius:14px;padding:16px 18px;text-decoration:none;margin-bottom:12px;transition:opacity .15s"
+        onmouseover="this.style.opacity='.88'" onmouseout="this.style.opacity='1'">
+        <div style="width:44px;height:44px;border-radius:12px;background:rgba(44,62,53,.15);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#2C3E35" stroke-width="1.8" width="22" height="22"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        </div>
+        <div style="flex:1">
+          <div style="font-size:14px;font-weight:700;color:#2C3E35;margin-bottom:2px">Dashboard financiero</div>
+          <div style="font-size:11px;color:rgba(44,62,53,.6)">KPIs · Proyectos · IVA · Previsión</div>
+        </div>
+        <svg viewBox="0 0 24 24" fill="none" stroke="#2C3E35" stroke-width="2" width="16" height="16"><path d="M9 18l6-6-6-6"/></svg>
+      </a>
+      <button onclick="cerrarAcceso()"
+        style="width:100%;padding:10px;background:none;border:none;color:#aaa;font-size:12px;font-family:inherit;cursor:pointer">
+        Cerrar
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// ── USUARIOS HARDCODEADOS ──
+const USUARIOS = {
+  'Joaquinbr': { pin: '0001', nombre: 'Joaquín', rol: 'admin' }
+};
+
+function abrirAcceso() {
+  document.getElementById('modal-acceso').style.display = 'flex';
+  document.getElementById('acceso-login').style.display = 'block';
+  document.getElementById('acceso-selector').style.display = 'none';
+  document.getElementById('acceso-error').style.display = 'none';
+  document.getElementById('acc-usuario').value = '';
+  document.getElementById('acc-pin').value = '';
+  setTimeout(() => document.getElementById('acc-usuario').focus(), 100);
+}
+
+function cerrarAcceso() {
+  document.getElementById('modal-acceso').style.display = 'none';
+}
+
+function doAcceso() {
+  const usuario = document.getElementById('acc-usuario').value.trim();
+  const pin     = document.getElementById('acc-pin').value.trim();
+  const user    = USUARIOS[usuario];
+
+  if (user && user.pin === pin) {
+    document.getElementById('acceso-error').style.display = 'none';
+    document.getElementById('acc-nombre').textContent = user.nombre;
+    // Mostrar dashboard solo si es admin
+    const btnDash = document.getElementById('acc-btn-dash');
+    if (user.rol === 'admin') btnDash.style.display = 'flex';
+    // Pasar al selector
+    document.getElementById('acceso-login').style.display = 'none';
+    document.getElementById('acceso-selector').style.display = 'block';
+  } else {
+    document.getElementById('acceso-error').style.display = 'block';
+  }
+}
+
+// Cerrar al hacer clic fuera del modal
+document.getElementById('modal-acceso').addEventListener('click', function(e) {
+  if (e.target === this) cerrarAcceso();
+});
 </script>
 </body>
 </html>
