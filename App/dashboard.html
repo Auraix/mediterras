@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mediterras · Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --olive:#2C3E35;
+  --gold:#C8A96E;
+  --gold-l:#e8d5a8;
+  --cream:#F5F0E8;
+  --sage:#7A9E8A;
+  --carbon:#3D3D3A;
+  --white:#ffffff;
+  --bg:#F0EDE6;
+  --card:#ffffff;
+  --border:#e8e5df;
+  --text:#1a1a1a;
+  --muted:#888;
+  --green:#27A86A;
+  --red:#E74C3C;
+  --blue:#1A5276;
+}
+body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+
+/* TOPBAR */
+.topbar{background:var(--olive);padding:0 24px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.topbar-logo{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:var(--white);letter-spacing:-.3px}
+.topbar-logo span{color:var(--gold)}
+.topbar-right{display:flex;align-items:center;gap:16px}
+.topbar-time{font-size:12px;color:rgba(255,255,255,.45);font-weight:300}
+.topbar-badge{font-size:10px;font-weight:600;color:var(--gold);background:rgba(200,169,110,.12);border:.5px solid rgba(200,169,110,.3);padding:3px 10px;border-radius:20px;letter-spacing:.05em}
+.refresh-btn{background:none;border:.5px solid rgba(255,255,255,.2);color:rgba(255,255,255,.6);border-radius:8px;padding:5px 10px;cursor:pointer;font-size:11px;font-family:inherit;display:flex;align-items:center;gap:5px;transition:all .2s}
+.refresh-btn:hover{border-color:var(--gold);color:var(--gold)}
+
+/* NAV TABS */
+.nav-tabs{background:var(--white);border-bottom:.5px solid var(--border);padding:0 24px;display:flex;gap:0;position:sticky;top:56px;z-index:99}
+.nav-tab{padding:14px 18px;font-size:13px;font-weight:500;color:var(--muted);border-bottom:2px solid transparent;cursor:pointer;display:flex;align-items:center;gap:7px;transition:all .15s;white-space:nowrap}
+.nav-tab:hover{color:var(--olive)}
+.nav-tab.active{color:var(--olive);border-bottom-color:var(--gold);font-weight:600}
+.nav-tab i{font-size:16px}
+
+/* LAYOUT */
+.main{max-width:1280px;margin:0 auto;padding:24px}
+.section{display:none}
+.section.active{display:block}
+
+/* CARDS */
+.card{background:var(--card);border-radius:14px;border:.5px solid var(--border);padding:20px}
+.card-title{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:14px;display:flex;align-items:center;gap:6px}
+.card-title i{font-size:14px;color:var(--gold)}
+
+/* KPI GRID */
+.kpi-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:20px}
+.kpi{background:var(--card);border-radius:14px;border:.5px solid var(--border);padding:18px 20px;position:relative;overflow:hidden}
+.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--gold)}
+.kpi-label{font-size:11px;color:var(--muted);font-weight:500;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+.kpi-value{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:700;color:var(--olive);line-height:1}
+.kpi-value.green{color:var(--green)}
+.kpi-value.red{color:var(--red)}
+.kpi-sub{font-size:11px;color:var(--muted);margin-top:4px}
+.kpi-icon{position:absolute;right:14px;top:14px;font-size:22px;color:rgba(200,169,110,.2)}
+
+/* GRID LAYOUTS */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+.grid-65{display:grid;grid-template-columns:1.8fr 1fr;gap:16px}
+
+/* TABLA PROYECTOS */
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px}
+thead th{font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;padding:8px 12px;text-align:left;border-bottom:.5px solid var(--border)}
+tbody tr{border-bottom:.5px solid #f5f2ec;transition:background .1s}
+tbody tr:hover{background:#faf8f4}
+tbody tr:last-child{border-bottom:none}
+td{padding:10px 12px;color:var(--text)}
+.td-id{font-size:11px;font-family:monospace;color:var(--muted);font-weight:600}
+.td-nombre{font-weight:500;color:var(--olive)}
+.td-num{font-weight:600;text-align:right}
+.td-num.green{color:var(--green)}
+.td-num.red{color:var(--red)}
+.badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:20px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+.badge-green{background:#eaf3de;color:#276221}
+.badge-orange{background:#fef3e2;color:#b05d00}
+.badge-blue{background:#e6f1fb;color:#1A5276}
+
+/* PROGRESS BAR */
+.progress-wrap{margin-top:6px}
+.progress-label{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:4px}
+.progress-bar{height:6px;background:#f0ede6;border-radius:3px;overflow:hidden}
+.progress-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--gold),var(--sage));transition:width .6s ease}
+
+/* IVA SECTION */
+.iva-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:.5px solid var(--border)}
+.iva-row:last-child{border-bottom:none}
+.iva-label{font-size:13px;color:var(--carbon)}
+.iva-amount{font-size:14px;font-weight:600}
+.iva-total{background:var(--olive);border-radius:10px;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;margin-top:10px}
+.iva-total span:first-child{font-size:12px;font-weight:600;color:rgba(255,255,255,.7)}
+.iva-total span:last-child{font-size:18px;font-weight:700;color:var(--gold)}
+
+/* SIMULADOR */
+.sim-input{width:100%;border:.5px solid var(--border);border-radius:10px;padding:10px 14px;font-size:15px;font-weight:600;color:var(--olive);font-family:inherit;background:var(--bg);outline:none;text-align:center}
+.sim-input:focus{border-color:var(--gold)}
+.sim-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.sim-kpi{background:var(--bg);border-radius:10px;padding:12px 14px;text-align:center}
+.sim-kpi-label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
+.sim-kpi-value{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:var(--olive)}
+
+/* CHAT AGENTE */
+.chat-wrap{display:flex;flex-direction:column;height:calc(100vh - 160px);min-height:500px}
+.chat-header{background:var(--olive);border-radius:14px 14px 0 0;padding:14px 18px;display:flex;align-items:center;gap:12px}
+.chat-avatar{width:38px;height:38px;border-radius:50%;background:rgba(200,169,110,.15);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.chat-avatar i{font-size:18px;color:var(--gold)}
+.chat-info-name{font-size:14px;font-weight:600;color:var(--white)}
+.chat-info-sub{font-size:11px;color:rgba(255,255,255,.45)}
+.chat-online{width:7px;height:7px;border-radius:50%;background:var(--green);margin-left:auto;flex-shrink:0}
+.chat-messages{flex:1;overflow-y:auto;padding:16px;background:var(--bg);display:flex;flex-direction:column;gap:12px;border-left:.5px solid var(--border);border-right:.5px solid var(--border)}
+.chat-messages::-webkit-scrollbar{width:3px}
+.chat-messages::-webkit-scrollbar-thumb{background:#ddd;border-radius:2px}
+.msg{display:flex;gap:10px;align-items:flex-start;animation:fadeUp .2s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.msg.user{flex-direction:row-reverse}
+.msg-av{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:13px}
+.msg-av.agent{background:var(--olive)}
+.msg-av.agent i{color:var(--gold);font-size:14px}
+.msg-av.user{background:var(--gold)}
+.msg-av.user i{color:var(--olive);font-size:14px}
+.msg-bubble{max-width:78%;padding:10px 14px;border-radius:14px;font-size:13px;line-height:1.6}
+.msg-bubble.agent{background:var(--white);border-radius:14px 14px 14px 4px;border:.5px solid var(--border)}
+.msg-bubble.user{background:var(--olive);color:var(--white);border-radius:14px 14px 4px 14px}
+.msg-name{font-size:10px;font-weight:700;color:var(--olive);margin-bottom:2px}
+.msg-time{font-size:10px;color:var(--muted);margin-top:4px}
+.msg-time.user{text-align:right;color:rgba(255,255,255,.4)}
+.typing{display:flex;gap:4px;align-items:center;height:16px}
+.typing span{width:6px;height:6px;border-radius:50%;background:var(--gold);animation:bounce .8s infinite}
+.typing span:nth-child(2){animation-delay:.15s}
+.typing span:nth-child(3){animation-delay:.3s}
+@keyframes bounce{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-5px)}}
+.chat-input-area{background:var(--white);border:.5px solid var(--border);border-top:none;border-radius:0 0 14px 14px;padding:12px 14px;display:flex;gap:10px;align-items:flex-end}
+.chat-input{flex:1;border:.5px solid var(--border);border-radius:10px;padding:9px 14px;font-size:13px;font-family:inherit;resize:none;outline:none;max-height:100px;line-height:1.5;color:var(--text);background:var(--bg)}
+.chat-input:focus{border-color:var(--gold)}
+.chat-send{width:38px;height:38px;border-radius:50%;background:var(--olive);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .15s}
+.chat-send:hover{background:#1a2e28}
+.chat-send i{color:var(--gold);font-size:17px}
+
+/* LOADING */
+.loading{display:flex;align-items:center;justify-content:center;height:200px;flex-direction:column;gap:12px}
+.spin{width:32px;height:32px;border:2px solid var(--border);border-top-color:var(--gold);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* FACTURAS TABLE */
+.fact-badge{display:inline-block;padding:2px 8px;border-radius:6px;font-size:10px;font-weight:600}
+.fact-badge.fact{background:#e6f1fb;color:var(--blue)}
+.fact-badge.tick{background:#fef3e2;color:#b05d00}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .kpi-grid{grid-template-columns:repeat(2,1fr)}
+  .grid-2,.grid-3,.grid-65{grid-template-columns:1fr}
+  .main{padding:14px}
+}
+@media(max-width:600px){
+  .kpi-grid{grid-template-columns:1fr 1fr}
+  .nav-tab span{display:none}
+}
+
+/* SECTION SPACING */
+.section > *+*{margin-top:16px}
+.mb-16{margin-bottom:16px}
+.divider{height:.5px;background:var(--border);margin:20px 0}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div style="display:flex;align-items:center;gap:16px">
+    <div>
+      <div class="topbar-logo">Mediterras<span>.</span></div>
+    </div>
+    <div class="topbar-badge">Dashboard interno</div>
+  </div>
+  <div class="topbar-right">
+    <div class="topbar-time" id="last-update">Actualizando...</div>
+    <button class="refresh-btn" onclick="cargarDatos()">
+      <i class="ti ti-refresh"></i> Actualizar
+    </button>
+  </div>
+</div>
+
+<!-- NAV TABS -->
+<div class="nav-tabs">
+  <div class="nav-tab active" onclick="setTab('resumen')" id="tab-resumen">
+    <i class="ti ti-layout-dashboard"></i><span>Resumen</span>
+  </div>
+  <div class="nav-tab" onclick="setTab('proyectos')" id="tab-proyectos">
+    <i class="ti ti-building"></i><span>Proyectos</span>
+  </div>
+  <div class="nav-tab" onclick="setTab('contabilidad')" id="tab-contabilidad">
+    <i class="ti ti-file-invoice"></i><span>Contabilidad</span>
+  </div>
+  <div class="nav-tab" onclick="setTab('iva')" id="tab-iva">
+    <i class="ti ti-receipt-tax"></i><span>IVA</span>
+  </div>
+  <div class="nav-tab" onclick="setTab('prevision')" id="tab-prevision">
+    <i class="ti ti-trending-up"></i><span>Previsión</span>
+  </div>
+  <div class="nav-tab" onclick="setTab('agente')" id="tab-agente">
+    <i class="ti ti-message-chatbot"></i><span>Agente</span>
+  </div>
+</div>
+
+<div class="main">
+
+<!-- ══ RESUMEN ══ -->
+<div class="section active" id="section-resumen">
+  <div class="kpi-grid" id="kpi-grid">
+    <div class="loading"><div class="spin"></div></div>
+  </div>
+  <div class="grid-65">
+    <div class="card">
+      <div class="card-title"><i class="ti ti-building"></i>Estado de obras</div>
+      <div id="obras-resumen"><div class="loading"><div class="spin"></div></div></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><i class="ti ti-cash"></i>Tesorería</div>
+      <div id="tesoreria-mini"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ PROYECTOS ══ -->
+<div class="section" id="section-proyectos">
+  <div class="card">
+    <div class="card-title"><i class="ti ti-building"></i>Todos los proyectos</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Proyecto</th>
+            <th>Cliente</th>
+            <th>Estado</th>
+            <th style="text-align:right">Presupuesto</th>
+            <th style="text-align:right">Cobrado</th>
+            <th style="text-align:right">Gastado</th>
+            <th style="text-align:right">Beneficio</th>
+            <th>Progreso cobro</th>
+          </tr>
+        </thead>
+        <tbody id="proyectos-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+  <div class="grid-3" id="proyectos-detail"></div>
+</div>
+
+<!-- ══ CONTABILIDAD ══ -->
+<div class="section" id="section-contabilidad">
+  <div class="card">
+    <div class="card-title"><i class="ti ti-file-invoice"></i>Facturas registradas</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nº Factura</th>
+            <th>Tipo</th>
+            <th>Fecha</th>
+            <th>Proveedor</th>
+            <th style="text-align:right">Base</th>
+            <th style="text-align:right">IVA</th>
+            <th style="text-align:right">Total</th>
+            <th>Pago</th>
+            <th>IVA Ded.</th>
+          </tr>
+        </thead>
+        <tbody id="facturas-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ══ IVA ══ -->
+<div class="section" id="section-iva">
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title"><i class="ti ti-arrow-up-circle"></i>IVA Repercutido (ventas)</div>
+      <div id="iva-repercutido"></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><i class="ti ti-arrow-down-circle"></i>IVA Soportado deducible</div>
+      <div id="iva-soportado"></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title"><i class="ti ti-calculator"></i>Liquidación Modelo 303</div>
+    <div id="iva-liquidacion"></div>
+  </div>
+</div>
+
+<!-- ══ PREVISIÓN ══ -->
+<div class="section" id="section-prevision">
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title"><i class="ti ti-trending-up"></i>Previsión basada en ritmo actual</div>
+      <div id="prevision-actual"></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><i class="ti ti-adjustments"></i>Simulador — ¿Qué pasa si cambio el ritmo?</div>
+      <div style="text-align:center;margin-bottom:8px">
+        <div style="font-size:11px;color:var(--muted);margin-bottom:6px">Obras por mes</div>
+        <input type="number" class="sim-input" id="sim-obras" value="3" min="1" max="20" oninput="simular()">
+      </div>
+      <div class="sim-grid" id="sim-results"></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title"><i class="ti ti-chart-bar"></i>Proyección mensual</div>
+    <div id="chart-prevision" style="height:180px;display:flex;align-items:flex-end;gap:8px;padding-top:10px"></div>
+  </div>
+</div>
+
+<!-- ══ AGENTE ══ -->
+<div class="section" id="section-agente">
+  <div class="chat-wrap">
+    <div class="chat-header">
+      <div class="chat-avatar"><i class="ti ti-message-chatbot"></i></div>
+      <div>
+        <div class="chat-info-name">Blanca · Agente Administrativo</div>
+        <div class="chat-info-sub">Contabilidad · Fiscal · Legal · Proyectos</div>
+      </div>
+      <div class="chat-online"></div>
+    </div>
+    <div class="chat-messages" id="chat-msgs">
+      <div class="msg">
+        <div class="msg-av agent"><i class="ti ti-message-chatbot"></i></div>
+        <div>
+          <div class="msg-name">Blanca</div>
+          <div class="msg-bubble agent">
+            Hola. Soy Blanca, tu asistente administrativa. Tengo acceso a todos vuestros datos de proyectos, facturas, IVA y contabilidad.<br><br>
+            Puedo ayudarte con preguntas como:<br>
+            · ¿Cuánto IVA debemos pagar este trimestre?<br>
+            · ¿Cuál es el margen de la obra OBR-001?<br>
+            · ¿Qué facturas están pendientes de cobro?<br>
+            · ¿Qué deducciones puedo aplicar?
+          </div>
+          <div class="msg-time">Ahora</div>
+        </div>
+      </div>
+    </div>
+    <div class="chat-input-area">
+      <textarea class="chat-input" id="chat-input" placeholder="Pregunta a Blanca sobre contabilidad, fiscal o proyectos..." rows="1"
+        oninput="autoGrow(this)"
+        onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();enviar()}"></textarea>
+      <button class="chat-send" onclick="enviar()"><i class="ti ti-send"></i></button>
+    </div>
+  </div>
+</div>
+
+</div><!-- /main -->
+
+<script>
+// ── CONFIG ────────────────────────────────────────────────────
+const WH_DATOS     = 'https://aientik.app.n8n.cloud/webhook/mediterras-datos';
+const WH_AGENTE    = 'https://aientik.app.n8n.cloud/webhook/mediterras-administrativo';
+
+// ── ESTADO ────────────────────────────────────────────────────
+let datos = null;
+let conversacion = [];
+let ingresoMedio = 0;
+let gastoMedio   = 0;
+
+// ── TABS ──────────────────────────────────────────────────────
+function setTab(id) {
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  document.getElementById('section-' + id).classList.add('active');
+}
+
+// ── FORMAT ────────────────────────────────────────────────────
+const fmt = (n, dec=2) => (n||0).toLocaleString('es-ES', {minimumFractionDigits:dec, maximumFractionDigits:dec});
+const fmtK = (n) => n >= 1000 ? (n/1000).toFixed(1) + 'K' : fmt(n, 0);
+const pct = (n) => (n||0).toFixed(1) + '%';
+const now = () => new Date().toLocaleTimeString('es-ES', {hour:'2-digit', minute:'2-digit'});
+
+// ── CARGAR DATOS ──────────────────────────────────────────────
+async function cargarDatos() {
+  document.getElementById('last-update').textContent = 'Actualizando...';
+  try {
+    const res  = await fetch(WH_DATOS);
+    const json = await res.json();
+    datos = Array.isArray(json) ? json[0] : json;
+    renderAll();
+    document.getElementById('last-update').textContent = 'Actualizado ' + now();
+  } catch(e) {
+    document.getElementById('last-update').textContent = 'Error al cargar datos';
+    console.error(e);
+  }
+}
+
+// ── RENDER ALL ────────────────────────────────────────────────
+function renderAll() {
+  if (!datos) return;
+  renderKPIs();
+  renderObrasResumen();
+  renderTesoreria();
+  renderProyectos();
+  renderFacturas();
+  renderIVA();
+  renderPrevision();
+  simular();
+}
+
+// ── KPIs ──────────────────────────────────────────────────────
+function renderKPIs() {
+  const r = datos.resumen;
+  const kpis = [
+    { label:'Ingresos cobrados', value:'€ '+fmtK(r.ingresos_cobrados), sub:'Total acumulado', icon:'ti-cash', cls:'' },
+    { label:'Beneficio bruto',   value:'€ '+fmtK(r.beneficio_bruto),   sub:'Sin gastos generales', icon:'ti-trending-up', cls:'green' },
+    { label:'Saldo en caja',     value:'€ '+fmtK(r.saldo_caja),        sub:'Cobrado − gastado', icon:'ti-building-bank', cls:r.saldo_caja >= 0 ? 'green' : 'red' },
+    { label:'Margen bruto',      value:pct(r.margen_bruto_pct),         sub:'Sobre base imponible', icon:'ti-percentage', cls:r.margen_bruto_pct > 50 ? 'green' : '' },
+    { label:'Obras',             value:r.obras_activas+' activas',       sub:r.obras_cobradas+' cobradas · '+r.obras_total+' total', icon:'ti-building', cls:'' },
+  ];
+  document.getElementById('kpi-grid').innerHTML = kpis.map(k => `
+    <div class="kpi">
+      <i class="ti ${k.icon} kpi-icon"></i>
+      <div class="kpi-label">${k.label}</div>
+      <div class="kpi-value ${k.cls}">${k.value}</div>
+      <div class="kpi-sub">${k.sub}</div>
+    </div>`).join('');
+}
+
+// ── OBRAS RESUMEN ─────────────────────────────────────────────
+function renderObrasResumen() {
+  const proyectos = datos.proyectos || [];
+  document.getElementById('obras-resumen').innerHTML = proyectos.map(p => {
+    const progCobro = p.total_con_iva > 0 ? Math.min(100, Math.round(p.cobrado / p.total_con_iva * 100)) : 0;
+    const badge = p.estado === 'EN CURSO'
+      ? '<span class="badge badge-orange">En curso</span>'
+      : p.estado === 'COBRADO'
+      ? '<span class="badge badge-green">Cobrado</span>'
+      : `<span class="badge badge-blue">${p.estado}</span>`;
+    return `
+      <div style="padding:12px 0;border-bottom:.5px solid var(--border)">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+          <div>
+            <span style="font-size:10px;font-family:monospace;color:var(--muted);font-weight:600">${p.id}</span>
+            <span style="font-size:13px;font-weight:600;color:var(--olive);margin-left:8px">${p.nombre}</span>
+          </div>
+          ${badge}
+        </div>
+        <div style="display:flex;gap:16px;font-size:11px;color:var(--muted);margin-bottom:6px">
+          <span>Presupuesto <strong style="color:var(--text)">€ ${fmt(p.total_con_iva)}</strong></span>
+          <span>Cobrado <strong style="color:var(--green)">€ ${fmt(p.cobrado)}</strong></span>
+          <span>Gastado <strong style="color:var(--red)">€ ${fmt(p.gastado)}</strong></span>
+          <span>Margen <strong style="color:var(--olive)">€ ${fmt(p.beneficio_bruto)}</strong></span>
+        </div>
+        <div class="progress-wrap">
+          <div class="progress-label"><span>Cobro</span><span>${progCobro}%</span></div>
+          <div class="progress-bar"><div class="progress-fill" style="width:${progCobro}%"></div></div>
+        </div>
+      </div>`;
+  }).join('') || '<div style="color:var(--muted);font-size:13px;padding:12px 0">Sin proyectos</div>';
+}
+
+// ── TESORERÍA MINI ────────────────────────────────────────────
+function renderTesoreria() {
+  const r = datos.resumen;
+  const p = datos.prevision;
+  document.getElementById('tesoreria-mini').innerHTML = `
+    <div class="iva-row">
+      <span class="iva-label">Total cobrado</span>
+      <span class="iva-amount" style="color:var(--green)">€ ${fmt(r.ingresos_cobrados)}</span>
+    </div>
+    <div class="iva-row">
+      <span class="iva-label">Total gastado</span>
+      <span class="iva-amount" style="color:var(--red)">€ ${fmt(r.total_gastado)}</span>
+    </div>
+    <div class="iva-total" style="margin-top:12px">
+      <span>Saldo en caja</span>
+      <span>€ ${fmt(r.saldo_caja)}</span>
+    </div>
+    <div style="margin-top:12px;padding:10px;background:var(--bg);border-radius:10px;font-size:12px;color:var(--muted)">
+      <i class="ti ti-trending-up" style="color:var(--gold);margin-right:4px"></i>
+      Previsión anual: <strong style="color:var(--olive)">€ ${fmt(p.prevision_anual)}</strong>
+      al ritmo de ${p.obras_mes_actual} obras/mes
+    </div>`;
+}
+
+// ── PROYECTOS TABLE ───────────────────────────────────────────
+function renderProyectos() {
+  const proyectos = datos.proyectos || [];
+  document.getElementById('proyectos-tbody').innerHTML = proyectos.map(p => {
+    const progCobro = p.total_con_iva > 0 ? Math.min(100, Math.round(p.cobrado / p.total_con_iva * 100)) : 0;
+    const badge = p.estado === 'EN CURSO'
+      ? '<span class="badge badge-orange">En curso</span>'
+      : p.estado === 'COBRADO'
+      ? '<span class="badge badge-green">Cobrado</span>'
+      : `<span class="badge badge-blue">${p.estado}</span>`;
+    return `<tr>
+      <td class="td-id">${p.id}</td>
+      <td class="td-nombre">${p.nombre}</td>
+      <td style="font-size:12px;color:var(--muted)">${p.cliente}</td>
+      <td>${badge}</td>
+      <td class="td-num">€ ${fmt(p.total_con_iva)}</td>
+      <td class="td-num green">€ ${fmt(p.cobrado)}</td>
+      <td class="td-num red">€ ${fmt(p.gastado)}</td>
+      <td class="td-num" style="color:var(--olive);font-weight:700">€ ${fmt(p.beneficio_bruto)}</td>
+      <td style="min-width:120px">
+        <div class="progress-bar"><div class="progress-fill" style="width:${progCobro}%"></div></div>
+        <div style="font-size:10px;color:var(--muted);margin-top:2px">${progCobro}%</div>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+// ── FACTURAS TABLE ────────────────────────────────────────────
+function renderFacturas() {
+  const facturas = datos.facturas || [];
+  if (!facturas.length) {
+    document.getElementById('facturas-tbody').innerHTML = '<tr><td colspan="10" style="text-align:center;color:var(--muted);padding:20px">Sin facturas en la BD</td></tr>';
+    return;
+  }
+  document.getElementById('facturas-tbody').innerHTML = facturas.map(f => `
+    <tr>
+      <td class="td-id">${f['ID FACTURA']||'—'}</td>
+      <td style="font-size:12px">${f['Nº FACTURA']||'—'}</td>
+      <td><span class="fact-badge ${(f['TIPO DOCUMENTO']||'').includes('TICKET')?'tick':'fact'}">${f['TIPO DOCUMENTO']||'—'}</span></td>
+      <td style="font-size:12px;color:var(--muted)">${f['FECHA FACTURA']||'—'}</td>
+      <td style="font-size:12px">${f['PROVEEDOR']||'—'}</td>
+      <td class="td-num">€ ${fmt(f['BASE IMPONIBLE']||0)}</td>
+      <td class="td-num" style="color:var(--muted)">€ ${fmt(f['IVA €']||0)}</td>
+      <td class="td-num" style="font-weight:700">€ ${fmt(f['IMPORTE €']||0)}</td>
+      <td><span class="badge ${f['ESTADO PAGO']==='Pagado'?'badge-green':'badge-orange'}">${f['ESTADO PAGO']||'—'}</span></td>
+      <td style="font-size:12px;color:${f['IVA DEDUCIBLE']==='Si'?'var(--green)':'var(--red)'}">${f['IVA DEDUCIBLE']||'—'}</td>
+    </tr>`).join('');
+}
+
+// ── IVA ───────────────────────────────────────────────────────
+function renderIVA() {
+  const iva = datos.iva || {};
+
+  // Repercutido
+  const repRows = (iva.repercutido_detalle || [
+    { concepto: 'Obras vivienda habitual (10%)', base: iva.base_repercutido_10||0, importe: iva.importe_repercutido_10||0 },
+    { concepto: 'Obras segunda vivienda (21%)',  base: iva.base_repercutido_21||0, importe: iva.importe_repercutido_21||0 },
+    { concepto: 'Cobros sin factura (0%)',        base: iva.base_sin_factura||0,    importe: 0 },
+  ]);
+  document.getElementById('iva-repercutido').innerHTML = (repRows.map(r => `
+    <div class="iva-row">
+      <span class="iva-label">${r.concepto}</span>
+      <span class="iva-amount">€ ${fmt(r.importe||0)}</span>
+    </div>`).join('')) + `
+    <div class="iva-total">
+      <span>Total IVA repercutido</span>
+      <span>€ ${fmt(iva.total_repercutido||0)}</span>
+    </div>`;
+
+  // Soportado
+  const sopRows = iva.soportado_detalle || [
+    { concepto: 'Material de obra FACT (21%)',     importe: iva.soportado_material||0 },
+    { concepto: 'Gastos generales FACT (21%)',     importe: iva.soportado_general||0 },
+    { concepto: 'Herramientas FACT (21%)',         importe: iva.soportado_herr||0 },
+    { concepto: 'No deducible (tickets sin CIF)',  importe: iva.no_deducible||0 },
+  ];
+  document.getElementById('iva-soportado').innerHTML = (sopRows.map(r => `
+    <div class="iva-row">
+      <span class="iva-label">${r.concepto}</span>
+      <span class="iva-amount">€ ${fmt(r.importe||0)}</span>
+    </div>`).join('')) + `
+    <div class="iva-total">
+      <span>Total IVA soportado</span>
+      <span>€ ${fmt(iva.total_soportado||0)}</span>
+    </div>`;
+
+  // Liquidación
+  const cuota = (iva.total_repercutido||0) - (iva.total_soportado||0);
+  const cuotaColor = cuota >= 0 ? 'var(--red)' : 'var(--green)';
+  const cuotaLabel = cuota >= 0 ? 'A INGRESAR' : 'A DEVOLVER';
+  document.getElementById('iva-liquidacion').innerHTML = `
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:14px">
+      <div style="text-align:center;padding:14px;background:var(--bg);border-radius:10px">
+        <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">IVA Repercutido</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:700;color:var(--olive)">€ ${fmt(iva.total_repercutido||0)}</div>
+      </div>
+      <div style="text-align:center;padding:14px;background:var(--bg);border-radius:10px">
+        <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">IVA Soportado</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:700;color:var(--olive)">€ ${fmt(iva.total_soportado||0)}</div>
+      </div>
+      <div style="text-align:center;padding:14px;background:var(--bg);border-radius:10px">
+        <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">Cuota neta</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:700;color:${cuotaColor}">€ ${fmt(Math.abs(cuota))}</div>
+        <div style="font-size:10px;font-weight:600;color:${cuotaColor}">${cuotaLabel}</div>
+      </div>
+    </div>
+    <div style="background:#fef3e2;border-radius:10px;padding:10px 14px;font-size:12px;color:#b05d00;display:flex;align-items:center;gap:8px">
+      <i class="ti ti-info-circle" style="font-size:16px"></i>
+      T3 2026 · Vencimiento 20/10/2026 · Modelo 303
+    </div>`;
+}
+
+// ── PREVISIÓN ─────────────────────────────────────────────────
+function renderPrevision() {
+  const p = datos.prevision;
+  ingresoMedio = p.ingreso_medio_obra || 0;
+  gastoMedio   = p.gasto_medio_obra   || 0;
+
+  document.getElementById('prevision-actual').innerHTML = `
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px">
+      <div style="background:var(--bg);border-radius:10px;padding:14px;text-align:center">
+        <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">Ritmo actual</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:700;color:var(--olive)">${p.obras_mes_actual}</div>
+        <div style="font-size:11px;color:var(--muted)">obras/mes</div>
+      </div>
+      <div style="background:var(--bg);border-radius:10px;padding:14px;text-align:center">
+        <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">Ingreso medio</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:700;color:var(--olive)">€ ${fmtK(ingresoMedio)}</div>
+        <div style="font-size:11px;color:var(--muted)">por obra</div>
+      </div>
+    </div>
+    <div class="iva-row">
+      <span class="iva-label">Previsión ingresos anuales</span>
+      <span class="iva-amount" style="color:var(--green)">€ ${fmt(p.prevision_anual)}</span>
+    </div>
+    <div class="iva-row">
+      <span class="iva-label">Previsión beneficio anual</span>
+      <span class="iva-amount" style="color:var(--olive)">€ ${fmt(p.beneficio_anual)}</span>
+    </div>
+    <div class="iva-row" style="border-bottom:none">
+      <span class="iva-label">Gasto medio por obra</span>
+      <span class="iva-amount" style="color:var(--red)">€ ${fmt(gastoMedio)}</span>
+    </div>`;
+
+  // Chart de barras mensual
+  renderChartPrevision(p.obras_mes_actual);
+}
+
+function renderChartPrevision(obrasMes) {
+  const meses = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+  const ingresoMes = ingresoMedio * obrasMes;
+  const gastoMes   = gastoMedio   * obrasMes;
+  const maxVal     = ingresoMes * 1.1;
+  const chartEl    = document.getElementById('chart-prevision');
+  if (!chartEl) return;
+  chartEl.innerHTML = meses.map((m, i) => {
+    const hIngreso = maxVal > 0 ? Math.round((ingresoMes / maxVal) * 160) : 0;
+    const hGasto   = maxVal > 0 ? Math.round((gastoMes   / maxVal) * 160) : 0;
+    return `
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px">
+        <div style="width:100%;display:flex;gap:2px;align-items:flex-end;height:160px">
+          <div style="flex:1;height:${hIngreso}px;background:var(--gold);border-radius:3px 3px 0 0;opacity:.85" title="Ingresos ${m}: €${fmt(ingresoMes)}"></div>
+          <div style="flex:1;height:${hGasto}px;background:var(--sage);border-radius:3px 3px 0 0;opacity:.7" title="Gastos ${m}: €${fmt(gastoMes)}"></div>
+        </div>
+        <div style="font-size:9px;color:var(--muted)">${m}</div>
+      </div>`;
+  }).join('') + `
+    <div style="position:absolute;top:-24px;right:0;display:flex;gap:12px;font-size:10px;color:var(--muted)">
+      <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;background:var(--gold);border-radius:2px;display:inline-block"></span>Ingresos</span>
+      <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;background:var(--sage);border-radius:2px;display:inline-block"></span>Gastos</span>
+    </div>`;
+  chartEl.style.position = 'relative';
+}
+
+// ── SIMULADOR ─────────────────────────────────────────────────
+function simular() {
+  const obrasMes = parseInt(document.getElementById('sim-obras')?.value || 3);
+  const ingAnual = ingresoMedio * obrasMes * 12;
+  const gasAnual = gastoMedio   * obrasMes * 12;
+  const benAnual = ingAnual - gasAnual;
+  const margen   = ingAnual > 0 ? Math.round(benAnual / ingAnual * 100) : 0;
+
+  document.getElementById('sim-results').innerHTML = `
+    <div class="sim-kpi">
+      <div class="sim-kpi-label">Ingresos/año</div>
+      <div class="sim-kpi-value" style="color:var(--green)">€ ${fmtK(ingAnual)}</div>
+    </div>
+    <div class="sim-kpi">
+      <div class="sim-kpi-label">Gastos/año</div>
+      <div class="sim-kpi-value" style="color:var(--red)">€ ${fmtK(gasAnual)}</div>
+    </div>
+    <div class="sim-kpi">
+      <div class="sim-kpi-label">Beneficio/año</div>
+      <div class="sim-kpi-value">€ ${fmtK(benAnual)}</div>
+    </div>
+    <div class="sim-kpi">
+      <div class="sim-kpi-label">Margen</div>
+      <div class="sim-kpi-value" style="color:${margen>50?'var(--green)':'var(--gold)'}">${margen}%</div>
+    </div>`;
+  renderChartPrevision(obrasMes);
+}
+
+// ── CHAT AGENTE ───────────────────────────────────────────────
+function autoGrow(el) {
+  el.style.height = 'auto';
+  el.style.height = Math.min(el.scrollHeight, 100) + 'px';
+}
+
+function addMsg(role, text) {
+  const msgs = document.getElementById('chat-msgs');
+  const isUser = role === 'user';
+  const t = new Date().toLocaleTimeString('es-ES', {hour:'2-digit', minute:'2-digit'});
+  const div = document.createElement('div');
+  div.className = 'msg' + (isUser ? ' user' : '');
+  if (isUser) {
+    div.innerHTML = `
+      <div>
+        <div class="msg-bubble user">${text}</div>
+        <div class="msg-time user">${t}</div>
+      </div>
+      <div class="msg-av user"><i class="ti ti-user"></i></div>`;
+  } else {
+    div.innerHTML = `
+      <div class="msg-av agent"><i class="ti ti-message-chatbot"></i></div>
+      <div>
+        <div class="msg-name">Blanca</div>
+        <div class="msg-bubble agent">${text.replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')}</div>
+        <div class="msg-time">${t}</div>
+      </div>`;
+  }
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+  return div;
+}
+
+function addTyping() {
+  const msgs = document.getElementById('chat-msgs');
+  const div = document.createElement('div');
+  div.className = 'msg'; div.id = 'typing';
+  div.innerHTML = `
+    <div class="msg-av agent"><i class="ti ti-message-chatbot"></i></div>
+    <div>
+      <div class="msg-name">Blanca</div>
+      <div class="msg-bubble agent"><div class="typing"><span></span><span></span><span></span></div></div>
+    </div>`;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+async function enviar() {
+  const input = document.getElementById('chat-input');
+  const text = input.value.trim();
+  if (!text) return;
+  input.value = ''; input.style.height = 'auto';
+  addMsg('user', text);
+  conversacion.push({ role: 'user', content: text });
+  addTyping();
+  try {
+    const res = await fetch(WH_AGENTE, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ messages: conversacion, datos_contexto: datos })
+    });
+    const raw = await res.text();
+    document.getElementById('typing')?.remove();
+    let reply = raw;
+    try {
+      const d = JSON.parse(raw);
+      const r = Array.isArray(d) ? d[0] : d;
+      reply = r.reply || r.output || r.text || r.message || raw;
+    } catch(e) { reply = raw; }
+    conversacion.push({ role: 'assistant', content: reply });
+    addMsg('agent', reply);
+  } catch(e) {
+    document.getElementById('typing')?.remove();
+    addMsg('agent', '⚠️ No se pudo conectar con el agente. Comprueba la conexión.');
+    conversacion.pop();
+  }
+}
+
+// ── INIT ──────────────────────────────────────────────────────
+cargarDatos();
+setInterval(cargarDatos, 5 * 60 * 1000); // refresco cada 5 min
+</script>
+</body>
+</html>
