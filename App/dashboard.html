@@ -170,6 +170,13 @@ td{padding:10px 12px;color:var(--text)}
   .nav-tab span{display:none}
 }
 
+/* GASTOS SUB-TABS */
+.gastos-subtab{flex:1;padding:9px 14px;font-size:12px;font-weight:500;font-family:inherit;color:var(--muted);background:transparent;border:none;border-radius:9px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:all .15s}
+.gastos-subtab:hover{color:var(--olive);background:var(--bg)}
+.gastos-subtab.active{background:var(--olive);color:var(--white);font-weight:600}
+.gastos-subtab.active i{color:var(--gold)}
+.gastos-subtab i{font-size:15px}
+
 /* SECTION SPACING */
 .section > *+*{margin-top:16px}
 .mb-16{margin-bottom:16px}
@@ -202,8 +209,8 @@ td{padding:10px 12px;color:var(--text)}
   <div class="nav-tab" onclick="setTab('proyectos')" id="tab-proyectos">
     <i class="ti ti-building"></i><span>Proyectos</span>
   </div>
-  <div class="nav-tab" onclick="setTab('contabilidad')" id="tab-contabilidad">
-    <i class="ti ti-file-invoice"></i><span>Contabilidad</span>
+  <div class="nav-tab" onclick="setTab('gastos')" id="tab-gastos">
+    <i class="ti ti-receipt"></i><span>Gastos</span>
   </div>
   <div class="nav-tab" onclick="setTab('iva')" id="tab-iva">
     <i class="ti ti-receipt-tax"></i><span>IVA</span>
@@ -261,30 +268,91 @@ td{padding:10px 12px;color:var(--text)}
   <div class="grid-3" id="proyectos-detail"></div>
 </div>
 
-<!-- ══ CONTABILIDAD ══ -->
-<div class="section" id="section-contabilidad">
-  <div class="card">
-    <div class="card-title"><i class="ti ti-file-invoice"></i>Facturas registradas</div>
+
+
+<!-- ══ GASTOS ══ -->
+<div class="section" id="section-gastos">
+
+  <!-- KPIs resumen gastos -->
+  <div class="kpi-grid" id="gastos-kpi-grid" style="grid-template-columns:repeat(4,1fr)"></div>
+
+  <!-- Sub-pestañas -->
+  <div style="background:var(--white);border-radius:12px;border:.5px solid var(--border);padding:4px;display:flex;gap:4px;margin-bottom:0">
+    <button class="gastos-subtab active" id="subtab-obra"    onclick="setGastosTab('obra')">
+      <i class="ti ti-hard-hat"></i> Obra
+    </button>
+    <button class="gastos-subtab" id="subtab-herr"    onclick="setGastosTab('herr')">
+      <i class="ti ti-tool"></i> Herramientas
+    </button>
+    <button class="gastos-subtab" id="subtab-empresa" onclick="setGastosTab('empresa')">
+      <i class="ti ti-building-store"></i> Empresa
+    </button>
+    <button class="gastos-subtab" id="subtab-sub"     onclick="setGastosTab('sub')">
+      <i class="ti ti-users"></i> Subcontrata
+    </button>
+  </div>
+
+  <!-- Paneles -->
+  <div class="card" id="panel-obra">
+    <div class="card-title"><i class="ti ti-hard-hat"></i>Gastos de obra</div>
     <div class="table-wrap">
       <table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Nº Factura</th>
-            <th>Tipo</th>
-            <th>Fecha</th>
-            <th>Proveedor</th>
-            <th style="text-align:right">Base</th>
-            <th style="text-align:right">IVA</th>
-            <th style="text-align:right">Total</th>
-            <th>Pago</th>
-            <th>IVA Ded.</th>
-          </tr>
-        </thead>
-        <tbody id="facturas-tbody"></tbody>
+        <thead><tr>
+          <th>ID</th><th>Nº Factura</th><th>Proveedor</th><th>Fecha</th>
+          <th style="text-align:right">Base</th><th style="text-align:right">IVA</th>
+          <th style="text-align:right">Total</th><th>Pago</th>
+        </tr></thead>
+        <tbody id="gastos-obra-tbody"></tbody>
       </table>
     </div>
+    <div id="gastos-obra-total" style="margin-top:12px"></div>
   </div>
+
+  <div class="card" id="panel-herr" style="display:none">
+    <div class="card-title"><i class="ti ti-tool"></i>Herramientas y material</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr>
+          <th>ID</th><th>Nº Factura</th><th>Proveedor</th><th>Fecha</th>
+          <th style="text-align:right">Base</th><th style="text-align:right">IVA</th>
+          <th style="text-align:right">Total</th><th>Pago</th>
+        </tr></thead>
+        <tbody id="gastos-herr-tbody"></tbody>
+      </table>
+    </div>
+    <div id="gastos-herr-total" style="margin-top:12px"></div>
+  </div>
+
+  <div class="card" id="panel-empresa" style="display:none">
+    <div class="card-title"><i class="ti ti-building-store"></i>Gastos empresa</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr>
+          <th>ID</th><th>Nº Factura</th><th>Proveedor</th><th>Fecha</th>
+          <th style="text-align:right">Base</th><th style="text-align:right">IVA</th>
+          <th style="text-align:right">Total</th><th>Pago</th>
+        </tr></thead>
+        <tbody id="gastos-empresa-tbody"></tbody>
+      </table>
+    </div>
+    <div id="gastos-empresa-total" style="margin-top:12px"></div>
+  </div>
+
+  <div class="card" id="panel-sub" style="display:none">
+    <div class="card-title"><i class="ti ti-users"></i>Subcontrata</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr>
+          <th>ID</th><th>Nº Factura</th><th>Proveedor</th><th>Fecha</th>
+          <th style="text-align:right">Base</th><th style="text-align:right">IVA</th>
+          <th style="text-align:right">Total</th><th>Pago</th>
+        </tr></thead>
+        <tbody id="gastos-sub-tbody"></tbody>
+      </table>
+    </div>
+    <div id="gastos-sub-total" style="margin-top:12px"></div>
+  </div>
+
 </div>
 
 <!-- ══ IVA ══ -->
@@ -414,6 +482,7 @@ function renderAll() {
   renderTesoreria();
   renderProyectos();
   renderFacturas();
+  renderGastos();
   renderIVA();
   renderPrevision();
   simular();
@@ -542,6 +611,77 @@ function renderFacturas() {
       <td><span class="badge ${f['ESTADO PAGO']==='Pagado'?'badge-green':'badge-orange'}">${f['ESTADO PAGO']||'—'}</span></td>
       <td style="font-size:12px;color:${f['IVA DEDUCIBLE']==='Si'?'var(--green)':'var(--red)'}">${f['IVA DEDUCIBLE']||'—'}</td>
     </tr>`).join('');
+}
+
+// ── GASTOS SUB-TABS ───────────────────────────────────────────
+function setGastosTab(tab) {
+  ['obra','herr','empresa','sub'].forEach(t => {
+    document.getElementById('subtab-' + t)?.classList.remove('active');
+    document.getElementById('panel-' + t) && (document.getElementById('panel-' + t).style.display = 'none');
+  });
+  document.getElementById('subtab-' + tab)?.classList.add('active');
+  document.getElementById('panel-' + tab) && (document.getElementById('panel-' + tab).style.display = 'block');
+}
+
+// ── GASTOS ────────────────────────────────────────────────────
+function renderGastos() {
+  const facturas = datos.facturas || [];
+
+  const esHerr    = f => (f.categoria||'') === 'HERR Y MAT'      || ['OBRAMAT','LEROY','LIDEL'].some(k => (f.proveedor||'').toUpperCase().includes(k));
+  const esEmpresa = f => (f.categoria||'') === 'GASTOS EMPRESA'   || ['GALP','BP','SINDICATO','SEGUROS','ASESOR'].some(k => (f.proveedor||'').toUpperCase().includes(k));
+  const esSub     = f => (f.categoria||'') === 'SUBCONTRATA'      || ['THIAGO','LORENZO','PAXI','SERGIO'].some(k => (f.proveedor||'').toUpperCase().includes(k));
+  const esObra    = f => !esHerr(f) && !esEmpresa(f) && !esSub(f);
+
+  const obra    = facturas.filter(esObra);
+  const herr    = facturas.filter(esHerr);
+  const empresa = facturas.filter(f => !esSub(f) && !esHerr(f) && esEmpresa(f));
+  const sub     = facturas.filter(esSub);
+
+  const totalOf = arr => arr.reduce((s, f) => s + (f.total||0), 0);
+  const tObra = totalOf(obra), tHerr = totalOf(herr), tEmp = totalOf(empresa), tSub = totalOf(sub);
+  const tTotal = tObra + tHerr + tEmp + tSub;
+
+  document.getElementById('gastos-kpi-grid').innerHTML = [
+    { label:'Gastos obra',    value:tObra, icon:'ti-hard-hat',       color:'var(--red)',  tab:'obra' },
+    { label:'Herramientas',   value:tHerr, icon:'ti-tool',           color:'var(--gold)', tab:'herr' },
+    { label:'Gastos empresa', value:tEmp,  icon:'ti-building-store', color:'var(--blue)', tab:'empresa' },
+    { label:'Subcontrata',    value:tSub,  icon:'ti-users',          color:'var(--sage)', tab:'sub' },
+  ].map(k => `
+    <div class="kpi" onclick="setGastosTab('${k.tab}')" style="cursor:pointer">
+      <i class="ti ${k.icon} kpi-icon"></i>
+      <div class="kpi-label">${k.label}</div>
+      <div class="kpi-value" style="color:${k.color};font-size:26px">€ ${fmt(k.value)}</div>
+      <div class="kpi-sub">${tTotal > 0 ? Math.round(k.value/tTotal*100) : 0}% del total</div>
+    </div>`).join('');
+
+  const filaGasto = f => `<tr>
+    <td class="td-id">${f.id||'—'}</td>
+    <td style="font-size:12px">${f.nro_documento||'—'}</td>
+    <td style="font-size:12px">${f.proveedor||'—'}</td>
+    <td style="font-size:12px;color:var(--muted)">${f.fecha_factura||'—'}</td>
+    <td class="td-num">€ ${fmt(f.base_imponible||0)}</td>
+    <td class="td-num" style="color:var(--muted)">€ ${fmt(f.iva_importe||0)}</td>
+    <td class="td-num red">€ ${fmt(f.total||0)}</td>
+    <td><span class="badge ${f.estado_pago==='Pagado'?'badge-green':'badge-orange'}">${f.estado_pago||'—'}</span></td>
+  </tr>`;
+
+  const totalRow = (arr, t) => `
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;font-size:12px;color:var(--muted)">
+      <span>${arr.length} registro${arr.length!==1?'s':''}</span>
+    </div>
+    <div class="iva-total"><span>Total</span><span>€ ${fmt(t)}</span></div>`;
+
+  const empty = '<tr><td colspan="8" style="text-align:center;color:var(--muted);padding:16px">Sin registros en esta categoría</td></tr>';
+
+  document.getElementById('gastos-obra-tbody').innerHTML    = obra.length    ? obra.map(filaGasto).join('')    : empty;
+  document.getElementById('gastos-herr-tbody').innerHTML    = herr.length    ? herr.map(filaGasto).join('')    : empty;
+  document.getElementById('gastos-empresa-tbody').innerHTML = empresa.length ? empresa.map(filaGasto).join('') : empty;
+  document.getElementById('gastos-sub-tbody').innerHTML     = sub.length     ? sub.map(filaGasto).join('')     : empty;
+
+  document.getElementById('gastos-obra-total').innerHTML    = totalRow(obra,    tObra);
+  document.getElementById('gastos-herr-total').innerHTML    = totalRow(herr,    tHerr);
+  document.getElementById('gastos-empresa-total').innerHTML = totalRow(empresa, tEmp);
+  document.getElementById('gastos-sub-total').innerHTML     = totalRow(sub,     tSub);
 }
 
 // ── IVA ───────────────────────────────────────────────────────
@@ -764,7 +904,11 @@ async function enviar() {
     try {
       const d = JSON.parse(raw);
       const r = Array.isArray(d) ? d[0] : d;
-      reply = r.reply || r.output || r.text || r.message || raw;
+      if (r.content && Array.isArray(r.content) && r.content[0]?.text) {
+        reply = r.content[0].text;
+      } else {
+        reply = r.reply || r.output || r.text || r.message || raw;
+      }
     } catch(e) { reply = raw; }
     conversacion.push({ role: 'assistant', content: reply });
     addMsg('agent', reply);
