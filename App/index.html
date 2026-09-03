@@ -1185,8 +1185,12 @@ function fillConfirmar(d) {
   // Reset opciones extra
   document.getElementById('chk-repercutido').checked = false;
   document.getElementById('chk-multiples').checked   = false;
-  document.getElementById('opt-repercutido').classList.remove('active');
-  document.getElementById('opt-multiples').classList.remove('active');
+  ['btn-repercutido','btn-multiples'].forEach(id => {
+    const btn = document.getElementById(id);
+    if (btn) { btn.style.borderColor='#e0e0e0'; btn.style.background='#fff'; btn.style.color='#888'; }
+  });
+  const obraWrap = document.getElementById('obra-selector-general');
+  if (obraWrap) obraWrap.style.display = 'block';
   document.getElementById('lineas-detalle').style.display = 'none';
 
   const lineas     = d.lineas || [];
