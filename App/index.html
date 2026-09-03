@@ -936,6 +936,23 @@ input[type=file]{display:none}
 </div><!-- /app -->
 
 <script>
+// ─── CAPTURADOR DE ERRORES VISUAL ─────────────────────────────────────────────
+window.onerror = function(msg, src, line, col, err) {
+  const div = document.createElement('div');
+  div.style.cssText = 'position:fixed;bottom:0;left:0;right:0;background:#E74C3C;color:#fff;padding:12px 14px;font-size:11px;z-index:99999;font-family:monospace;word-break:break-all';
+  div.textContent = 'ERROR L' + line + ': ' + msg;
+  document.body.appendChild(div);
+  setTimeout(() => div.remove(), 15000);
+  return false;
+};
+window.addEventListener('unhandledrejection', function(e) {
+  const div = document.createElement('div');
+  div.style.cssText = 'position:fixed;bottom:0;left:0;right:0;background:#E67E22;color:#fff;padding:12px 14px;font-size:11px;z-index:99999;font-family:monospace;word-break:break-all';
+  div.textContent = 'PROMISE ERROR: ' + (e.reason?.message || e.reason || 'desconocido');
+  document.body.appendChild(div);
+  setTimeout(() => div.remove(), 15000);
+});
+
 // ─── WEBHOOKS ─────────────────────────────────────────────────────────────────
 const WH_LOGIN      = 'https://aientik.app.n8n.cloud/webhook/mediterras-login';
 const WH_FASE1      = 'https://aientik.app.n8n.cloud/webhook/mediterras-gastos-fase1';
